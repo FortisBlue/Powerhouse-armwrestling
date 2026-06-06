@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POWERHOUSE ARMWRESTLING — Gold Coast, QLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:   #0a0908;
+  --deep:    #111009;
+  --char:    #1c1a16;
+  --gold:    #C9A234;
+  --gold-lt: #E8B84B;
+  --gold-dk: #9A7A22;
+  --cream:   #F0E8D8;
+  --cream-d: #C8BEA8;
+  --cream-f: rgba(240,232,216,0.45);
+  --glass:   rgba(12,11,9,0.72);
+  --glass-b: rgba(201,162,52,0.22);
+  --ink:     #0a0908;
+  --body-sz: 15px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: var(--body-sz);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ────────────────────────────────────────────────
+   SCROLLBAR
+──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold-dk); border-radius: 2px; }
+
+/* ────────────────────────────────────────────────
+   NAV
+──────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 clamp(20px, 4vw, 60px);
+  height: 68px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  background: transparent;
+  border-bottom: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 0;
+  animation: navDrop 0.6s 0.05s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--cream);
+  gap: 1px;
+}
+.nav-logo-top {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.nav-logo-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+}
+
+.nav-pills {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  list-style: none;
+}
+.nav-pills a {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(15,13,11,0.45);
+  color: var(--cream-d);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(201,162,52,0.30),
+    inset 0 0 18px 0 rgba(201,162,52,0.07),
+    0 1px 3px rgba(0,0,0,0.55),
+    0 4px 14px rgba(0,0,0,0.40);
+  transition: color 180ms ease, box-shadow 180ms ease, transform 120ms ease;
+  z-index: 0;
+}
+.nav-pills a:hover {
+  color: var(--cream);
+  box-shadow:
+    inset 0 0 0 1px rgba(201,162,52,0.55),
+    inset 0 0 20px 0 rgba(201,162,52,0.12),
+    0 1px 3px rgba(0,0,0,0.55),
+    0 6px 20px rgba(0,0,0,0.45);
+}
+.nav-pills a:active { transform: scale(0.975); }
+.nav-pills a.active {
+  color: var(--ink);
+  background: var(--gold);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.5),
+    0 4px 14px rgba(201,162,52,0.25);
+}
+/* glow circles spawned by JS */
+.nav-pills a .hb-circle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  filter: blur(9px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+.nav-pills a .hb-circle.on  { opacity: 0.85; }
+.nav-pills a .hb-circle.off { opacity: 0; transition: opacity 1.1s ease; }
+
+/* ── JOIN NOW — get-started sweep button ── */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 6px 0 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(201,162,52,0.45);
+  background: rgba(10,9,8,0.78);
+  color: var(--cream);
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 0 0 var(--gold),
+    0 1px 3px rgba(0,0,0,0.55),
+    0 4px 14px rgba(0,0,0,0.35);
+  transition: border-color 0.35s ease, transform 0.15s ease;
+}
+.nav-cta:hover {
+  border-color: var(--gold);
+}
+.nav-cta:active { transform: scale(0.96); }
+
+/* text fades out as icon sweeps in */
+.nav-cta-text {
+  position: relative;
+  z-index: 1;
+  padding-right: 34px; /* clearance for the icon panel */
+  transition: opacity 0.42s ease;
+}
+.nav-cta:hover .nav-cta-text { opacity: 0; }
+
+/* gold panel — starts as small square, sweeps to full width */
+.nav-cta-icon {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: calc(100% - 8px);
+  background: var(--gold);
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  transition: width 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.nav-cta:hover .nav-cta-icon { width: calc(100% - 8px); }
+
+/* hamburger */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.nav-burger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--cream);
+  border-radius: 1px;
+  transition: transform 300ms ease, opacity 300ms ease;
+}
+
+/* ────────────────────────────────────────────────
+   HERO
+──────────────────────────────────────────────── */
+#hero {
+  position: relative;
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.hero-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: bgFade 1.2s 0.1s ease-out forwards;
+}
+
+.hero-img-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 22%;
+  background: linear-gradient(180deg, rgba(10,9,8,0.85) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
+
+.hero-content {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: rgba(10,9,8,0.52);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201,162,52,0.18);
+  border-radius: 10px;
+  padding: 14px 20px;
+  white-space: nowrap;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: riseIn 0.6s 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: riseIn 0.7s 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+.hero-est {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-f);
+}
+
+.hero-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(201,162,52,0.4);
+}
+
+.hero-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(201,162,52,0.35);
+  background: rgba(201,162,52,0.08);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+}
+.hero-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+
+/* ────────────────────────────────────────────────
+   SECTION COMMONS
+──────────────────────────────────────────────── */
+section {
+  padding: clamp(64px, 10vh, 120px) clamp(24px, 5vw, 80px);
+}
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-label::before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  margin-bottom: clamp(32px, 5vh, 56px);
+}
+
+/* scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ────────────────────────────────────────────────
+   EVENTS
+──────────────────────────────────────────────── */
+#events {
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
+#events::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,52,0.4), transparent);
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.event-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  border-radius: 12px;
+  padding: 28px 26px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+  cursor: default;
+}
+.event-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,162,52,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.event-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,162,52,0.55);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,162,52,0.15);
+}
+
+.event-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold-dk);
+  margin-bottom: 20px;
+}
+
+.event-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.event-tagline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 22px;
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+  border-top: 1px solid rgba(201,162,52,0.12);
+  padding-top: 18px;
+}
+
+.event-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+}
+.event-row dt {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--cream-d);
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.event-row dd {
+  color: var(--cream);
+  font-weight: 500;
+  font-size: 13px;
+  text-align: right;
+}
+
+.event-classes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+.class-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(201,162,52,0.3);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--gold-lt);
+  text-transform: uppercase;
+}
+
+.btn-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+.btn-register:hover {
+  background: var(--gold-lt);
+  transform: translateY(-1px);
+}
+
+/* ────────────────────────────────────────────────
+   RANKINGS
+──────────────────────────────────────────────── */
+#rankings {
+  background: var(--black);
+  position: relative;
+}
+
+.rankings-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 56px;
+  align-items: start;
+}
+
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rank-table thead th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  text-align: left;
+  padding: 0 16px 14px;
+  border-bottom: 1px solid rgba(201,162,52,0.2);
+}
+.rank-table thead th:first-child { padding-left: 0; }
+
+.rank-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 180ms ease;
+}
+.rank-table tbody tr:hover {
+  background: rgba(201,162,52,0.04);
+}
+.rank-table tbody tr.rank-1 {
+  background: rgba(201,162,52,0.07);
+}
+.rank-table tbody tr.rank-1 td { color: var(--gold-lt); }
+
+.rank-table tbody td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--cream);
+  vertical-align: middle;
+}
+.rank-table tbody td:first-child { padding-left: 0; }
+
+.rank-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--cream-d);
+  width: 48px;
+}
+.rank-1 .rank-num {
+  color: var(--gold);
+}
+
+.rank-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rank-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(201,162,52,0.14);
+  color: var(--gold);
+  border: 1px solid rgba(201,162,52,0.25);
+}
+
+.rank-wins { color: var(--gold-lt); font-weight: 600; }
+.rank-losses { color: var(--cream-d); }
+
+.rank-aside {
+  position: sticky;
+  top: 88px;
+}
+
+.rank-aside-card {
+  background: var(--char);
+  border: 1px solid var(--glass-b);
+  border-radius: 12px;
+  padding: 28px;
+}
+
+.rank-aside-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row dt {
+  font-family: 'Barlow Condensed', sans-serif;
+  color: var(--cream-d);
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.stat-row dd {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+}
+
+/* ────────────────────────────────────────────────
+   LOCATIONS
+──────────────────────────────────────────────── */
+#locations {
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
+#locations::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,52,0.4), transparent);
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.location-card {
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 280ms ease, border-color 280ms ease;
+}
+.location-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,162,52,0.45);
+}
+
+.location-header {
+  background: linear-gradient(135deg, #1f1c14, #14120c);
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid rgba(201,162,52,0.12);
+  position: relative;
+}
+.location-hq-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.location-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.location-suburb {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.location-body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.location-info-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.location-info-row dt {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  white-space: nowrap;
+  margin-top: 2px;
+  min-width: 68px;
+}
+.location-info-row dd {
+  font-size: 13px;
+  color: var(--cream-d);
+  line-height: 1.5;
+}
+
+.btn-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(201,162,52,0.35);
+  background: transparent;
+  color: var(--gold-lt);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+  cursor: pointer;
+}
+.btn-directions:hover {
+  background: rgba(201,162,52,0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn-directions svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* ────────────────────────────────────────────────
+   STORE
+──────────────────────────────────────────────── */
+#store {
+  background: var(--black);
+}
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.product-card {
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,162,52,0.4);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(201,162,52,0.08);
+}
+
+.product-img {
+  height: 200px;
+  background: linear-gradient(135deg, #1c1a10 0%, #2a2208 50%, #1a1508 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.product-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(201,162,52,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(232,184,75,0.10) 0%, transparent 55%);
+}
+.product-img-icon {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.2rem;
+  letter-spacing: 0.04em;
+  color: rgba(201,162,52,0.25);
+  text-align: center;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.product-body {
+  padding: 18px 18px 20px;
+}
+
+.product-cat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-bottom: 6px;
+}
+
+.product-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 14px;
+  line-height: 1.15;
+}
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.product-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.btn-cart {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: rgba(201,162,52,0.12);
+  border: 1px solid rgba(201,162,52,0.3);
+  color: var(--gold-lt);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+.btn-cart:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+/* ────────────────────────────────────────────────
+   ABOUT / JOIN
+──────────────────────────────────────────────── */
+#about {
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
+#about::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,52,0.4), transparent);
+}
+#about::after {
+  content: "POWERHOUSE";
+  position: absolute;
+  bottom: -0.1em;
+  right: -0.05em;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22vw;
+  color: rgba(201,162,52,0.03);
+  line-height: 1;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.about-text p {
+  color: var(--cream-d);
+  line-height: 1.7;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+
+.about-features {
+  margin: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.about-feat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.about-feat::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* JOIN FORM */
+.join-form-wrap {
+  background: var(--char);
+  border: 1px solid var(--glass-b);
+  border-radius: 16px;
+  padding: 36px 32px;
+}
+
+.form-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.form-subtitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+.form-label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  margin-bottom: 7px;
+}
+.form-input,
+.form-select {
+  width: 100%;
+  height: 44px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,162,52,0.2);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  padding: 0 14px;
+  outline: none;
+  transition: border-color 180ms ease, background 180ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.form-input::placeholder { color: rgba(200,190,168,0.35); }
+.form-input:focus,
+.form-select:focus {
+  border-color: rgba(201,162,52,0.55);
+  background: rgba(201,162,52,0.04);
+}
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A234' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+  background-color: rgba(255,255,255,0.04);
+}
+.form-select option { background: #1c1a16; color: var(--cream); }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-join {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  background: var(--gold);
+  border: none;
+  color: var(--ink);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.btn-join:hover {
+  background: var(--gold-lt);
+  transform: translateY(-2px);
+}
+.btn-join .arr {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: var(--ink);
+  position: relative;
+  flex-shrink: 0;
+  transition: width 220ms ease;
+}
+.btn-join .arr::before,
+.btn-join .arr::after {
+  content: "";
+  position: absolute;
+  right: 0; top: 0;
+  width: 7px; height: 1px;
+  background: var(--ink);
+}
+.btn-join .arr::before { transform: rotate(38deg); transform-origin: right center; }
+.btn-join .arr::after  { transform: rotate(-38deg); transform-origin: right center; }
+.btn-join:hover .arr { width: 52px; }
+
+/* ────────────────────────────────────────────────
+   FOOTER
+──────────────────────────────────────────────── */
+footer {
+  background: #060504;
+  border-top: 1px solid rgba(201,162,52,0.14);
+  padding: 56px clamp(24px, 5vw, 80px) 36px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.footer-brand {}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+}
+.footer-logo-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  display: block;
+  margin-bottom: 18px;
+}
+.footer-tagline {
+  font-size: 13px;
+  color: var(--cream-d);
+  line-height: 1.6;
+  max-width: 220px;
+}
+
+.footer-col-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.footer-links a {
+  color: var(--cream-d);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 160ms ease;
+}
+.footer-links a:hover { color: var(--cream); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: rgba(200,190,168,0.45);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 10px;
+}
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(201,162,52,0.2);
+  color: var(--cream-d);
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.footer-socials a:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.footer-socials svg { width: 16px; height: 16px; }
+
+/* ────────────────────────────────────────────────
+   GOLD DIVIDER
+──────────────────────────────────────────────── */
+.gold-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,52,0.5), transparent);
+  border: none;
+  margin: 0;
+}
+
+/* ────────────────────────────────────────────────
+   ANIMATIONS
+──────────────────────────────────────────────── */
+@keyframes navDrop {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bgFade {
+  to { opacity: 1; }
+}
+@keyframes riseIn {
+  to { opacity: 1; transform: none; }
+}
+
+/* ────────────────────────────────────────────────
+   RESPONSIVE
+──────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .rankings-layout { grid-template-columns: 1fr; gap: 36px; }
+  .rank-aside { position: static; }
+  .rank-aside-card { max-width: 480px; }
+  .store-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 900px) {
+  .events-grid { grid-template-columns: 1fr; max-width: 520px; }
+  .locations-grid { grid-template-columns: 1fr; max-width: 520px; }
+  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .nav-pills { display: none; }
+  .nav-burger { display: flex; }
+  .nav { grid-template-columns: 1fr auto auto; }
+}
+
+@media (max-width: 640px) {
+  .hero-img {
+    object-position: 52% 22%;
+  }
+  .hero-content { bottom: 12%; }
+
+  .store-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-title { font-size: clamp(4rem, 22vw, 20rem); }
+  .hero-sub { letter-spacing: 0.14em; }
+}
+
+/* mobile nav drawer */
+.nav-drawer {
+  position: fixed;
+  top: 68px; left: 0; right: 0;
+  background: rgba(10,9,8,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,162,52,0.14);
+  padding: 20px clamp(20px, 4vw, 60px) 28px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 99;
+}
+.nav-drawer.open { display: flex; }
+.nav-drawer a {
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 4px;
+  color: var(--cream-d);
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: color 160ms ease;
+}
+.nav-drawer a:hover { color: var(--gold); }
+.nav-drawer a:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<header class="nav" id="main-nav">
+  <a href="#hero" class="nav-logo" aria-label="Powerhouse Armwrestling">
+    <span class="nav-logo-top">POWERHOUSE</span>
+    <span class="nav-logo-sub">Armwrestling Club</span>
+  </a>
+
+  <ul class="nav-pills">
+    <li><a href="#events" class="pill-link">Events</a></li>
+    <li><a href="#rankings" class="pill-link">Rankings</a></li>
+    <li><a href="#locations" class="pill-link">Locations</a></li>
+    <li><a href="#store" class="pill-link">Store</a></li>
+    <li><a href="#about" class="pill-link">About</a></li>
+  </ul>
+
+  <div style="display:flex;align-items:center;gap:20px;">
+    <a href="#about" class="nav-cta">
+      <span class="nav-cta-text">Join Now</span>
+      <span class="nav-cta-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
+    </a>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<nav class="nav-drawer" id="nav-drawer">
+  <a href="#events">Events</a>
+  <a href="#rankings">Rankings</a>
+  <a href="#locations">Locations</a>
+  <a href="#store">Store</a>
+  <a href="#about">About</a>
+  <a href="#about" style="color:var(--gold);font-weight:800;margin-top:8px;">Join Now →</a>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero">
+  <div class="hero-img-wrap">
+    <img src="hero.jpg" alt="Powerhouse Armwrestling — Gold Coast, QLD" class="hero-img">
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Gold Coast, Queensland — Est. 2024</p>
+      <div class="hero-meta">
+        <span class="hero-est">Est. 2024 — Gold Coast, QLD</span>
+        <div class="hero-divider" aria-hidden="true"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">127</span>
+          Members
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">32</span>
+          Events Run
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          Locations
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ EVENTS ══════════════════════ -->
+<section id="events">
+  <div class="section-label reveal">Upcoming</div>
+  <h2 class="section-title reveal">Next Battles</h2>
+
+  <div class="events-grid">
+
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">01 / OPEN EVENT</div>
+      <h3 class="event-name">Gold Coast Open</h3>
+      <p class="event-tagline">Season Opener — Right &amp; Left Hand</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>14 Jun 2025</dd></div>
+        <div class="event-row"><dt>Time</dt><dd>10:00 AM — 5:00 PM</dd></div>
+        <div class="event-row"><dt>Venue</dt><dd>Southport PCYC, QLD</dd></div>
+        <div class="event-row"><dt>Format</dt><dd>Double Elim.</dd></div>
+      </dl>
+      <div class="event-classes">
+        <span class="class-pill">70kg</span>
+        <span class="class-pill">80kg</span>
+        <span class="class-pill">90kg</span>
+        <span class="class-pill">100kg</span>
+        <span class="class-pill">110kg+</span>
+      </div>
+      <a href="#" class="btn-register">Register Now</a>
+    </article>
+
+    <article class="event-card reveal reveal-delay-2">
+      <div class="event-num">02 / INVITATIONAL</div>
+      <h3 class="event-name">QLD State Championships</h3>
+      <p class="event-tagline">Qualifier — Points Series</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>19 Jul 2025</dd></div>
+        <div class="event-row"><dt>Time</dt><dd>9:00 AM — 6:00 PM</dd></div>
+        <div class="event-row"><dt>Venue</dt><dd>Brisbane City Hall, QLD</dd></div>
+        <div class="event-row"><dt>Format</dt><dd>Round Robin</dd></div>
+      </dl>
+      <div class="event-classes">
+        <span class="class-pill">60kg</span>
+        <span class="class-pill">70kg</span>
+        <span class="class-pill">80kg</span>
+        <span class="class-pill">90kg</span>
+        <span class="class-pill">Open</span>
+      </div>
+      <a href="#" class="btn-register">Register Now</a>
+    </article>
+
+    <article class="event-card reveal reveal-delay-3">
+      <div class="event-num">03 / NATIONAL</div>
+      <h3 class="event-name">Powerhouse Classic</h3>
+      <p class="event-tagline">Signature Event — All Divisions</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>30 Aug 2025</dd></div>
+        <div class="event-row"><dt>Time</dt><dd>10:00 AM — 8:00 PM</dd></div>
+        <div class="event-row"><dt>Venue</dt><dd>Broadbeach BCEC, QLD</dd></div>
+        <div class="event-row"><dt>Format</dt><dd>Single Elim.</dd></div>
+      </dl>
+      <div class="event-classes">
+        <span class="class-pill">All</span>
+        <span class="class-pill">Masters</span>
+        <span class="class-pill">Juniors</span>
+        <span class="class-pill">Women</span>
+      </div>
+      <a href="#" class="btn-register">Register Now</a>
+    </article>
+
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ RANKINGS ══════════════════════ -->
+<section id="rankings">
+  <div class="rankings-layout">
+    <div>
+      <div class="section-label reveal">2025 Season</div>
+      <h2 class="section-title reveal">Current Champions</h2>
+
+      <table class="rank-table reveal">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Athlete</th>
+            <th>Class</th>
+            <th>Wins</th>
+            <th>Losses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="rank-1">
+            <td class="rank-num">1</td>
+            <td>
+              <div class="rank-name">Marcus "Iron" Webb</div>
+            </td>
+            <td><span class="rank-badge">90kg</span></td>
+            <td class="rank-wins">18</td>
+            <td class="rank-losses">1</td>
+          </tr>
+          <tr>
+            <td class="rank-num">2</td>
+            <td><div class="rank-name">Jake Thornton</div></td>
+            <td><span class="rank-badge">80kg</span></td>
+            <td class="rank-wins">15</td>
+            <td class="rank-losses">2</td>
+          </tr>
+          <tr>
+            <td class="rank-num">3</td>
+            <td><div class="rank-name">Dion Kalepa</div></td>
+            <td><span class="rank-badge">100kg</span></td>
+            <td class="rank-wins">14</td>
+            <td class="rank-losses">3</td>
+          </tr>
+          <tr>
+            <td class="rank-num">4</td>
+            <td><div class="rank-name">Ryan Kowalski</div></td>
+            <td><span class="rank-badge">70kg</span></td>
+            <td class="rank-wins">12</td>
+            <td class="rank-losses">2</td>
+          </tr>
+          <tr>
+            <td class="rank-num">5</td>
+            <td><div class="rank-name">Tyson Osei</div></td>
+            <td><span class="rank-badge">110kg+</span></td>
+            <td class="rank-wins">11</td>
+            <td class="rank-losses">4</td>
+          </tr>
+          <tr>
+            <td class="rank-num">6</td>
+            <td><div class="rank-name">Sam Reeves</div></td>
+            <td><span class="rank-badge">80kg</span></td>
+            <td class="rank-wins">9</td>
+            <td class="rank-losses">3</td>
+          </tr>
+          <tr>
+            <td class="rank-num">7</td>
+            <td><div class="rank-name">Nathan Grills</div></td>
+            <td><span class="rank-badge">90kg</span></td>
+            <td class="rank-wins">8</td>
+            <td class="rank-losses">5</td>
+          </tr>
+          <tr>
+            <td class="rank-num">8</td>
+            <td><div class="rank-name">Chris "The Bear" Dalton</div></td>
+            <td><span class="rank-badge">110kg+</span></td>
+            <td class="rank-wins">7</td>
+            <td class="rank-losses">4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rank-aside reveal">
+      <div class="rank-aside-card">
+        <div class="rank-aside-title">Season Stats</div>
+        <dl>
+          <div class="stat-row"><dt>Active Members</dt><dd>127</dd></div>
+          <div class="stat-row"><dt>Events This Year</dt><dd>11</dd></div>
+          <div class="stat-row"><dt>Matches Contested</dt><dd>843</dd></div>
+          <div class="stat-row"><dt>Weight Classes</dt><dd>8</dd></div>
+          <div class="stat-row"><dt>Avg. Pull Time</dt><dd>4.2s</dd></div>
+          <div class="stat-row"><dt>Next Event</dt><dd>14 Jun</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ LOCATIONS ══════════════════════ -->
+<section id="locations">
+  <div class="section-label reveal">3 Venues</div>
+  <h2 class="section-title reveal">Find Your Gym</h2>
+
+  <div class="locations-grid">
+
+    <div class="location-card reveal reveal-delay-1">
+      <div class="location-header">
+        <span class="location-hq-badge">HQ</span>
+        <div class="location-name">Gold Coast</div>
+        <div class="location-suburb">Southport, QLD</div>
+      </div>
+      <dl class="location-body">
+        <div class="location-info-row">
+          <dt>Address</dt>
+          <dd>12 Nerang St, Southport QLD 4215</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Training</dt>
+          <dd>Mon, Wed, Fri — 6:00 PM to 9:00 PM<br>Sat — 9:00 AM to 12:00 PM</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Tables</dt>
+          <dd>4 Competition Tables</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Coach</dt>
+          <dd>Marcus Webb — Head Coach</dd>
+        </div>
+        <a href="#" class="btn-directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Get Directions
+        </a>
+      </dl>
+    </div>
+
+    <div class="location-card reveal reveal-delay-2">
+      <div class="location-header">
+        <div class="location-name">Brisbane</div>
+        <div class="location-suburb">Fortitude Valley, QLD</div>
+      </div>
+      <dl class="location-body">
+        <div class="location-info-row">
+          <dt>Address</dt>
+          <dd>88 Brunswick St, Fortitude Valley QLD 4006</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Training</dt>
+          <dd>Tue, Thu — 7:00 PM to 9:30 PM<br>Sun — 10:00 AM to 1:00 PM</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Tables</dt>
+          <dd>2 Competition Tables</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Coach</dt>
+          <dd>Jake Thornton — Senior Coach</dd>
+        </div>
+        <a href="#" class="btn-directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Get Directions
+        </a>
+      </dl>
+    </div>
+
+    <div class="location-card reveal reveal-delay-3">
+      <div class="location-header">
+        <div class="location-name">Sunshine Coast</div>
+        <div class="location-suburb">Maroochydore, QLD</div>
+      </div>
+      <dl class="location-body">
+        <div class="location-info-row">
+          <dt>Address</dt>
+          <dd>5 Ocean St, Maroochydore QLD 4558</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Training</dt>
+          <dd>Mon, Thu — 6:30 PM to 9:00 PM<br>Sat — 8:30 AM to 11:00 AM</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Tables</dt>
+          <dd>2 Competition Tables</dd>
+        </div>
+        <div class="location-info-row">
+          <dt>Coach</dt>
+          <dd>Dion Kalepa — Coach</dd>
+        </div>
+        <a href="#" class="btn-directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Get Directions
+        </a>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ STORE ══════════════════════ -->
+<section id="store">
+  <div class="section-label reveal">Official Gear</div>
+  <h2 class="section-title reveal">Gear Up</h2>
+
+  <div class="store-grid">
+
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img">
+        <div class="product-img-icon">WRAPS</div>
+      </div>
+      <div class="product-body">
+        <div class="product-cat">Training</div>
+        <div class="product-name">Competition<br>Wrist Straps</div>
+        <div class="product-footer">
+          <div class="product-price">$38</div>
+          <button class="btn-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img">
+        <div class="product-img-icon">SINGLET</div>
+      </div>
+      <div class="product-body">
+        <div class="product-cat">Apparel</div>
+        <div class="product-name">Club<br>Singlet</div>
+        <div class="product-footer">
+          <div class="product-price">$65</div>
+          <button class="btn-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-img">
+        <div class="product-img-icon">CHALK</div>
+      </div>
+      <div class="product-body">
+        <div class="product-cat">Equipment</div>
+        <div class="product-name">Pro<br>Chalk Bag</div>
+        <div class="product-footer">
+          <div class="product-price">$22</div>
+          <button class="btn-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-4">
+      <div class="product-img">
+        <div class="product-img-icon">HOODIE</div>
+      </div>
+      <div class="product-body">
+        <div class="product-cat">Apparel</div>
+        <div class="product-name">Competition<br>Hoodie</div>
+        <div class="product-footer">
+          <div class="product-price">$110</div>
+          <button class="btn-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ ABOUT / JOIN ══════════════════════ -->
+<section id="about">
+  <div class="section-label reveal">Our Story</div>
+  <h2 class="section-title reveal">Become a Powerhouse</h2>
+
+  <div class="about-layout">
+
+    <div class="about-text reveal">
+      <p>Powerhouse Armwrestling was founded in 2024 by a group of Gold Coast athletes who wanted a real home for the sport — not a side show at a gym, but a dedicated club where serious competitors and curious beginners are both welcome.</p>
+
+      <p>We train the full technical game: back pressure, pronation, the top-roll, the hook, wrist curl strength and explosive speed. Whether you've never sat at a table or you're gunning for nationals, our coaches meet you where you are.</p>
+
+      <div class="about-features">
+        <div class="about-feat">Structured technical coaching every session</div>
+        <div class="about-feat">Competition table training (pegs &amp; straps)</div>
+        <div class="about-feat">Strength programming for arm wrestling</div>
+        <div class="about-feat">Regular in-house ladders &amp; ranked events</div>
+        <div class="about-feat">Pathways to state &amp; national competition</div>
+        <div class="about-feat">All ages, genders &amp; experience levels welcome</div>
+      </div>
+
+      <p>Membership is $30/month — no lock-in contract, no inflated gym fees. Show up, train hard, and become part of one of Australia's fastest-growing arm wrestling clubs.</p>
+    </div>
+
+    <div class="join-form-wrap reveal reveal-delay-2">
+      <div class="form-title">Join the Club</div>
+      <div class="form-subtitle">First session is free — no obligation</div>
+
+      <form id="join-form" onsubmit="handleJoin(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="f-first">First Name</label>
+            <input class="form-input" type="text" id="f-first" name="first" placeholder="Marcus" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-last">Last Name</label>
+            <input class="form-input" type="text" id="f-last" name="last" placeholder="Webb" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-email">Email Address</label>
+          <input class="form-input" type="email" id="f-email" name="email" placeholder="you@email.com" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="f-class">Weight Class</label>
+            <select class="form-select" id="f-class" name="class">
+              <option value="">Select class</option>
+              <option>60kg</option>
+              <option>70kg</option>
+              <option>80kg</option>
+              <option>90kg</option>
+              <option>100kg</option>
+              <option>110kg+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-exp">Experience</label>
+            <select class="form-select" id="f-exp" name="experience">
+              <option value="">Your level</option>
+              <option>Complete Beginner</option>
+              <option>Casual Puller</option>
+              <option>Club Competitor</option>
+              <option>State Level</option>
+              <option>National Level</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-location">Preferred Location</label>
+          <select class="form-select" id="f-location" name="location">
+            <option value="">Choose gym</option>
+            <option>Gold Coast HQ — Southport</option>
+            <option>Brisbane — Fortitude Valley</option>
+            <option>Sunshine Coast — Maroochydore</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-join">
+          Send My Interest
+          <span class="arr"></span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">POWERHOUSE</span>
+      <span class="footer-logo-sub">Armwrestling Club</span>
+      <p class="footer-tagline">Competing hard. Training harder. Gold Coast's home of arm wrestling since 2024.</p>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Events</div>
+      <ul class="footer-links">
+        <li><a href="#events">Upcoming Events</a></li>
+        <li><a href="#">Past Results</a></li>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Host an Event</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Club</div>
+      <ul class="footer-links">
+        <li><a href="#rankings">Rankings</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#about">Join Now</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Store</div>
+      <ul class="footer-links">
+        <li><a href="#store">All Products</a></li>
+        <li><a href="#">Apparel</a></li>
+        <li><a href="#">Equipment</a></li>
+        <li><a href="#">Bundles</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Waiver &amp; Liability</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Powerhouse Armwrestling Club Inc. — Gold Coast, QLD, Australia</p>
+    <div class="footer-socials">
+      <!-- Instagram -->
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <!-- YouTube -->
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22.5 6.4a2.8 2.8 0 0 0-1.97-1.98C18.88 4 12 4 12 4s-6.88 0-8.53.42A2.8 2.8 0 0 0 1.5 6.4 29 29 0 0 0 1.08 12a29 29 0 0 0 .42 5.6 2.8 2.8 0 0 0 1.97 1.98C5.12 20 12 20 12 20s6.88 0 8.53-.42a2.8 2.8 0 0 0 1.97-1.98A29 29 0 0 0 22.92 12a29 29 0 0 0-.42-5.6zm-12.5 9V8.6L15.5 12z"/>
+        </svg>
+      </a>
+      <!-- Facebook -->
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <!-- TikTok -->
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.6 8.5a5.6 5.6 0 0 1-3.6-1.3V15a5.5 5.5 0 1 1-5.5-5.5c.2 0 .4 0 .5.02V13a2 2 0 1 0 1.5 1.93V3h3.5a5.6 5.6 0 0 0 3.6 4.5v1z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV SCROLL ── */
+// nav is always solid — no scroll toggle needed
+
+/* ── MOBILE BURGER ── */
+const burger = document.getElementById('nav-burger');
+const drawer = document.getElementById('nav-drawer');
+let drawerOpen = false;
+burger.addEventListener('click', () => {
+  drawerOpen = !drawerOpen;
+  drawer.classList.toggle('open', drawerOpen);
+  const spans = burger.querySelectorAll('span');
+  if (drawerOpen) {
+    spans[0].style.transform = 'rotate(45deg) translate(4.5px, 4.5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(4.5px, -4.5px)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+drawer.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    drawerOpen = false;
+    drawer.classList.remove('open');
+    burger.querySelectorAll('span').forEach(s => {
+      s.style.transform = '';
+      s.style.opacity = '';
+    });
+  });
+});
+
+/* ── ACTIVE NAV PILL ── */
+const pillLinks = document.querySelectorAll('.pill-link');
+const sections  = document.querySelectorAll('section[id]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      pillLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+sections.forEach(s => observer.observe(s));
+
+/* ── SCROLL REVEAL ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { rootMargin: '0px 0px -80px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── JOIN FORM ── */
+function handleJoin(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-join');
+  btn.textContent = '✓ Request Sent — We\'ll be in touch!';
+  btn.style.background = '#2a7a2a';
+  btn.style.color = '#e8f8e8';
+  btn.style.pointerEvents = 'none';
+  btn.style.letterSpacing = '0.1em';
+}
+
+/* ── HOVER BUTTON — gold cursor-trail circles ── */
+(function () {
+  const THROTTLE_MS = 90;
+  const HOLD_MS     = 950;
+  const FADE_MS     = 1150;
+
+  document.querySelectorAll('.pill-link').forEach(btn => {
+    let last = 0;
+
+    btn.addEventListener('pointermove', e => {
+      const now = Date.now();
+      if (now - last < THROTTLE_MS) return;
+      last = now;
+
+      const rect   = btn.getBoundingClientRect();
+      const x      = e.clientX - rect.left;
+      const y      = e.clientY - rect.top;
+      const ratio  = Math.max(0, Math.min(1, x / rect.width));
+
+      // Gold → amber gradient per horizontal position
+      const c1 = `hsl(${42 + ratio * 8}, 85%, ${58 + ratio * 10}%)`;
+      const c2 = `hsl(${38 - ratio * 6}, 80%, ${48 - ratio * 8}%)`;
+
+      const circle = document.createElement('span');
+      circle.className = 'hb-circle';
+      circle.style.left       = x + 'px';
+      circle.style.top        = y + 'px';
+      circle.style.background = `radial-gradient(circle, ${c1} 0%, ${c2} 100%)`;
+      btn.appendChild(circle);
+
+      // Force reflow so transition fires
+      void circle.offsetWidth;
+      circle.classList.add('on');
+
+      setTimeout(() => {
+        circle.classList.remove('on');
+        circle.classList.add('off');
+      }, HOLD_MS);
+
+      setTimeout(() => circle.remove(), HOLD_MS + FADE_MS);
+    });
+  });
+})();
+</script>
+</body>
+</html>
