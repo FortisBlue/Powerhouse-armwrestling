@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Powerhouse Armwrestling — Membership</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<!-- Square SDK — swap to https://web.squarecdn.com/v1/square.js for production -->
+<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+<style>
+:root {
+  --black:    #0a0908;
+  --deep:     #111009;
+  --char:     #1c1a16;
+  --char-lt:  #252218;
+  --gold:     #C9A234;
+  --gold-lt:  #E8B84B;
+  --gold-dk:  #9A7A22;
+  --gold-dim: rgba(201,162,52,0.25);
+  --cream:    #F0E8D8;
+  --cream-d:  #C8BEA8;
+  --error:    #e05a5a;
+  --nav-h:    68px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold-dk); border-radius: 2px; }
+
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  padding: 0 clamp(20px, 4vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,9,8,0.96);
+  border-bottom: 1px solid rgba(201,162,52,0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.nav-logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; gap: 1px; }
+.nav-logo-top { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.08em; color: var(--gold); }
+.nav-logo-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-d); }
+.nav-back { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-d); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: var(--gold); }
+
+/* MAIN */
+.form-main { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 80px; min-height: 100vh; }
+
+/* PROGRESS */
+.progress-wrap { max-width: 640px; margin: 0 auto 36px; padding: 0 clamp(16px, 4vw, 40px); }
+.progress-labels { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.prog-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-d); opacity: 0.35; transition: opacity 0.3s, color 0.3s; }
+.prog-label.active { color: var(--gold); opacity: 1; }
+.progress-track { height: 2px; background: rgba(201,162,52,0.15); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 50%; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+
+/* PAGES */
+.form-page { display: none; max-width: 640px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+.form-page.active { display: block; }
+
+/* CARD */
+.form-card { background: var(--char); border: 1px solid rgba(201,162,52,0.1); border-radius: 12px; padding: clamp(20px, 4vw, 36px); margin-bottom: 14px; }
+
+/* HEADINGS */
+.section-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(24px, 5vw, 34px); letter-spacing: 0.04em; color: var(--cream); line-height: 1; margin-bottom: 4px; }
+.section-sub { font-size: 14px; color: var(--cream-d); line-height: 1.6; margin-bottom: 24px; }
+
+/* FORM FIELDS */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { margin-bottom: 14px; }
+.form-group:last-child { margin-bottom: 0; }
+.form-label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-d); margin-bottom: 6px; }
+.req { color: var(--gold); margin-left: 2px; }
+.form-input,
+.form-select {
+  width: 100%;
+  background: var(--char-lt);
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  padding: 11px 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.form-input::placeholder { color: rgba(200,190,168,0.3); }
+.form-input:focus, .form-select:focus { border-color: var(--gold); }
+.form-input.error, .form-select.error { border-color: var(--error) !important; }
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpolyline points='1 1 6 6 11 1' stroke='%23C9A234' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  padding-right: 34px;
+  cursor: pointer;
+}
+.form-select option { background: var(--char); }
+.form-hint { font-size: 12px; color: rgba(200,190,168,0.45); margin-top: 5px; }
+.form-divider { height: 1px; background: rgba(201,162,52,0.1); margin: 24px 0; }
+
+/* WAIVER DOCUMENT */
+.waiver-warning {
+  background: rgba(220,40,40,0.1);
+  border: 1px solid rgba(220,40,40,0.35);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #f0a0a0;
+}
+.waiver-warning strong { color: #f07070; }
+
+.waiver-doc {
+  background: rgba(201,162,52,0.03);
+  border: 1px solid rgba(201,162,52,0.12);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--cream-d);
+}
+.waiver-doc p { margin-bottom: 12px; }
+.waiver-doc p:last-child { margin-bottom: 0; }
+.waiver-section-head {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  display: block;
+}
+.waiver-doc ul { padding-left: 16px; margin: 6px 0 10px; display: flex; flex-direction: column; gap: 6px; }
+.waiver-doc ul li { list-style: none; padding-left: 8px; position: relative; }
+.waiver-doc ul li::before { content: '—'; position: absolute; left: -10px; color: var(--gold-dk); }
+.waiver-doc strong { color: var(--cream); }
+
+/* AGREE CHECKBOX */
+.agree-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: var(--char-lt);
+  border: 2px solid rgba(201,162,52,0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  margin-bottom: 20px;
+  user-select: none;
+}
+.agree-item:hover { border-color: rgba(201,162,52,0.4); }
+.agree-item.error { border-color: var(--error) !important; }
+.agree-visual { flex-shrink: 0; margin-top: 2px; }
+.agree-visual input[type="checkbox"] { display: none; }
+.check-box {
+  width: 22px; height: 22px;
+  border: 2px solid rgba(201,162,52,0.4);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.agree-visual input:checked + .check-box { background: var(--gold); border-color: var(--gold); }
+.check-box svg { display: none; }
+.agree-visual input:checked + .check-box svg { display: block; }
+.agree-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cream-d);
+  flex: 1;
+}
+.agree-text strong { color: var(--cream); }
+.agree-err { display: none; font-size: 12px; color: var(--error); margin-top: 6px; }
+
+/* SIGNATURE PADS */
+.sig-wrap { border: 1.5px solid var(--gold-dim); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+.sig-wrap.error { border-color: var(--error) !important; }
+.sig-bar { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; background: var(--char-lt); border-bottom: 1px solid rgba(201,162,52,0.1); }
+.sig-bar-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-d); }
+.sig-clear { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); cursor: pointer; padding: 3px 7px; border-radius: 3px; transition: background 0.15s; }
+.sig-clear:hover { background: rgba(201,162,52,0.1); }
+.sig-canvas { display: block; width: 100%; height: 150px; background: #fff; cursor: crosshair; touch-action: none; }
+.sig-footer { font-size: 11px; font-style: italic; color: rgba(200,190,168,0.35); text-align: center; padding: 7px 12px; background: var(--char-lt); border-top: 1px solid rgba(201,162,52,0.07); }
+.sig-err { display: none; font-size: 12px; color: var(--error); margin-top: 5px; }
+.minor-note { font-size: 12px; color: rgba(200,190,168,0.45); border-left: 2px solid rgba(201,162,52,0.2); padding-left: 10px; margin-top: 14px; line-height: 1.5; }
+
+/* BUTTONS */
+.btn-primary { width: 100%; padding: 15px 24px; background: var(--gold); color: var(--black); border: none; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.12s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; }
+.btn-primary:hover { background: var(--gold-lt); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-back { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--cream-d); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; margin-bottom: 18px; transition: color 0.2s; }
+.btn-back:hover { color: var(--gold); }
+
+/* PAGE 2 — CLUB INFO */
+.club-info { margin-bottom: 14px; }
+.club-welcome { font-size: 14px; color: var(--cream-d); line-height: 1.6; margin-bottom: 18px; }
+.club-detail { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--cream-d); }
+.club-detail-icon { flex-shrink: 0; margin-top: 1px; color: var(--gold); }
+.club-detail strong { color: var(--cream); display: block; margin-bottom: 1px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.club-divider { height: 1px; background: rgba(201,162,52,0.1); margin: 18px 0; }
+.includes-list { display: flex; flex-direction: column; gap: 8px; }
+.includes-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--cream-d); }
+.includes-tick { width: 18px; height: 18px; border-radius: 50%; background: rgba(201,162,52,0.1); border: 1px solid rgba(201,162,52,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* PRICE / MEMBERSHIP */
+.membership-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: rgba(201,162,52,0.06);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.membership-radio { flex-shrink: 0; margin-top: 3px; width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; }
+.membership-info { flex: 1; }
+.membership-name { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cream); margin-bottom: 2px; }
+.membership-note { font-size: 12px; color: var(--cream-d); margin-bottom: 0; }
+.membership-price { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.04em; color: var(--gold); white-space: nowrap; }
+
+/* NEW/RENEW TOGGLE */
+.toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.toggle-option input { display: none; }
+.toggle-label { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 12px; border: 1.5px solid rgba(201,162,52,0.18); border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
+.toggle-label:hover { border-color: rgba(201,162,52,0.4); }
+.toggle-option input:checked + .toggle-label { border-color: var(--gold); background: rgba(201,162,52,0.06); }
+.toggle-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); }
+.toggle-sub { font-size: 12px; color: var(--cream-d); }
+
+/* SQUARE */
+.sandbox-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: rgba(201,162,52,0.07); border: 1px solid rgba(201,162,52,0.2); border-radius: 5px; padding: 7px 12px; text-align: center; margin-bottom: 14px; }
+.card-loading { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--cream-d); padding: 18px 0; }
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(201,162,52,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#card-container { min-height: 80px; }
+#pay-error { display: none; font-size: 13px; color: var(--error); background: rgba(224,90,90,0.07); border: 1px solid rgba(224,90,90,0.2); border-radius: 6px; padding: 11px 14px; margin-top: 12px; line-height: 1.5; }
+.pay-note { font-size: 12px; color: rgba(200,190,168,0.35); text-align: center; margin-top: 12px; line-height: 1.5; }
+
+/* CONFIRMATION */
+.form-confirm { display: none; max-width: 520px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); text-align: center; }
+.form-confirm.active { display: block; }
+.confirm-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(201,162,52,0.1); border: 2px solid rgba(201,162,52,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
+.confirm-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 10vw, 72px); letter-spacing: 0.04em; color: var(--gold); line-height: 1; margin-bottom: 14px; }
+.confirm-body { font-size: 16px; color: var(--cream); line-height: 1.6; margin-bottom: 6px; }
+.confirm-detail { font-size: 14px; color: var(--cream-d); line-height: 1.6; margin-bottom: 36px; }
+.confirm-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,162,52,0.3); border-radius: 6px; padding: 12px 24px; transition: background 0.2s, border-color 0.2s; }
+.confirm-link:hover { background: rgba(201,162,52,0.06); border-color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-top">Powerhouse</span>
+    <span class="nav-logo-sub">Armwrestling Club</span>
+  </a>
+  <a href="/" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to site
+  </a>
+</header>
+
+<main class="form-main">
+
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-labels">
+      <span class="prog-label active" id="prog-1">Step 1 — Waiver</span>
+      <span class="prog-label" id="prog-2">Step 2 — Membership</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ═══ PAGE 1: WAIVER ═══ -->
+  <section class="form-page active" id="page-1">
+
+    <!-- PERSONAL INFO -->
+    <div class="form-card">
+      <p class="section-eyebrow">Membership Application</p>
+      <h1 class="section-title">Your Details</h1>
+      <p class="section-sub">
+        I, <strong style="color:var(--cream)"></strong> HERBY AGREE with GOLDCOAST POWERHOUSE that I am by this agreement entitled to participate in a GOLDCOAST POWERHOUSE Event on the terms and conditions set out in this document.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="first-name">First Name <span class="req">*</span></label>
+          <input class="form-input" type="text" id="first-name" autocomplete="given-name" placeholder="Marcus">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="last-name">Last Name <span class="req">*</span></label>
+          <input class="form-input" type="text" id="last-name" autocomplete="family-name" placeholder="Webb">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone Number <span class="req">*</span></label>
+          <input class="form-input" type="tel" id="phone" autocomplete="tel" placeholder="0400000000" maxlength="10">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email <span class="req">*</span></label>
+          <input class="form-input" type="email" id="email" autocomplete="email" placeholder="you@email.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="dob">Date of Birth <span class="req">*</span></label>
+        <input class="form-input" type="date" id="dob">
+      </div>
+    </div>
+
+    <!-- UNDER-16 WARNING -->
+    <div class="form-card" style="padding: 18px 20px;">
+      <div class="waiver-warning">
+        <strong>IMPORTANT — Under 16s:</strong> Any PowerHouse Arm Wrestling Club member under the age of 16 is strictly prohibited from participating in any competitive arm wrestling events, including but not limited to competitions hosted by PowerHouse or by any other affiliated or unaffiliated clubs, associations, or organizations within Australia.
+      </div>
+    </div>
+
+    <!-- WAIVER TEXT -->
+    <div class="form-card">
+      <p class="section-eyebrow">Release & Waiver</p>
+      <h2 class="section-title">Release and Waiver Form</h2>
+      <p class="section-sub" style="margin-bottom:16px;">WARNING — THIS IS AN IMPORTANT DOCUMENT THAT AFFECTS YOUR LEGAL RIGHTS AND OBLIGATIONS. READ IT CAREFULLY AND DO NOT SIGN IT UNLESS YOU ARE SATISFIED YOU UNDERSTAND IT.</p>
+
+      <div class="waiver-doc">
+
+        <span class="waiver-section-head">Acknowledgment of Risks, Dangers and Obligations</span>
+        <p>I ACKNOWLEDGE that Arm-wrestling sport is dangerous and that by engaging in the sport and participating in the event (whether as recreational, support crew or media) I take and am exposed to certain risks and dangers and am under certain obligations as follows:</p>
+        <ul>
+          <li>that I may be injured, physically or mentally and may be killed;</li>
+          <li>that other participants may arm-wrestle dangerously or with lack of skill;</li>
+          <li>that organisers, officials, landowners, Venue operators and any agents or representatives of those in charge of events are frequently obliged to make decisions under pressure of time and/or events;</li>
+          <li>that any policy of insurance of or in respect of my life or physical or mental health may be voided;</li>
+          <li>that there may be no or inadequate facilities of treatment or transport of me if I am injured;</li>
+          <li>that I have an obligation to myself and to others to participate safely and within the rules of the event;</li>
+          <li>that I will not participate in the event whilst under the influence of drugs, alcohol or intoxicating substance (in accordance with applicable road rules or State Laws);</li>
+          <li>that I have voluntarily read and understood this warning and accept and assume the inherent risks in participating in the event.</li>
+        </ul>
+
+        <span class="waiver-section-head">Indemnity and Release Given to Landowners & Organisers</span>
+        <p>IN CONSIDERATION of the acceptance of me as a participant in the event:</p>
+        <p><strong>I AGREE TO INDEMNIFY AND KEEP INDEMNIFIED</strong> to the full extent permitted by law the Indemnitees and each of them in the following manner:</p>
+        <ul>
+          <li>that I participate in the event at my sole risk and responsibility;</li>
+          <li>that I accept the trail/venue as it stands with all or any defect hidden or exposed;</li>
+          <li>that I indemnify and hold harmless the landowners, organisers, their respective servants, agents or officials against actions or claims which may be made by me or on my behalf or by other parties for or respect of or arising out of my death or any injury, loss or damage caused to me whether caused by negligence, breach of contract, or in any other manner whatsoever.</li>
+        </ul>
+        <p><strong>I AGREE TO RELEASE</strong> to the full extent permitted by law the Indemnitees and each of them in the following manner from all liability to me for any claim, loss, damage, cost or expense (whether arising under statute, from negligence, personal injury, psychological trauma, death, property damage or infringement of third party rights or otherwise) that arises as a result of any act, matter or thing done, permitted or omitted to be done by me or which is in any way connected with my presence at or involvement in the event.</p>
+
+        <span class="waiver-section-head">Medical</span>
+        <p>I declare that I am and must continue to be medically and physically fit and able to participate in the event. I understand and accept the Indemnitees will continue to rely upon this declaration as evidence of my fitness and ability to participate.</p>
+        <p>I acknowledge and agree that if required, the Indemnitees (or any of them) may arrange medical or hospital treatment (including ambulance or helicopter transportation) for me. I authorise such actions being taken by the Indemnitees and agree to meet all costs associated with such action. I understand it is compulsory for me to have ambulance insurance in some form and I accept responsibility for the cost of ambulance transportation, ambulance cover and further agree to maintain ambulance cover during the duration of the event.</p>
+
+        <span class="waiver-section-head">Privacy & Personal Information</span>
+        <p>I consent to GOLD COAST POWERHOUSE ARM WRESTLING collecting, using, and sharing my personal information for the purposes of organising, conducting, and managing events and related activities.</p>
+
+        <span class="waiver-section-head">Use of Images & Media</span>
+        <p>I consent to photographs, video, and other images being taken of me during events. I understand these images are owned by GOLD COAST POWERHOUSE ARM WRESTLING and may be used, along with my name, likeness, and performance, for promotional or related purposes across any media without further consent or compensation.</p>
+
+        <span class="waiver-section-head">Governing Law & Severability</span>
+        <p>This agreement is governed by the laws of Queensland, Australia. If any provision of this agreement is found to be unenforceable or invalid, such provision shall be limited to the minimum extent necessary so that the remaining provisions shall remain in full force and effect.</p>
+
+      </div>
+
+      <!-- SINGLE AGREE CHECKBOX -->
+      <label class="agree-item" id="agree-item">
+        <div class="agree-visual">
+          <input type="checkbox" id="agree-check">
+          <span class="check-box">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><polyline points="1.5 5 4.5 8 10.5 1.5" stroke="#0a0908" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <span class="agree-text">
+          <strong>EXECUTION — I UNDERSIGNED STATE THAT I HAVE READ AND UNDERSTOOD THIS DECLARATION</strong> (INCLUDING THE WARNING, INDEMNITY AND RELEASE) AND AGREE TO THE TERMS AND CONDITIONS AS STATED.
+        </span>
+      </label>
+      <p class="agree-err" id="agree-err">You must read and agree to the terms above before continuing.</p>
+
+    </div>
+
+    <!-- MEMBER SIGNATURE -->
+    <div class="form-card">
+      <p class="section-eyebrow">Your Signature</p>
+      <h2 class="section-title">Sign the Waiver</h2>
+      <p class="section-sub">Draw your signature below to execute this agreement.</p>
+
+      <div class="form-group">
+        <div class="sig-wrap" id="member-sig-wrap">
+          <div class="sig-bar">
+            <span class="sig-bar-label">Signature</span>
+            <button type="button" class="sig-clear" onclick="clearSig('member')">Clear</button>
+          </div>
+          <canvas class="sig-canvas" id="member-sig-canvas"></canvas>
+          <div class="sig-footer">Sign with your finger or stylus</div>
+        </div>
+        <p class="sig-err" id="member-sig-err">Please provide your signature.</p>
+      </div>
+
+      <div class="form-group" style="margin-top:16px;">
+        <label class="form-label" for="sig-date">Date <span class="req">*</span></label>
+        <input class="form-input" type="date" id="sig-date">
+      </div>
+    </div>
+
+    <!-- EMERGENCY CONTACT -->
+    <div class="form-card">
+      <p class="section-eyebrow">Emergency Contact</p>
+      <h2 class="section-title">Contact Details</h2>
+      <p class="section-sub">Someone we can reach in an emergency.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="ec-name">Full Name <span class="req">*</span></label>
+          <input class="form-input" type="text" id="ec-name" autocomplete="off" placeholder="Jane Webb">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ec-phone">Phone Number <span class="req">*</span></label>
+          <input class="form-input" type="tel" id="ec-phone" autocomplete="off" placeholder="0400000000" maxlength="10">
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <div class="sig-wrap" id="ec-sig-wrap">
+          <div class="sig-bar">
+            <span class="sig-bar-label">Emergency Contact Signature and Consent</span>
+            <button type="button" class="sig-clear" onclick="clearSig('ec')">Clear</button>
+          </div>
+          <canvas class="sig-canvas" id="ec-sig-canvas"></canvas>
+          <div class="sig-footer">Emergency contact signs here</div>
+        </div>
+        <p class="sig-err" id="ec-sig-err">Please provide the emergency contact's signature.</p>
+      </div>
+
+      <p class="minor-note">If the member is between 16–18 years old, a parent or legal guardian must sign above. The guardian's signature constitutes: (a) consent for the member to participate in all club activities; (b) agreement to all waiver and indemnity terms on the member's behalf; and (c) consent for photographs and media of the member to be used as described in the waiver above.</p>
+    </div>
+
+    <button type="button" class="btn-primary" onclick="goToPage2()">
+      Continue to Membership
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+  </section>
+
+  <!-- ═══ PAGE 2: MEMBERSHIP + PAYMENT ═══ -->
+  <section class="form-page" id="page-2">
+
+    <button type="button" class="btn-back" onclick="goToPage1()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Waiver
+    </button>
+
+    <!-- CLUB INFO -->
+    <div class="form-card club-info">
+      <p class="section-eyebrow">Welcome</p>
+      <h2 class="section-title">Power House Gold Coast</h2>
+      <p class="club-welcome">A volunteer-run club focused on strength, skill, safety, and community — from beginners to national-level pullers. Train hard, get stronger, and enjoy the camaraderie. See you at the table.</p>
+
+      <div class="club-detail">
+        <div class="club-detail-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <strong>Training</strong>
+          Saturdays 9:45am – 12:30pm<br>
+          Pimpama School of Arts Hall, 15 Clark Way, Pimpama QLD 4209
+        </div>
+      </div>
+
+      <div class="club-detail">
+        <div class="club-detail-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <strong>Contact</strong>
+          PowerHouseArmWrestling@gmail.com
+        </div>
+      </div>
+
+      <div class="club-divider"></div>
+
+      <p class="form-label" style="margin-bottom:12px;">Your membership includes</p>
+      <div class="includes-list">
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Weekly coaching
+        </div>
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Club shirt (new members)
+        </div>
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Competition & gear discounts
+        </div>
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Permanent venue with full amenities
+        </div>
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Pro tables & training equipment
+        </div>
+        <div class="includes-item">
+          <div class="includes-tick"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1 4 3.5 6.5 9 1" stroke="#C9A234" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Strong, supportive community
+        </div>
+      </div>
+    </div>
+
+    <!-- T-SHIRT + MEMBERSHIP -->
+    <div class="form-card">
+      <p class="section-eyebrow">Membership</p>
+      <h2 class="section-title">Select Your Membership</h2>
+
+      <div class="form-group" style="margin-bottom:20px;">
+        <label class="form-label">New or renewing member? <span class="req">*</span></label>
+        <div class="toggle-group">
+          <div class="toggle-option">
+            <input type="radio" name="join-type" id="join-new" value="new" checked onchange="handleJoinType('new')">
+            <label class="toggle-label" for="join-new">
+              <span class="toggle-title">New Member</span>
+              <span class="toggle-sub">First time joining</span>
+            </label>
+          </div>
+          <div class="toggle-option">
+            <input type="radio" name="join-type" id="join-renew" value="renewing" onchange="handleJoinType('renewing')">
+            <label class="toggle-label" for="join-renew">
+              <span class="toggle-title">Renewing</span>
+              <span class="toggle-sub">Existing member</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="tshirt-section" style="margin-bottom:24px;">
+        <div class="form-group">
+          <label class="form-label" for="tshirt-size">T-Shirt Size <span class="req">*</span></label>
+          <select class="form-select" id="tshirt-size">
+            <option value="">Select your size</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="XL">Extra Large — XL</option>
+            <option value="XXL">Double Extra Large — XXL</option>
+            <option value="XXXL">Triple Extra Large — XXXL</option>
+            <option value="XXXXL">Four Extra Large — XXXXL</option>
+          </select>
+          <p class="form-hint">Your last name will be printed on the back of your shirt.</p>
+        </div>
+      </div>
+
+      <div class="membership-option">
+        <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked>
+        <div class="membership-info">
+          <div class="membership-name">Yearly Powerhouse Membership</div>
+          <div class="membership-note">Valid to 31 July. Free shirt for new members.</div>
+        </div>
+        <div class="membership-price">$192</div>
+      </div>
+
+      <!-- HALF-YEAR OPTION — enable when ready (show only Feb 1 – Jul 31)
+      <div class="membership-option" style="border-color: rgba(201,162,52,0.25); background: transparent;">
+        <input class="membership-radio" type="radio" name="mem-type" id="mem-half" value="half">
+        <div class="membership-info">
+          <div class="membership-name">Half Year Powerhouse Membership</div>
+          <div class="membership-note">Valid to 31 July.</div>
+        </div>
+        <div class="membership-price">$100</div>
+      </div>
+      -->
+
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="form-card">
+      <p class="section-eyebrow">Secure Payment</p>
+      <h2 class="section-title">Card Details</h2>
+      <p class="section-sub">Processed securely via Square. Your card is charged once at checkout.</p>
+
+      <div class="sandbox-badge" id="sandbox-badge">
+        ⚠ Sandbox mode — Test card: 4111 1111 1111 1111 / Any future date / Any CVV
+      </div>
+
+      <div class="card-loading" id="card-loading">
+        <div class="spinner"></div>
+        Loading payment form…
+      </div>
+
+      <div id="card-container"></div>
+      <div id="pay-error"></div>
+
+      <button type="button" class="btn-primary" id="submit-btn" onclick="submitForm()" style="margin-top:20px;">
+        Complete Membership — $192.00
+      </button>
+
+      <p class="pay-note">By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.</p>
+    </div>
+
+  </section>
+
+  <!-- ═══ CONFIRMATION ═══ -->
+  <section class="form-confirm" id="confirm">
+    <div class="confirm-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A234" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2 class="confirm-title">You're In!</h2>
+    <p class="confirm-body">Welcome to the Powerhouse family, <strong id="confirm-name"></strong>.</p>
+    <p class="confirm-detail">A receipt has been sent to <strong id="confirm-email"></strong>.<br>Our team will be in touch with your membership details.</p>
+    <a href="/" class="confirm-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Powerhouse
+    </a>
+  </section>
+
+</main>
+
+<script>
+/* ─────────────────────────────────────────────────────────────────────────────
+   CONFIGURATION — fill these in before deploying
+   ───────────────────────────────────────────────────────────────────────────── */
+const CFG = {
+  APPS_SCRIPT_URL: 'https://script.google.com/a/macros/powerhousearmwrestling.com.au/s/AKfycbzAxulwj1oyDk_2s-XPbG21EbzL6VhI6YVa5xjSrapdw2ua6NCLwgTjcIdUaKXFAhvxsA/exec',
+  SQ_APP_ID:       'sandbox-sq0idb-ba6MDAYOnCNCwBsZE8CbGA',
+  SQ_LOCATION_ID:  'L004RPCTBYFK4',
+  IS_SANDBOX:      true,  // flip to false + swap Square SDK <script src> for production
+};
+
+// Pricing (cents)
+const PRICES = { yearly: 19200, half: 10000 };
+
+/* ─── STATE ─────────────────────────────────────────────────────────────────── */
+let squareCard = null, memberPad = null, ecPad = null;
+
+/* ─── INIT ──────────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  memberPad = initPad('member-sig-canvas');
+  ecPad     = initPad('ec-sig-canvas');
+  window.addEventListener('resize', () => {
+    resizePad(document.getElementById('member-sig-canvas'), memberPad);
+    resizePad(document.getElementById('ec-sig-canvas'), ecPad);
+  });
+  document.getElementById('sig-date').value = new Date().toISOString().slice(0, 10);
+  if (!CFG.IS_SANDBOX) document.getElementById('sandbox-badge').style.display = 'none';
+});
+
+/* ─── SIGNATURE PADS ────────────────────────────────────────────────────────── */
+function initPad(id) {
+  const canvas = document.getElementById(id);
+  const ratio  = Math.max(window.devicePixelRatio || 1, 1);
+  canvas.width  = canvas.offsetWidth  * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  canvas.getContext('2d').scale(ratio, ratio);
+  return new SignaturePad(canvas, { backgroundColor: 'rgb(255,255,255)', penColor: 'rgb(10,9,8)', minWidth: 1.5, maxWidth: 3 });
+}
+
+function resizePad(canvas, pad) {
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  const data  = pad.toData();
+  canvas.width  = canvas.offsetWidth  * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  canvas.getContext('2d').scale(ratio, ratio);
+  pad.fromData(data);
+}
+
+function clearSig(which) {
+  const pad  = which === 'member' ? memberPad : ecPad;
+  const wrap = document.getElementById(which === 'member' ? 'member-sig-wrap' : 'ec-sig-wrap');
+  pad.clear();
+  wrap.classList.remove('error');
+}
+
+/* ─── PAGE 1 VALIDATION ─────────────────────────────────────────────────────── */
+function validatePage1() {
+  let ok = true;
+
+  // Required text/date fields
+  ['first-name','last-name','phone','email','dob','sig-date','ec-name','ec-phone'].forEach(id => {
+    const el  = document.getElementById(id);
+    const bad = !el.value.trim();
+    el.classList.toggle('error', bad);
+    if (bad) ok = false;
+  });
+
+  // Australian mobile format
+  ['phone','ec-phone'].forEach(id => {
+    const el  = document.getElementById(id);
+    const val = el.value.replace(/\s/g, '');
+    if (val && !/^04\d{8}$/.test(val)) { el.classList.add('error'); ok = false; }
+  });
+
+  // Agree checkbox
+  const agreeCheck = document.getElementById('agree-check');
+  const agreeItem  = document.getElementById('agree-item');
+  const agreeErr   = document.getElementById('agree-err');
+  if (!agreeCheck.checked) {
+    agreeItem.classList.add('error');
+    agreeErr.style.display = 'block';
+    ok = false;
+  } else {
+    agreeItem.classList.remove('error');
+    agreeErr.style.display = 'none';
+  }
+
+  // Signatures
+  [['member-sig-wrap','member-sig-err', memberPad], ['ec-sig-wrap','ec-sig-err', ecPad]].forEach(([wrapId, errId, pad]) => {
+    const empty = pad.isEmpty();
+    document.getElementById(wrapId).classList.toggle('error', empty);
+    document.getElementById(errId).style.display = empty ? 'block' : 'none';
+    if (empty) ok = false;
+  });
+
+  if (!ok) {
+    const first = document.querySelector('.error');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return ok;
+}
+
+/* ─── NAVIGATION ────────────────────────────────────────────────────────────── */
+async function goToPage2() {
+  if (!validatePage1()) return;
+  document.getElementById('page-1').classList.remove('active');
+  document.getElementById('page-2').classList.add('active');
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('prog-1').classList.remove('active');
+  document.getElementById('prog-2').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  await initSquare();
+}
+
+function goToPage1() {
+  document.getElementById('page-2').classList.remove('active');
+  document.getElementById('page-1').classList.add('active');
+  document.getElementById('progress-fill').style.width = '50%';
+  document.getElementById('prog-1').classList.add('active');
+  document.getElementById('prog-2').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ─── SQUARE ────────────────────────────────────────────────────────────────── */
+async function initSquare() {
+  const loadEl = document.getElementById('card-loading');
+  if (!window.Square) {
+    loadEl.innerHTML = '<span style="color:var(--error)">Payment system failed to load — please refresh.</span>';
+    return;
+  }
+  try {
+    const payments = Square.payments(CFG.SQ_APP_ID, CFG.SQ_LOCATION_ID);
+    squareCard = await payments.card({
+      style: {
+        '.input-container':          { borderColor: 'rgba(201,162,52,0.4)', borderRadius: '6px' },
+        '.input-container.is-focus': { borderColor: '#C9A234' },
+        '.input-container.is-error': { borderColor: '#e05a5a' },
+        'input':                     { backgroundColor: '#252218', color: '#F0E8D8', fontFamily: "'Barlow',sans-serif", fontSize: '15px' },
+        'input::placeholder':        { color: 'rgba(200,190,168,0.3)' },
+        '.message-text':             { color: '#C8BEA8' },
+      },
+    });
+    await squareCard.attach('#card-container');
+    loadEl.style.display = 'none';
+  } catch (err) {
+    loadEl.innerHTML = `<span style="color:var(--error)">Failed to load payment form: ${err.message}</span>`;
+  }
+}
+
+/* ─── JOIN TYPE TOGGLE ──────────────────────────────────────────────────────── */
+function handleJoinType(type) {
+  document.getElementById('tshirt-section').style.display = type === 'new' ? 'block' : 'none';
+  document.getElementById('tshirt-size').value = '';
+  document.getElementById('tshirt-size').classList.remove('error');
+}
+
+/* ─── SUBMIT ────────────────────────────────────────────────────────────────── */
+async function submitForm() {
+  const errEl = document.getElementById('pay-error');
+  const btn   = document.getElementById('submit-btn');
+  errEl.style.display = 'none';
+
+  // T-shirt required for new members only
+  const joinType = document.querySelector('input[name="join-type"]:checked').value;
+  const sz = document.getElementById('tshirt-size');
+  if (joinType === 'new' && !sz.value) {
+    sz.classList.add('error');
+    sz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  sz.classList.remove('error');
+
+  if (!squareCard) {
+    errEl.textContent = 'Payment system not ready — please refresh and try again.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const selectedType  = document.querySelector('input[name="mem-type"]:checked').value;
+  const amountCents   = PRICES[selectedType] || PRICES.yearly;
+  const amountDisplay = (amountCents / 100).toFixed(2);
+
+  btn.disabled = true;
+  btn.textContent = 'Processing payment…';
+
+  try {
+    const result = await squareCard.tokenize();
+    if (result.status !== 'OK') {
+      throw new Error(result.errors ? result.errors.map(e => e.message).join('. ') : 'Card error — please check your details.');
+    }
+
+    const idempotencyKey = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2);
+
+    const payload = {
+      nonce:            result.token,
+      idempotency_key:  idempotencyKey,
+      amount_cents:     amountCents,
+      membership_type:  selectedType,
+      join_type:        joinType,
+      first_name:       document.getElementById('first-name').value.trim(),
+      last_name:        document.getElementById('last-name').value.trim(),
+      email:            document.getElementById('email').value.trim(),
+      phone:            document.getElementById('phone').value.trim(),
+      dob:              document.getElementById('dob').value,
+      sig_date:         document.getElementById('sig-date').value,
+      member_signature: memberPad.toDataURL('image/png'),
+      ec_name:          document.getElementById('ec-name').value.trim(),
+      ec_phone:         document.getElementById('ec-phone').value.trim(),
+      ec_signature:     ecPad.toDataURL('image/png'),
+      tshirt_size:      joinType === 'new' ? sz.value : '',
+    };
+
+    const resp = await fetch(CFG.APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      redirect: 'follow',
+    });
+
+    const data = await resp.json();
+
+    if (data.success) {
+      document.getElementById('page-2').classList.remove('active');
+      document.getElementById('confirm').classList.add('active');
+      document.getElementById('progress-wrap').style.display = 'none';
+      document.getElementById('confirm-name').textContent  = payload.first_name;
+      document.getElementById('confirm-email').textContent = payload.email;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error(data.error || 'Payment failed — please try again or contact us.');
+    }
+
+  } catch (err) {
+    const isNetwork = err.name === 'TypeError' || err.message.includes('fetch') || err.message.includes('network');
+    errEl.textContent = isNetwork
+      ? 'Network error — check your connection and try again.'
+      : err.message;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = `Complete Membership — $${amountDisplay || '192.00'}`;
+  }
+}
+</script>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  GOOGLE APPS SCRIPT — paste into a new Apps Script project                  ║
+║                                                                              ║
+║  Steps:                                                                      ║
+║  1. script.google.com → New Project                                          ║
+║  2. Paste everything between the dashed lines                                ║
+║  3. Fill in SHEET_ID and SQUARE_TOKEN                                        ║
+║  4. Deploy → New Deployment → Web App                                        ║
+║     · Execute as: Me                                                         ║
+║     · Who can access: Anyone                                                 ║
+║  5. Copy deployment URL → paste into CFG.APPS_SCRIPT_URL above              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+var SHEET_ID     = 'YOUR_GOOGLE_SHEET_ID';
+var SQUARE_TOKEN = 'EAAAl6f5J6UVjur0WcdEaMbjds0SCCLXZWSYNLnAq_53QOgiIjPPRCAB_GH1UsLG';
+var IS_SANDBOX   = true;
+var SQ_BASE      = IS_SANDBOX
+  ? 'https://connect.squareupsandbox.com'
+  : 'https://connect.squareup.com';
+
+function doPost(e) {
+  try {
+    var data      = JSON.parse(e.postData.contents);
+    var payResult = chargeSquare(data.nonce, data.amount_cents, data.idempotency_key);
+    if (!payResult.success) return res({success: false, error: payResult.error});
+    writeToSheet(data, payResult.payment_id);
+    return res({success: true, payment_id: payResult.payment_id});
+  } catch(err) {
+    return res({success: false, error: err.message});
+  }
+}
+
+function doGet() {
+  return res({status: 'ok'});
+}
+
+function chargeSquare(nonce, amountCents, idempotencyKey) {
+  var resp = UrlFetchApp.fetch(SQ_BASE + '/v2/payments', {
+    method: 'POST',
+    headers: {
+      'Authorization':  'Bearer ' + SQUARE_TOKEN,
+      'Content-Type':   'application/json',
+      'Square-Version': '2025-01-23',
+    },
+    payload: JSON.stringify({
+      source_id:       nonce,
+      idempotency_key: idempotencyKey,
+      amount_money:    {amount: amountCents, currency: 'AUD'},
+      note:            'Powerhouse Armwrestling — ' + (amountCents === 19200 ? 'Yearly' : 'Half Year') + ' Membership',
+    }),
+    muteHttpExceptions: true,
+  });
+  var result = JSON.parse(resp.getContentText());
+  if (result.payment && result.payment.status === 'COMPLETED') {
+    return {success: true, payment_id: result.payment.id};
+  }
+  var msg = result.errors ? result.errors[0].detail : 'Payment declined';
+  return {success: false, error: msg};
+}
+
+function writeToSheet(data, paymentId) {
+  var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      'Timestamp','First Name','Last Name','Email','Phone','DOB',
+      'Membership Type','T-Shirt Size','EC Name','EC Phone',
+      'Payment ID','Amount','Member Signed','EC Signed'
+    ]);
+  }
+  sheet.appendRow([
+    new Date().toISOString(),
+    data.first_name, data.last_name, data.email, data.phone, data.dob,
+    data.membership_type, data.tshirt_size,
+    data.ec_name, data.ec_phone,
+    paymentId, (data.amount_cents / 100).toFixed(2) + ' AUD',
+    data.member_signature ? 'Yes' : 'No',
+    data.ec_signature     ? 'Yes' : 'No',
+  ]);
+}
+
+function res(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+-->
+
+</body>
+</html>

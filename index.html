@@ -420,8 +420,37 @@ section {
 
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+.event-card.event-past {
+  opacity: 0.48;
+}
+.event-past-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  border: 1px solid rgba(200,190,168,0.2);
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: inline-block;
+  margin-top: 8px;
+}
+.event-upcoming-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,162,52,0.35);
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: inline-block;
+  margin-top: 8px;
 }
 
 .event-card {
@@ -1268,7 +1297,7 @@ footer {
 }
 
 @media (max-width: 900px) {
-  .events-grid { grid-template-columns: 1fr; max-width: 520px; }
+  .events-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .locations-grid { grid-template-columns: 1fr; max-width: 520px; }
   .about-layout { grid-template-columns: 1fr; gap: 40px; }
   .nav-pills { display: none; }
@@ -1341,7 +1370,7 @@ footer {
   </ul>
 
   <div style="display:flex;align-items:center;gap:20px;">
-    <a href="#about" class="nav-cta">
+    <a href="/membership" class="nav-cta">
       <span class="nav-cta-text">Join Now</span>
       <span class="nav-cta-icon">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1362,7 +1391,7 @@ footer {
   <a href="#locations">Locations</a>
   <a href="#store">Store</a>
   <a href="#about">About</a>
-  <a href="#about" style="color:var(--gold);font-weight:800;margin-top:8px;">Join Now →</a>
+  <a href="/membership" style="color:var(--gold);font-weight:800;margin-top:8px;">Join Now →</a>
 </nav>
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
@@ -1396,68 +1425,129 @@ footer {
 
 <!-- ══════════════════════ EVENTS ══════════════════════ -->
 <section id="events">
-  <div class="section-label reveal">Upcoming</div>
-  <h2 class="section-title reveal">Next Battles</h2>
+  <div class="section-label reveal">AAF 2026 Season</div>
+  <h2 class="section-title reveal">Competition Calendar</h2>
 
   <div class="events-grid">
 
-    <article class="event-card reveal reveal-delay-1">
-      <div class="event-num">01 / OPEN EVENT</div>
-      <h3 class="event-name">Gold Coast Open</h3>
-      <p class="event-tagline">Season Opener — Right &amp; Left Hand</p>
+    <article class="event-card event-past reveal reveal-delay-1">
+      <div class="event-num">01 / STATE TITLES</div>
+      <h3 class="event-name">SA State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
       <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>14 Jun 2025</dd></div>
-        <div class="event-row"><dt>Time</dt><dd>10:00 AM — 5:00 PM</dd></div>
-        <div class="event-row"><dt>Venue</dt><dd>Southport PCYC, QLD</dd></div>
-        <div class="event-row"><dt>Format</dt><dd>Double Elim.</dd></div>
+        <div class="event-row"><dt>Date</dt><dd>21 Feb 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>South Australia</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
       </dl>
-      <div class="event-classes">
-        <span class="class-pill">70kg</span>
-        <span class="class-pill">80kg</span>
-        <span class="class-pill">90kg</span>
-        <span class="class-pill">100kg</span>
-        <span class="class-pill">110kg+</span>
-      </div>
-      <a href="#" class="btn-register">Register Now</a>
+      <div class="event-past-tag">Completed</div>
+    </article>
+
+    <article class="event-card event-past reveal reveal-delay-2">
+      <div class="event-num">02 / REGIONAL</div>
+      <h3 class="event-name">Toowoomba Champs</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>11 Apr 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Toowoomba, QLD</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-past-tag">Completed</div>
+    </article>
+
+    <article class="event-card event-past reveal reveal-delay-1">
+      <div class="event-num">03 / REGIONAL</div>
+      <h3 class="event-name">Gippsland Champs</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>18 Apr 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Gippsland, VIC</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-past-tag">Completed</div>
+    </article>
+
+    <article class="event-card event-past reveal reveal-delay-2">
+      <div class="event-num">04 / REGIONAL</div>
+      <h3 class="event-name">Sydney Champs</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>02 May 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Sydney, NSW</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-past-tag">Completed</div>
+    </article>
+
+    <article class="event-card event-past reveal reveal-delay-1">
+      <div class="event-num">05 / STATE TITLES</div>
+      <h3 class="event-name">WA State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>06 Jun 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Western Australia</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-past-tag">Completed</div>
     </article>
 
     <article class="event-card reveal reveal-delay-2">
-      <div class="event-num">02 / INVITATIONAL</div>
-      <h3 class="event-name">QLD State Championships</h3>
-      <p class="event-tagline">Qualifier — Points Series</p>
+      <div class="event-num">06 / STATE TITLES</div>
+      <h3 class="event-name">NSW State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
       <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>19 Jul 2025</dd></div>
-        <div class="event-row"><dt>Time</dt><dd>9:00 AM — 6:00 PM</dd></div>
-        <div class="event-row"><dt>Venue</dt><dd>Brisbane City Hall, QLD</dd></div>
-        <div class="event-row"><dt>Format</dt><dd>Round Robin</dd></div>
+        <div class="event-row"><dt>Date</dt><dd>11 Jul 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>New South Wales</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
       </dl>
-      <div class="event-classes">
-        <span class="class-pill">60kg</span>
-        <span class="class-pill">70kg</span>
-        <span class="class-pill">80kg</span>
-        <span class="class-pill">90kg</span>
-        <span class="class-pill">Open</span>
-      </div>
-      <a href="#" class="btn-register">Register Now</a>
+      <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
-    <article class="event-card reveal reveal-delay-3">
-      <div class="event-num">03 / NATIONAL</div>
-      <h3 class="event-name">Powerhouse Classic</h3>
-      <p class="event-tagline">Signature Event — All Divisions</p>
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">07 / STATE TITLES</div>
+      <h3 class="event-name">QLD State Titles</h3>
+      <p class="event-tagline">Home Turf — AAF Points Series</p>
       <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>30 Aug 2025</dd></div>
-        <div class="event-row"><dt>Time</dt><dd>10:00 AM — 8:00 PM</dd></div>
-        <div class="event-row"><dt>Venue</dt><dd>Broadbeach BCEC, QLD</dd></div>
-        <div class="event-row"><dt>Format</dt><dd>Single Elim.</dd></div>
+        <div class="event-row"><dt>Date</dt><dd>08 Aug 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Queensland</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
       </dl>
-      <div class="event-classes">
-        <span class="class-pill">All</span>
-        <span class="class-pill">Masters</span>
-        <span class="class-pill">Juniors</span>
-        <span class="class-pill">Women</span>
-      </div>
-      <a href="#" class="btn-register">Register Now</a>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-2">
+      <div class="event-num">08 / STATE TITLES</div>
+      <h3 class="event-name">VIC State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>19 Sep 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Victoria</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">09 / WORLD</div>
+      <h3 class="event-name">World Champs</h3>
+      <p class="event-tagline">WAF World Championships 2026</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>10 Oct 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>WAF International</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-2">
+      <div class="event-num">10 / NATIONAL</div>
+      <h3 class="event-name">National Titles</h3>
+      <p class="event-tagline">Australian National Championships</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>21 Nov 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF National</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
   </div>
@@ -1469,77 +1559,57 @@ footer {
 <section id="rankings">
   <div class="rankings-layout">
     <div>
-      <div class="section-label reveal">2025 Season</div>
-      <h2 class="section-title reveal">Current Champions</h2>
+      <div class="section-label reveal">2026 Season</div>
+      <h2 class="section-title reveal">Current Rankings</h2>
 
       <table class="rank-table reveal">
         <thead>
           <tr>
             <th>#</th>
             <th>Athlete</th>
-            <th>Class</th>
-            <th>Wins</th>
-            <th>Losses</th>
+            <th>Club</th>
           </tr>
         </thead>
         <tbody>
           <tr class="rank-1">
             <td class="rank-num">1</td>
-            <td>
-              <div class="rank-name">Marcus "Iron" Webb</div>
-            </td>
-            <td><span class="rank-badge">90kg</span></td>
-            <td class="rank-wins">18</td>
-            <td class="rank-losses">1</td>
+            <td><div class="rank-name">Jay Etheve</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">2</td>
-            <td><div class="rank-name">Jake Thornton</div></td>
-            <td><span class="rank-badge">80kg</span></td>
-            <td class="rank-wins">15</td>
-            <td class="rank-losses">2</td>
+            <td><div class="rank-name">Pona Purcell</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">3</td>
-            <td><div class="rank-name">Dion Kalepa</div></td>
-            <td><span class="rank-badge">100kg</span></td>
-            <td class="rank-wins">14</td>
-            <td class="rank-losses">3</td>
+            <td><div class="rank-name">Sam Saffuri</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">4</td>
-            <td><div class="rank-name">Ryan Kowalski</div></td>
-            <td><span class="rank-badge">70kg</span></td>
-            <td class="rank-wins">12</td>
-            <td class="rank-losses">2</td>
+            <td><div class="rank-name">Joyal George</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">5</td>
-            <td><div class="rank-name">Tyson Osei</div></td>
-            <td><span class="rank-badge">110kg+</span></td>
-            <td class="rank-wins">11</td>
-            <td class="rank-losses">4</td>
+            <td><div class="rank-name">Josh Hampson</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">6</td>
-            <td><div class="rank-name">Sam Reeves</div></td>
-            <td><span class="rank-badge">80kg</span></td>
-            <td class="rank-wins">9</td>
-            <td class="rank-losses">3</td>
+            <td><div class="rank-name">Eethan Paterson</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">7</td>
-            <td><div class="rank-name">Nathan Grills</div></td>
-            <td><span class="rank-badge">90kg</span></td>
-            <td class="rank-wins">8</td>
-            <td class="rank-losses">5</td>
+            <td><div class="rank-name">Alex Stewart</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">8</td>
-            <td><div class="rank-name">Chris "The Bear" Dalton</div></td>
-            <td><span class="rank-badge">110kg+</span></td>
-            <td class="rank-wins">7</td>
-            <td class="rank-losses">4</td>
+            <td><div class="rank-name">Martin Harper</div></td>
+            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
         </tbody>
       </table>
@@ -1547,14 +1617,14 @@ footer {
 
     <div class="rank-aside reveal">
       <div class="rank-aside-card">
-        <div class="rank-aside-title">Season Stats</div>
+        <div class="rank-aside-title">2026 Season</div>
         <dl>
           <div class="stat-row"><dt>Active Members</dt><dd>127</dd></div>
-          <div class="stat-row"><dt>Events This Year</dt><dd>11</dd></div>
-          <div class="stat-row"><dt>Matches Contested</dt><dd>843</dd></div>
-          <div class="stat-row"><dt>Weight Classes</dt><dd>8</dd></div>
-          <div class="stat-row"><dt>Avg. Pull Time</dt><dd>4.2s</dd></div>
-          <div class="stat-row"><dt>Next Event</dt><dd>14 Jun</dd></div>
+          <div class="stat-row"><dt>AAF Events</dt><dd>10</dd></div>
+          <div class="stat-row"><dt>Completed</dt><dd>5 of 10</dd></div>
+          <div class="stat-row"><dt>Next Event</dt><dd>11 Jul — NSW</dd></div>
+          <div class="stat-row"><dt>Home State</dt><dd>08 Aug — QLD</dd></div>
+          <div class="stat-row"><dt>Season End</dt><dd>21 Nov — Nationals</dd></div>
         </dl>
       </div>
     </div>
@@ -1847,7 +1917,7 @@ footer {
         <li><a href="#rankings">Rankings</a></li>
         <li><a href="#locations">Locations</a></li>
         <li><a href="#about">About Us</a></li>
-        <li><a href="#about">Join Now</a></li>
+        <li><a href="/membership">Join Now</a></li>
       </ul>
     </div>
 
