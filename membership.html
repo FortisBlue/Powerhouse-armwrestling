@@ -945,7 +945,7 @@ async function submitForm() {
   try {
     const result = await squareCard.tokenize();
     if (result.status !== 'OK') {
-      throw new Error(result.errors ? result.errors.map(e => `[${e.field || e.type}] ${e.message}`).join('. ') : 'Card error — please check your details.');
+      throw new Error('Square result: ' + JSON.stringify(result));
     }
 
     const idempotencyKey = (typeof crypto !== 'undefined' && crypto.randomUUID)
