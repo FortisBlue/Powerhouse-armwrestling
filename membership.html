@@ -708,8 +708,41 @@ document.addEventListener('DOMContentLoaded', () => {
     resizePad(document.getElementById('ec-sig-canvas'), ecPad);
   });
   document.getElementById('sig-date').value = new Date().toISOString().slice(0, 10);
-  if (!CFG.IS_SANDBOX) document.getElementById('sandbox-badge').style.display = 'none';
+  if (!CFG.IS_SANDBOX) {
+    document.getElementById('sandbox-badge').style.display = 'none';
+  } else {
+    devPrefill();
+  }
 });
+
+function devPrefill() {
+  document.getElementById('first-name').value = 'Test';
+  document.getElementById('last-name').value  = 'Member';
+  document.getElementById('phone').value      = '0412345678';
+  document.getElementById('email').value      = 'test@powerhousearmwrestling.com.au';
+  document.getElementById('dob').value        = '1990-06-14';
+  document.getElementById('ec-name').value    = 'Jane Member';
+  document.getElementById('ec-phone').value   = '0498765432';
+  document.getElementById('agree-check').checked = true;
+  // Pre-draw a squiggle on both signature pads
+  setTimeout(() => {
+    [memberPad, ecPad].forEach(pad => {
+      if (!pad) return;
+      const w = pad._canvas.offsetWidth;
+      const h = pad._canvas.offsetHeight;
+      const t = Date.now();
+      pad.fromData([[
+        { x: w*0.08, y: h*0.55, pressure: 0.5, time: t },
+        { x: w*0.2,  y: h*0.3,  pressure: 0.5, time: t+20 },
+        { x: w*0.35, y: h*0.65, pressure: 0.5, time: t+40 },
+        { x: w*0.5,  y: h*0.3,  pressure: 0.5, time: t+60 },
+        { x: w*0.65, y: h*0.65, pressure: 0.5, time: t+80 },
+        { x: w*0.8,  y: h*0.3,  pressure: 0.5, time: t+100 },
+        { x: w*0.92, y: h*0.55, pressure: 0.5, time: t+120 },
+      ]]);
+    });
+  }, 100);
+}
 
 /* ─── SIGNATURE PADS ────────────────────────────────────────────────────────── */
 function initPad(id) {
