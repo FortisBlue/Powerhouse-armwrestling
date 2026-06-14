@@ -711,6 +711,107 @@ section {
 }
 
 /* ────────────────────────────────────────────────
+   PODIUM (Top 3)
+──────────────────────────────────────────────── */
+.podium-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+  max-width: 580px;
+  margin: 0 auto 56px;
+}
+.podium-slot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.podium-crown {
+  font-size: 22px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+  text-shadow: 0 0 14px rgba(201,162,52,0.7);
+}
+.podium-photo {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--glass-b);
+  margin-bottom: 10px;
+  background: var(--char);
+  position: relative;
+  flex-shrink: 0;
+}
+.podium-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.podium-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+}
+.podium-pos-1 .podium-photo { width: 96px; height: 96px; border-color: var(--gold); box-shadow: 0 0 24px rgba(201,162,52,0.4); }
+.podium-pos-2 .podium-photo { width: 78px; height: 78px; border-color: #a8a9ad; }
+.podium-pos-3 .podium-photo { width: 72px; height: 72px; border-color: #cd7f32; }
+.podium-pos-1 .podium-initials { font-size: 30px; color: var(--gold); }
+.podium-pos-2 .podium-initials { font-size: 24px; color: #a8a9ad; }
+.podium-pos-3 .podium-initials { font-size: 22px; color: #cd7f32; }
+.podium-pname {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.podium-pos-1 .podium-pname { color: var(--gold-lt); }
+.podium-block {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid var(--glass-b);
+  border-bottom: none;
+  background: var(--char);
+}
+.podium-pos-1 .podium-block {
+  height: 108px;
+  background: linear-gradient(180deg, rgba(201,162,52,0.14) 0%, rgba(201,162,52,0.04) 100%);
+  border-color: rgba(201,162,52,0.3);
+}
+.podium-pos-2 .podium-block {
+  height: 72px;
+  background: rgba(168,169,173,0.06);
+  border-color: rgba(168,169,173,0.25);
+}
+.podium-pos-3 .podium-block {
+  height: 52px;
+  background: rgba(205,127,50,0.06);
+  border-color: rgba(205,127,50,0.25);
+}
+.podium-num {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.podium-pos-1 .podium-num { font-size: 52px; color: var(--gold); }
+.podium-pos-2 .podium-num { font-size: 40px; color: #a8a9ad; }
+.podium-pos-3 .podium-num { font-size: 36px; color: #cd7f32; }
+.rank-tba { opacity: 0.38; font-style: italic; }
+
+/* ────────────────────────────────────────────────
    LOCATIONS
 ──────────────────────────────────────────────── */
 #locations {
@@ -1317,6 +1418,17 @@ footer {
   .footer-top { grid-template-columns: 1fr; }
   .hero-title { font-size: clamp(4rem, 22vw, 20rem); }
   .hero-sub { letter-spacing: 0.14em; }
+  .podium-pos-1 .podium-photo { width: 72px; height: 72px; }
+  .podium-pos-2 .podium-photo { width: 58px; height: 58px; }
+  .podium-pos-3 .podium-photo { width: 54px; height: 54px; }
+  .podium-pos-1 .podium-block { height: 80px; }
+  .podium-pos-2 .podium-block { height: 54px; }
+  .podium-pos-3 .podium-block { height: 38px; }
+  .podium-pos-1 .podium-num { font-size: 40px; }
+  .podium-pos-2 .podium-num { font-size: 32px; }
+  .podium-pos-3 .podium-num { font-size: 28px; }
+  .podium-pname { font-size: 11px; letter-spacing: 0.06em; }
+  .podium-crown { font-size: 18px; }
 }
 
 /* mobile nav drawer */
@@ -1363,8 +1475,8 @@ footer {
   </a>
 
   <ul class="nav-pills">
-    <li><a href="#events" class="pill-link">Events</a></li>
     <li><a href="#rankings" class="pill-link">Rankings</a></li>
+    <li><a href="#events" class="pill-link">Events</a></li>
     <li><a href="#locations" class="pill-link">Locations</a></li>
     <li><a href="#store" class="pill-link">Store</a></li>
     <li><a href="#about" class="pill-link">About</a></li>
@@ -1388,8 +1500,8 @@ footer {
 
 <!-- mobile drawer -->
 <nav class="nav-drawer" id="nav-drawer">
-  <a href="#events">Events</a>
   <a href="#rankings">Rankings</a>
+  <a href="#events">Events</a>
   <a href="#locations">Locations</a>
   <a href="#store">Store</a>
   <a href="#about">About</a>
@@ -1419,145 +1531,40 @@ footer {
 
 <hr class="gold-rule">
 
-<!-- ══════════════════════ EVENTS ══════════════════════ -->
-<section id="events">
-  <div class="section-label reveal">AAF 2026 Season</div>
-  <h2 class="section-title reveal">Competition Calendar</h2>
-
-  <div class="events-grid">
-
-    <article class="event-card event-past reveal reveal-delay-1">
-      <div class="event-num">01 / STATE TITLES</div>
-      <h3 class="event-name">SA State Titles</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>21 Feb 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>South Australia</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-past-tag">Completed</div>
-    </article>
-
-    <article class="event-card event-past reveal reveal-delay-2">
-      <div class="event-num">02 / REGIONAL</div>
-      <h3 class="event-name">Toowoomba Champs</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>11 Apr 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Toowoomba, QLD</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-past-tag">Completed</div>
-    </article>
-
-    <article class="event-card event-past reveal reveal-delay-1">
-      <div class="event-num">03 / REGIONAL</div>
-      <h3 class="event-name">Gippsland Champs</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>18 Apr 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Gippsland, VIC</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-past-tag">Completed</div>
-    </article>
-
-    <article class="event-card event-past reveal reveal-delay-2">
-      <div class="event-num">04 / REGIONAL</div>
-      <h3 class="event-name">Sydney Champs</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>02 May 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Sydney, NSW</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-past-tag">Completed</div>
-    </article>
-
-    <article class="event-card event-past reveal reveal-delay-1">
-      <div class="event-num">05 / STATE TITLES</div>
-      <h3 class="event-name">WA State Titles</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>06 Jun 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Western Australia</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-past-tag">Completed</div>
-    </article>
-
-    <article class="event-card reveal reveal-delay-2">
-      <div class="event-num">06 / STATE TITLES</div>
-      <h3 class="event-name">NSW State Titles</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>11 Jul 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>New South Wales</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-upcoming-tag">Upcoming</div>
-    </article>
-
-    <article class="event-card reveal reveal-delay-1">
-      <div class="event-num">07 / STATE TITLES</div>
-      <h3 class="event-name">QLD State Titles</h3>
-      <p class="event-tagline">Home Turf — AAF Points Series</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>08 Aug 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Queensland</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-upcoming-tag">Upcoming</div>
-    </article>
-
-    <article class="event-card reveal reveal-delay-2">
-      <div class="event-num">08 / STATE TITLES</div>
-      <h3 class="event-name">VIC State Titles</h3>
-      <p class="event-tagline">Australian Armwrestling Federation</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>19 Sep 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>Victoria</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
-      </dl>
-      <div class="event-upcoming-tag">Upcoming</div>
-    </article>
-
-    <article class="event-card reveal reveal-delay-1">
-      <div class="event-num">09 / WORLD</div>
-      <h3 class="event-name">World Champs</h3>
-      <p class="event-tagline">WAF World Championships 2026</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>10 Oct 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>WAF International</dd></div>
-      </dl>
-      <div class="event-upcoming-tag">Upcoming</div>
-    </article>
-
-    <article class="event-card reveal reveal-delay-2">
-      <div class="event-num">10 / NATIONAL</div>
-      <h3 class="event-name">National Titles</h3>
-      <p class="event-tagline">Australian National Championships</p>
-      <dl class="event-details">
-        <div class="event-row"><dt>Date</dt><dd>21 Nov 2026</dd></div>
-        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
-        <div class="event-row"><dt>Series</dt><dd>AAF National</dd></div>
-      </dl>
-      <div class="event-upcoming-tag">Upcoming</div>
-    </article>
-
-  </div>
-</section>
-
-<hr class="gold-rule">
-
 <!-- ══════════════════════ RANKINGS ══════════════════════ -->
 <section id="rankings">
+  <div class="section-label reveal">2026 Season</div>
+  <h2 class="section-title reveal">Club Ladder</h2>
+
+  <!-- Podium: Top 3 -->
+  <div class="podium-wrap reveal">
+
+    <!-- 2nd Place -->
+    <div class="podium-slot podium-pos-2">
+      <div class="podium-photo"><div class="podium-initials">PP</div></div>
+      <div class="podium-pname">Pona Purcell</div>
+      <div class="podium-block"><span class="podium-num">2</span></div>
+    </div>
+
+    <!-- 1st Place -->
+    <div class="podium-slot podium-pos-1">
+      <div class="podium-crown" aria-hidden="true">★</div>
+      <div class="podium-photo"><div class="podium-initials">JE</div></div>
+      <div class="podium-pname">Jay Etheve</div>
+      <div class="podium-block"><span class="podium-num">1</span></div>
+    </div>
+
+    <!-- 3rd Place -->
+    <div class="podium-slot podium-pos-3">
+      <div class="podium-photo"><div class="podium-initials">SS</div></div>
+      <div class="podium-pname">Sam Saffuri</div>
+      <div class="podium-block"><span class="podium-num">3</span></div>
+    </div>
+
+  </div>
+
   <div class="rankings-layout">
     <div>
-      <div class="section-label reveal">2026 Season</div>
-      <h2 class="section-title reveal">Current Rankings</h2>
-
       <table class="rank-table reveal">
         <thead>
           <tr>
@@ -1567,21 +1574,6 @@ footer {
           </tr>
         </thead>
         <tbody>
-          <tr class="rank-1">
-            <td class="rank-num">1</td>
-            <td><div class="rank-name">Jay Etheve</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
-          </tr>
-          <tr>
-            <td class="rank-num">2</td>
-            <td><div class="rank-name">Pona Purcell</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
-          </tr>
-          <tr>
-            <td class="rank-num">3</td>
-            <td><div class="rank-name">Sam Saffuri</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
-          </tr>
           <tr>
             <td class="rank-num">4</td>
             <td><div class="rank-name">Joyal George</div></td>
@@ -1607,6 +1599,16 @@ footer {
             <td><div class="rank-name">Martin Harper</div></td>
             <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
+          <tr>
+            <td class="rank-num">9</td>
+            <td><div class="rank-name rank-tba">— TBA —</div></td>
+            <td><span class="rank-badge">—</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">10</td>
+            <td><div class="rank-name rank-tba">— TBA —</div></td>
+            <td><span class="rank-badge">—</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -1624,6 +1626,78 @@ footer {
         </dl>
       </div>
     </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ══════════════════════ EVENTS ══════════════════════ -->
+<section id="events">
+  <div class="section-label reveal">AAF 2026 Season</div>
+  <h2 class="section-title reveal">Upcoming Events</h2>
+
+  <div class="events-grid">
+
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">01 / STATE TITLES</div>
+      <h3 class="event-name">NSW State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>11 Jul 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>New South Wales</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-2">
+      <div class="event-num">02 / STATE TITLES</div>
+      <h3 class="event-name">QLD State Titles</h3>
+      <p class="event-tagline">Home Turf — AAF Points Series</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>08 Aug 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Queensland</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">03 / STATE TITLES</div>
+      <h3 class="event-name">VIC State Titles</h3>
+      <p class="event-tagline">Australian Armwrestling Federation</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>19 Sep 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>Victoria</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-2">
+      <div class="event-num">04 / WORLD</div>
+      <h3 class="event-name">World Champs</h3>
+      <p class="event-tagline">WAF World Championships 2026</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>10 Oct 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>WAF International</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
+    <article class="event-card reveal reveal-delay-1">
+      <div class="event-num">05 / NATIONAL</div>
+      <h3 class="event-name">National Titles</h3>
+      <p class="event-tagline">Australian National Championships</p>
+      <dl class="event-details">
+        <div class="event-row"><dt>Date</dt><dd>21 Nov 2026</dd></div>
+        <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
+        <div class="event-row"><dt>Series</dt><dd>AAF National</dd></div>
+      </dl>
+      <div class="event-upcoming-tag">Upcoming</div>
+    </article>
+
   </div>
 </section>
 
