@@ -275,11 +275,13 @@ body {
 .hero-cta {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   z-index: 2;
-  text-align: center;
-  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   animation: riseIn 0.7s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
 }
@@ -1379,7 +1381,7 @@ footer {
   .hero-img {
     object-position: 52% 22%;
   }
-  .hero-cta { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .hero-cta { top: 50%; left: 0; right: 0; transform: translateY(-50%); }
 
   .store-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -1495,8 +1497,8 @@ footer {
 
 <!-- ══════════════════════ RANKINGS ══════════════════════ -->
 <section id="rankings">
-  <div class="section-label reveal">2026 Season</div>
-  <h2 class="section-title reveal">Club Ladder</h2>
+  <div class="section-label reveal">Powerhouse Club Ladder</div>
+  <h2 class="section-title reveal">2026 Season</h2>
 
   <!-- Podium: Top 3 -->
   <div class="podium-wrap reveal">
@@ -1532,44 +1534,36 @@ footer {
           <tr>
             <th>#</th>
             <th>Athlete</th>
-            <th>Club</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="rank-num">4</td>
             <td><div class="rank-name">Joyal George</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">5</td>
             <td><div class="rank-name">Josh Hampson</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">6</td>
             <td><div class="rank-name">Eethan Paterson</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">7</td>
             <td><div class="rank-name">Alex Stewart</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">8</td>
             <td><div class="rank-name">Martin Harper</div></td>
-            <td><span class="rank-badge">Powerhouse GC</span></td>
           </tr>
           <tr>
             <td class="rank-num">9</td>
             <td><div class="rank-name rank-tba">— TBA —</div></td>
-            <td><span class="rank-badge">—</span></td>
           </tr>
           <tr>
             <td class="rank-num">10</td>
             <td><div class="rank-name rank-tba">— TBA —</div></td>
-            <td><span class="rank-badge">—</span></td>
           </tr>
         </tbody>
       </table>
