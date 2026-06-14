@@ -944,6 +944,7 @@ async function submitForm() {
 
   try {
     const result = await squareCard.tokenize();
+    console.log('TOKENIZE RESULT:', JSON.stringify(result));
     if (result.status !== 'OK') {
       throw new Error('Square result: ' + JSON.stringify(result));
     }
@@ -951,6 +952,9 @@ async function submitForm() {
     const idempotencyKey = (typeof crypto !== 'undefined' && crypto.randomUUID)
       ? crypto.randomUUID()
       : Date.now().toString(36) + Math.random().toString(36).slice(2);
+
+    console.log('NONCE:', result.token);
+    console.log('AMOUNT CENTS:', amountCents);
 
     const payload = {
       nonce:            result.token,
@@ -973,12 +977,13 @@ async function submitForm() {
 
     const resp = await fetch(CFG.APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       redirect: 'follow',
     });
 
     const data = await resp.json();
+    console.log('API RESPONSE:', JSON.stringify(data));
 
     if (data.success) {
       document.getElementById('page-2').classList.remove('active');
