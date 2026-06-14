@@ -1037,15 +1037,22 @@ function doPost(e) {
     var payResult = chargeSquare(data.nonce, data.amount_cents, data.idempotency_key);
     if (!payResult.success) return res({success: false, error: payResult.error});
     writeToSheet(data, payResult.payment_id);
-    if (data.join_type === 'renewing' && data.tshirt_size) notifyTshirtOrder(data);
+    notifyAdmin(data, payResult.payment_id);
+    if (data.tshirt_size) notifyTshirtOrder(data);
     return res({success: true, payment_id: payResult.payment_id});
   } catch(err) {
     return res({success: false, error: err.message});
   }
 }
 
-function doGet() {
-  return res({status: 'ok'});
+function doGet(e) {
+  try {
+    var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+    var count = Math.max(0, sheet.getLastRow() - 1);
+    return res({count: count});
+  } catch(err) {
+    return res({count: 0});
+  }
 }
 
 function chargeSquare(nonce, amountCents, idempotencyKey) {
@@ -1101,11 +1108,32 @@ function writeToSheet(data, paymentId) {
   ]);
 }
 
+function notifyAdmin(data, paymentId) {
+  var joinLabel = data.join_type === 'renewing' ? 'Renewing Member' : 'New Member';
+  var amount    = '$' + (data.amount_cents / 100).toFixed(2) + ' AUD';
+  var subject   = 'New Membership — ' + data.first_name + ' ' + data.last_name;
+  var body =
+    'A membership has been processed through the portal.\n\n' +
+    'Type:            ' + joinLabel + '\n' +
+    'Name:            ' + data.first_name + ' ' + data.last_name + '\n' +
+    'Email:           ' + data.email + '\n' +
+    'Phone:           ' + data.phone + '\n' +
+    'Date of Birth:   ' + data.dob + '\n' +
+    'T-Shirt Size:    ' + (data.tshirt_size || 'N/A') + '\n' +
+    'Membership:      ' + data.membership_type + '\n' +
+    'Amount Paid:     ' + amount + '\n' +
+    'Payment ID:      ' + paymentId + '\n\n' +
+    'Emergency Contact: ' + data.ec_name + ' — ' + data.ec_phone + '\n\n' +
+    'Powerhouse Armwrestling Club';
+  MailApp.sendEmail('admin@powerhousearmwrestling.com.au', subject, body);
+}
+
 function notifyTshirtOrder(data) {
-  var subject = 'New T-Shirt Order — ' + data.first_name + ' ' + data.last_name;
+  var joinLabel = data.join_type === 'renewing' ? 'renewing member (add-on)' : 'new member';
+  var subject   = 'T-Shirt Order — ' + data.first_name + ' ' + data.last_name;
   var body =
     'Hi,\n\n' +
-    'A renewing member has ordered a club t-shirt through the membership portal.\n\n' +
+    'A ' + joinLabel + ' requires a club t-shirt.\n\n' +
     'Name:  ' + data.first_name + ' ' + data.last_name + '\n' +
     'Size:  ' + data.tshirt_size + '\n' +
     'Phone: ' + data.phone + '\n' +
