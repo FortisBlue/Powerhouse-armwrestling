@@ -575,6 +575,7 @@ body {
         </div>
       </div>
 
+      <!-- NEW MEMBER: free shirt included -->
       <div id="tshirt-section" style="margin-bottom:24px;">
         <div class="form-group">
           <label class="form-label" for="tshirt-size">T-Shirt Size <span class="req">*</span></label>
@@ -589,6 +590,30 @@ body {
             <option value="XXXXL">Four Extra Large — XXXXL</option>
           </select>
           <p class="form-hint">Your last name will be printed on the back of your shirt.</p>
+        </div>
+      </div>
+
+      <!-- RENEWING MEMBER: optional shirt add-on -->
+      <div id="tshirt-addon-section" style="display:none; margin-bottom:24px;">
+        <label style="display:flex; align-items:flex-start; gap:12px; border:1px solid rgba(201,162,52,0.25); border-radius:8px; padding:16px; cursor:pointer;">
+          <input type="checkbox" id="tshirt-addon-check" onchange="handleTshirtAddon()" style="margin-top:2px; width:18px; height:18px; accent-color:var(--gold); flex-shrink:0;">
+          <span style="font-family:'Barlow Condensed',sans-serif; font-size:15px; line-height:1.4;">
+            I need a new club t-shirt &nbsp;<span style="color:var(--gold); font-weight:600;">+$50</span><br>
+            <small style="color:var(--cream-d); font-weight:400;">Your last name will be printed on the back</small>
+          </span>
+        </label>
+        <div id="tshirt-addon-size-wrap" style="display:none; margin-top:12px;">
+          <label class="form-label" for="tshirt-addon-size">T-Shirt Size <span class="req">*</span></label>
+          <select class="form-select" id="tshirt-addon-size">
+            <option value="">Select your size</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="XL">Extra Large — XL</option>
+            <option value="XXL">Double Extra Large — XXL</option>
+            <option value="XXXL">Triple Extra Large — XXXL</option>
+            <option value="XXXXL">Four Extra Large — XXXXL</option>
+          </select>
         </div>
       </div>
 
@@ -808,9 +833,39 @@ async function initSquare() {
 
 /* ─── JOIN TYPE TOGGLE ──────────────────────────────────────────────────────── */
 function handleJoinType(type) {
-  document.getElementById('tshirt-section').style.display = type === 'new' ? 'block' : 'none';
+  document.getElementById('tshirt-section').style.display       = type === 'new'      ? 'block' : 'none';
+  document.getElementById('tshirt-addon-section').style.display = type === 'renewing' ? 'block' : 'none';
   document.getElementById('tshirt-size').value = '';
   document.getElementById('tshirt-size').classList.remove('error');
+  document.getElementById('tshirt-addon-check').checked = false;
+  document.getElementById('tshirt-addon-size-wrap').style.display = 'none';
+  document.getElementById('tshirt-addon-size').value = '';
+  document.getElementById('tshirt-addon-size').classList.remove('error');
+  updateSubmitBtn();
+}
+
+function handleTshirtAddon() {
+  const checked = document.getElementById('tshirt-addon-check').checked;
+  document.getElementById('tshirt-addon-size-wrap').style.display = checked ? 'block' : 'none';
+  if (!checked) {
+    document.getElementById('tshirt-addon-size').value = '';
+    document.getElementById('tshirt-addon-size').classList.remove('error');
+  }
+  updateSubmitBtn();
+}
+
+function calcTotal() {
+  const type  = document.querySelector('input[name="mem-type"]:checked').value;
+  let cents   = PRICES[type] || PRICES.yearly;
+  const jtype = document.querySelector('input[name="join-type"]:checked').value;
+  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
+  return cents;
+}
+
+function updateSubmitBtn() {
+  const display = (calcTotal() / 100).toFixed(2);
+  const btn = document.getElementById('submit-btn');
+  if (btn) btn.textContent = `Complete Membership — $${display}`;
 }
 
 /* ─── SUBMIT ────────────────────────────────────────────────────────────────── */
@@ -819,8 +874,9 @@ async function submitForm() {
   const btn   = document.getElementById('submit-btn');
   errEl.style.display = 'none';
 
-  // T-shirt required for new members only
   const joinType = document.querySelector('input[name="join-type"]:checked').value;
+
+  // T-shirt size required for new members
   const sz = document.getElementById('tshirt-size');
   if (joinType === 'new' && !sz.value) {
     sz.classList.add('error');
@@ -829,6 +885,16 @@ async function submitForm() {
   }
   sz.classList.remove('error');
 
+  // T-shirt size required for renewing members who ticked the add-on
+  const addonChecked = document.getElementById('tshirt-addon-check').checked;
+  const addonSz      = document.getElementById('tshirt-addon-size');
+  if (joinType === 'renewing' && addonChecked && !addonSz.value) {
+    addonSz.classList.add('error');
+    addonSz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  addonSz.classList.remove('error');
+
   if (!squareCard) {
     errEl.textContent = 'Payment system not ready — please refresh and try again.';
     errEl.style.display = 'block';
@@ -836,7 +902,7 @@ async function submitForm() {
   }
 
   const selectedType  = document.querySelector('input[name="mem-type"]:checked').value;
-  const amountCents   = PRICES[selectedType] || PRICES.yearly;
+  const amountCents   = calcTotal();
   const amountDisplay = (amountCents / 100).toFixed(2);
 
   btn.disabled = true;
@@ -868,7 +934,7 @@ async function submitForm() {
       ec_name:          document.getElementById('ec-name').value.trim(),
       ec_phone:         document.getElementById('ec-phone').value.trim(),
       ec_signature:     ecPad.toDataURL('image/png'),
-      tshirt_size:      joinType === 'new' ? sz.value : '',
+      tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
     };
 
     const resp = await fetch(CFG.APPS_SCRIPT_URL, {
@@ -932,6 +998,7 @@ function doPost(e) {
     var payResult = chargeSquare(data.nonce, data.amount_cents, data.idempotency_key);
     if (!payResult.success) return res({success: false, error: payResult.error});
     writeToSheet(data, payResult.payment_id);
+    if (data.join_type === 'renewing' && data.tshirt_size) notifyTshirtOrder(data);
     return res({success: true, payment_id: payResult.payment_id});
   } catch(err) {
     return res({success: false, error: err.message});
@@ -969,21 +1036,44 @@ function chargeSquare(nonce, amountCents, idempotencyKey) {
 function writeToSheet(data, paymentId) {
   var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      'Timestamp','First Name','Last Name','Email','Phone','DOB',
-      'Membership Type','T-Shirt Size','EC Name','EC Phone',
-      'Payment ID','Amount','Member Signed','EC Signed'
-    ]);
+    var headers = [
+      'Timestamp','Join Type','First Name','Last Name','Phone','Email','Date of Birth',
+      'T-Shirt Size','Membership Type','Amount Paid',
+      'EC Name','EC Phone','Payment ID','Member Signed','EC Signed'
+    ];
+    sheet.appendRow(headers);
+    var hRange = sheet.getRange(1, 1, 1, headers.length);
+    hRange.setFontWeight('bold');
+    hRange.setBackground('#1c1a16');
+    hRange.setFontColor('#C9A234');
+    sheet.setFrozenRows(1);
   }
   sheet.appendRow([
     new Date().toISOString(),
-    data.first_name, data.last_name, data.email, data.phone, data.dob,
-    data.membership_type, data.tshirt_size,
+    data.join_type || 'new',
+    data.first_name, data.last_name, data.phone, data.email, data.dob,
+    data.tshirt_size || '',
+    data.membership_type,
+    '$' + (data.amount_cents / 100).toFixed(2) + ' AUD',
     data.ec_name, data.ec_phone,
-    paymentId, (data.amount_cents / 100).toFixed(2) + ' AUD',
+    paymentId,
     data.member_signature ? 'Yes' : 'No',
     data.ec_signature     ? 'Yes' : 'No',
   ]);
+}
+
+function notifyTshirtOrder(data) {
+  var subject = 'New T-Shirt Order — ' + data.first_name + ' ' + data.last_name;
+  var body =
+    'Hi,\n\n' +
+    'A renewing member has ordered a club t-shirt through the membership portal.\n\n' +
+    'Name:  ' + data.first_name + ' ' + data.last_name + '\n' +
+    'Size:  ' + data.tshirt_size + '\n' +
+    'Phone: ' + data.phone + '\n' +
+    'Email: ' + data.email + '\n\n' +
+    'Please arrange with the supplier.\n\n' +
+    'Powerhouse Armwrestling Club';
+  MailApp.sendEmail('president@powerhousearmwrestling.com.au', subject, body);
 }
 
 function res(obj) {
