@@ -964,10 +964,10 @@ async function submitForm() {
       phone:            document.getElementById('phone').value.trim(),
       dob:              document.getElementById('dob').value,
       sig_date:         document.getElementById('sig-date').value,
-      member_signature: memberPad.toDataURL('image/png'),
+      member_signed:    !memberPad.isEmpty(),
       ec_name:          document.getElementById('ec-name').value.trim(),
       ec_phone:         document.getElementById('ec-phone').value.trim(),
-      ec_signature:     ecPad.toDataURL('image/png'),
+      ec_signed:        !ecPad.isEmpty(),
       tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
     };
 
@@ -1091,8 +1091,8 @@ function writeToSheet(data, paymentId) {
     '$' + (data.amount_cents / 100).toFixed(2) + ' AUD',
     data.ec_name, data.ec_phone,
     paymentId,
-    data.member_signature ? 'Yes' : 'No',
-    data.ec_signature     ? 'Yes' : 'No',
+    data.member_signed ? 'Yes' : 'No',
+    data.ec_signed     ? 'Yes' : 'No',
   ]);
 }
 
