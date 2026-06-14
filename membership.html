@@ -816,6 +816,7 @@ async function initSquare() {
   try {
     const payments = Square.payments(CFG.SQ_APP_ID, CFG.SQ_LOCATION_ID);
     squareCard = await payments.card({
+      postalCode: false,
       style: {
         '.input-container':          { borderColor: 'rgba(201,162,52,0.4)', borderRadius: '6px' },
         '.input-container.is-focus': { borderColor: '#C9A234' },
