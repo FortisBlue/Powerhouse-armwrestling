@@ -807,6 +807,7 @@ function goToPage1() {
 
 /* ─── SQUARE ────────────────────────────────────────────────────────────────── */
 async function initSquare() {
+  if (squareCard) return; // already initialized — prevent double attach
   const loadEl = document.getElementById('card-loading');
   if (!window.Square) {
     loadEl.innerHTML = '<span style="color:var(--error)">Payment system failed to load — please refresh.</span>';
