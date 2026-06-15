@@ -9,8 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-<!-- Square SDK — swap to https://web.squarecdn.com/v1/square.js for production -->
-<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+<script src="https://web.squarecdn.com/v1/square.js"></script>
 <style>
 :root {
   --black:    #0a0908;
@@ -694,9 +693,9 @@ body {
    ───────────────────────────────────────────────────────────────────────────── */
 const CFG = {
   APPS_SCRIPT_URL: '/api/membership',
-  SQ_APP_ID:       'sandbox-sq0idb-ba6MDAYOnCNCwBsZE8CbGA',
+  SQ_APP_ID:       'sq0idp-FwOlU52Jd1g948fKdnpnMg',
   SQ_LOCATION_ID:  'L004RPCTBYFK4',
-  IS_SANDBOX:      true,  // flip to false + swap Square SDK <script src> for production
+  IS_SANDBOX:      false,
 };
 
 // Pricing (cents)
