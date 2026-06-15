@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Powerhouse Armwrestling Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0908;
+    --deep:  #111009;
+    --char:  #1c1a16;
+    --gold:  #C9A234;
+    --gold-lt: #E8B84B;
+    --cream: #F0E8D8;
+    --cream-d: #C8BEA8;
+    --ink:   #0a0908;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 68px;
+    background: rgba(10,9,8,0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,162,52,0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 4vw, 60px);
+    z-index: 100;
+  }
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1;
+    gap: 1px;
+  }
+  .nav-logo-top {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+  .nav-logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-d);
+  }
+  .nav-back {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-d);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 160ms ease;
+  }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back svg { width: 14px; height: 14px; }
+
+  /* ── CONTENT ── */
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 120px clamp(20px, 5vw, 40px) 80px;
+  }
+
+  .page-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 8vw, 64px);
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .page-updated {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--cream-d);
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(201,162,52,0.18);
+  }
+
+  .policy-section {
+    margin-bottom: 40px;
+  }
+
+  .policy-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .policy-section p {
+    color: var(--cream-d);
+    margin-bottom: 12px;
+  }
+
+  .policy-section ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  .policy-section ul li {
+    color: var(--cream-d);
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+
+  .policy-section ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .policy-section a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .policy-section a:hover {
+    text-decoration: underline;
+  }
+
+  .contact-card {
+    background: var(--char);
+    border: 1px solid rgba(201,162,52,0.18);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-top: 16px;
+  }
+  .contact-card p {
+    margin-bottom: 6px;
+  }
+  .contact-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    text-align: center;
+    padding: 32px clamp(20px, 4vw, 60px);
+    border-top: 1px solid rgba(201,162,52,0.12);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(200,190,168,0.5);
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="nav-logo" aria-label="Powerhouse Armwrestling">
+    <span class="nav-logo-top">POWERHOUSE</span>
+    <span class="nav-logo-sub">Armwrestling Club</span>
+  </a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Home
+  </a>
+</header>
+
+<div class="page-wrap">
+
+  <div class="page-eyebrow">Legal</div>
+  <h1 class="page-title">Privacy Policy</h1>
+  <p class="page-updated">Last updated: June 2026</p>
+
+  <div class="policy-section">
+    <p>Powerhouse Armwrestling Club Inc. ("we", "us", "our") is committed to protecting your personal information in accordance with the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs). This policy explains what information we collect, how we use it, and your rights regarding that information.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>1. What We Collect</h2>
+    <p>When you join as a member or interact with our website, we may collect:</p>
+    <ul>
+      <li>Full name, date of birth, gender</li>
+      <li>Home address, phone number, email address</li>
+      <li>Emergency contact name and phone number</li>
+      <li>Payment card details (processed securely by Square — we do not store card numbers)</li>
+      <li>Digital signature (for the membership waiver)</li>
+      <li>T-shirt size (if ordering club apparel)</li>
+      <li>IP address and browser information collected automatically when you visit our website</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>2. How We Use Your Information</h2>
+    <p>We collect and use your personal information to:</p>
+    <ul>
+      <li>Process your membership application and annual renewal</li>
+      <li>Take payment for membership fees and merchandise</li>
+      <li>Manage our member register and club ladder rankings</li>
+      <li>Send you club communications, event notices, and renewal reminders</li>
+      <li>Comply with our insurance and regulatory obligations as an incorporated association</li>
+      <li>Respond to any enquiries or complaints you make</li>
+    </ul>
+    <p>We will not use your information for any unrelated purpose without your consent.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>3. Disclosure to Third Parties</h2>
+    <p>We may share your information with:</p>
+    <ul>
+      <li><strong>Square Inc.</strong> — our payment processor. Card details are transmitted directly to Square and are not stored by us. Square's privacy policy is available at <a href="https://squareup.com/au/en/legal/privacy" target="_blank" rel="noopener">squareup.com</a>.</li>
+      <li><strong>Google LLC</strong> — membership data is recorded in a Google Sheet stored in Google Drive, accessible only to authorised club officers.</li>
+      <li><strong>Australian Armwrestling Federation (AAF)</strong> — where required for competition registration or rankings.</li>
+    </ul>
+    <p>We will not sell, rent, or trade your personal information to any third party for marketing purposes.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>4. Data Storage &amp; Security</h2>
+    <p>Your information is stored in Google Sheets on Google Drive, access to which is restricted to authorised club officers. Payment transactions are handled entirely by Square's secure, PCI-compliant infrastructure. We take reasonable steps to protect personal information from misuse, interference, loss, unauthorised access, modification, and disclosure.</p>
+    <p>We retain membership records for a minimum of 7 years to meet our obligations as an incorporated association under Queensland law, after which records are securely deleted.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>5. Access &amp; Correction</h2>
+    <p>You have the right to request access to the personal information we hold about you, and to request corrections if it is inaccurate, out of date, or incomplete. To make a request, contact us using the details below. We will respond within 30 days.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>6. Complaints</h2>
+    <p>If you believe we have not handled your personal information in accordance with this policy or the Australian Privacy Principles, please contact us in the first instance. If you are not satisfied with our response, you may lodge a complaint with the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">oaic.gov.au</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>7. Changes to This Policy</h2>
+    <p>We may update this privacy policy from time to time. Changes will be published on this page with an updated date. Continued use of the site or membership in the club after changes constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>8. Contact Us</h2>
+    <p>For any privacy-related enquiries, access requests, or complaints:</p>
+    <div class="contact-card">
+      <p><strong>Powerhouse Armwrestling Club Inc.</strong></p>
+      <p>Gold Coast, Queensland, Australia</p>
+      <p>Training: 15 Clark Way, Pimpama QLD 4209</p>
+      <p>Email: <a href="mailto:info@powerhousearmwrestling.com.au">info@powerhousearmwrestling.com.au</a></p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  © 2026 Powerhouse Armwrestling Club Inc. — Gold Coast, QLD, Australia
+</footer>
+
+</body>
+</html>
