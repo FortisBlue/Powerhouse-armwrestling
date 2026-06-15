@@ -800,7 +800,9 @@ section {
 
 .locations-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
+  max-width: 520px;
+  margin: 0 auto;
   gap: 20px;
 }
 
@@ -1061,12 +1063,15 @@ section {
 }
 
 .about-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
   position: relative;
   z-index: 1;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .about-text p {
@@ -1082,6 +1087,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
 .about-feat {
   display: flex;
@@ -1661,7 +1667,7 @@ footer {
 
 <!-- ══════════════════════ LOCATIONS ══════════════════════ -->
 <section id="locations">
-  <div class="section-label reveal">3 Venues</div>
+  <div class="section-label reveal">Where We Train</div>
   <h2 class="section-title reveal">Find Your Gym</h2>
 
   <div class="locations-grid">
@@ -1669,89 +1675,23 @@ footer {
     <div class="location-card reveal reveal-delay-1">
       <div class="location-header">
         <span class="location-hq-badge">HQ</span>
-        <div class="location-name">Gold Coast</div>
-        <div class="location-suburb">Southport, QLD</div>
+        <div class="location-name">Pimpama</div>
+        <div class="location-suburb">School of Arts Hall, QLD</div>
       </div>
       <dl class="location-body">
         <div class="location-info-row">
           <dt>Address</dt>
-          <dd>12 Nerang St, Southport QLD 4215</dd>
+          <dd>15 Clark Way, Pimpama QLD 4209</dd>
         </div>
         <div class="location-info-row">
           <dt>Training</dt>
-          <dd>Mon, Wed, Fri — 6:00 PM to 9:00 PM<br>Sat — 9:00 AM to 12:00 PM</dd>
+          <dd>Saturday — 9:45 AM to 12:30 PM</dd>
         </div>
-        <div class="location-info-row">
-          <dt>Tables</dt>
-          <dd>4 Competition Tables</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Coach</dt>
-          <dd>Marcus Webb — Head Coach</dd>
-        </div>
-        <a href="#" class="btn-directions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Get Directions
-        </a>
       </dl>
-    </div>
-
-    <div class="location-card reveal reveal-delay-2">
-      <div class="location-header">
-        <div class="location-name">Brisbane</div>
-        <div class="location-suburb">Fortitude Valley, QLD</div>
-      </div>
-      <dl class="location-body">
-        <div class="location-info-row">
-          <dt>Address</dt>
-          <dd>88 Brunswick St, Fortitude Valley QLD 4006</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Training</dt>
-          <dd>Tue, Thu — 7:00 PM to 9:30 PM<br>Sun — 10:00 AM to 1:00 PM</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Tables</dt>
-          <dd>2 Competition Tables</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Coach</dt>
-          <dd>Jake Thornton — Senior Coach</dd>
-        </div>
-        <a href="#" class="btn-directions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Get Directions
-        </a>
-      </dl>
-    </div>
-
-    <div class="location-card reveal reveal-delay-3">
-      <div class="location-header">
-        <div class="location-name">Sunshine Coast</div>
-        <div class="location-suburb">Maroochydore, QLD</div>
-      </div>
-      <dl class="location-body">
-        <div class="location-info-row">
-          <dt>Address</dt>
-          <dd>5 Ocean St, Maroochydore QLD 4558</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Training</dt>
-          <dd>Mon, Thu — 6:30 PM to 9:00 PM<br>Sat — 8:30 AM to 11:00 AM</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Tables</dt>
-          <dd>2 Competition Tables</dd>
-        </div>
-        <div class="location-info-row">
-          <dt>Coach</dt>
-          <dd>Dion Kalepa — Coach</dd>
-        </div>
-        <a href="#" class="btn-directions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Get Directions
-        </a>
-      </dl>
+      <a href="https://maps.google.com/?q=15+Clark+Way,+Pimpama+QLD+4209" target="_blank" rel="noopener" class="btn-directions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Get Directions
+      </a>
     </div>
 
   </div>
