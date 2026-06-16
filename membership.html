@@ -974,6 +974,7 @@ async function submitForm() {
 
     const payload = {
       nonce:            result.token,
+      location_id:      CFG.SQ_LOCATION_ID,
       idempotency_key:  idempotencyKey,
       amount_cents:     amountCents,
       membership_type:  selectedType,
