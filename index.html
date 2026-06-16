@@ -71,25 +71,13 @@ body {
 
 .nav-logo {
   display: flex;
-  flex-direction: column;
-  line-height: 1;
+  align-items: center;
   text-decoration: none;
-  color: var(--cream);
-  gap: 1px;
 }
-.nav-logo-top {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 0.08em;
-  color: var(--gold);
-}
-.nav-logo-sub {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--cream-d);
+.nav-logo img {
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 .nav-pills {
@@ -1662,8 +1650,7 @@ footer {
 <!-- ══════════════════════ NAV ══════════════════════ -->
 <header class="nav" id="main-nav">
   <a href="#hero" class="nav-logo" aria-label="Powerhouse Armwrestling">
-    <span class="nav-logo-top">POWERHOUSE</span>
-    <span class="nav-logo-sub">Armwrestling Club</span>
+    <img src="logo.png" alt="Powerhouse Armwrestling Club">
   </a>
 
   <ul class="nav-pills">
