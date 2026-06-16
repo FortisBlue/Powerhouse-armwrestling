@@ -409,6 +409,17 @@ section {
   display: inline-block;
   margin-top: 8px;
 }
+.event-row-countdown {
+  border-top: 1px solid rgba(201,162,52,0.12);
+  margin-top: 4px;
+  padding-top: 10px;
+}
+.event-countdown {
+  color: var(--gold) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+}
+
 .event-upcoming-tag {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px;
@@ -1714,7 +1725,7 @@ footer {
 
   <div class="events-grid">
 
-    <article class="event-card reveal reveal-delay-1">
+    <article class="event-card reveal reveal-delay-1" data-event-date="2026-07-11">
       <div class="event-num">01 / STATE TITLES</div>
       <h3 class="event-name">NSW State Titles</h3>
       <p class="event-tagline">Australian Armwrestling Federation</p>
@@ -1722,11 +1733,12 @@ footer {
         <div class="event-row"><dt>Date</dt><dd>11 Jul 2026</dd></div>
         <div class="event-row"><dt>Location</dt><dd>New South Wales</dd></div>
         <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+        <div class="event-row event-row-countdown"><dt>Time Left</dt><dd class="event-countdown">—</dd></div>
       </dl>
       <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
-    <article class="event-card reveal reveal-delay-2">
+    <article class="event-card reveal reveal-delay-2" data-event-date="2026-08-08">
       <div class="event-num">02 / STATE TITLES</div>
       <h3 class="event-name">QLD State Titles</h3>
       <p class="event-tagline">Home Turf — AAF Points Series</p>
@@ -1734,11 +1746,12 @@ footer {
         <div class="event-row"><dt>Date</dt><dd>08 Aug 2026</dd></div>
         <div class="event-row"><dt>Location</dt><dd>Queensland</dd></div>
         <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+        <div class="event-row event-row-countdown"><dt>Time Left</dt><dd class="event-countdown">—</dd></div>
       </dl>
       <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
-    <article class="event-card reveal reveal-delay-1">
+    <article class="event-card reveal reveal-delay-1" data-event-date="2026-09-19">
       <div class="event-num">03 / STATE TITLES</div>
       <h3 class="event-name">VIC State Titles</h3>
       <p class="event-tagline">Australian Armwrestling Federation</p>
@@ -1746,11 +1759,12 @@ footer {
         <div class="event-row"><dt>Date</dt><dd>19 Sep 2026</dd></div>
         <div class="event-row"><dt>Location</dt><dd>Victoria</dd></div>
         <div class="event-row"><dt>Series</dt><dd>AAF Points Series</dd></div>
+        <div class="event-row event-row-countdown"><dt>Time Left</dt><dd class="event-countdown">—</dd></div>
       </dl>
       <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
-    <article class="event-card reveal reveal-delay-2">
+    <article class="event-card reveal reveal-delay-2" data-event-date="2026-10-10">
       <div class="event-num">04 / WORLD</div>
       <h3 class="event-name">World Champs</h3>
       <p class="event-tagline">WAF World Championships 2026</p>
@@ -1758,11 +1772,12 @@ footer {
         <div class="event-row"><dt>Date</dt><dd>10 Oct 2026</dd></div>
         <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
         <div class="event-row"><dt>Series</dt><dd>WAF International</dd></div>
+        <div class="event-row event-row-countdown"><dt>Time Left</dt><dd class="event-countdown">—</dd></div>
       </dl>
       <div class="event-upcoming-tag">Upcoming</div>
     </article>
 
-    <article class="event-card reveal reveal-delay-1">
+    <article class="event-card reveal reveal-delay-1" data-event-date="2026-11-21">
       <div class="event-num">05 / NATIONAL</div>
       <h3 class="event-name">National Titles</h3>
       <p class="event-tagline">Australian National Championships</p>
@@ -1770,6 +1785,7 @@ footer {
         <div class="event-row"><dt>Date</dt><dd>21 Nov 2026</dd></div>
         <div class="event-row"><dt>Location</dt><dd>TBA</dd></div>
         <div class="event-row"><dt>Series</dt><dd>AAF National</dd></div>
+        <div class="event-row event-row-countdown"><dt>Time Left</dt><dd class="event-countdown">—</dd></div>
       </dl>
       <div class="event-upcoming-tag">Upcoming</div>
     </article>
@@ -2074,6 +2090,39 @@ fetch('/api/member-count')
     }
   })
   .catch(() => {});
+
+/* ── EVENT COUNTDOWNS ── */
+(function () {
+  function fmtCountdown(isoDate) {
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    var target = new Date(isoDate);
+    target.setHours(0, 0, 0, 0);
+    var days = Math.round((target - now) / 86400000);
+    if (days < 0)  return null;
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Tomorrow';
+    if (days < 7)  return days + ' days';
+    var weeks = Math.floor(days / 7);
+    var remD  = days % 7;
+    if (days < 60) {
+      var s = weeks === 1 ? '1 week' : weeks + ' weeks';
+      if (remD) s += ', ' + remD + (remD === 1 ? ' day' : ' days');
+      return s;
+    }
+    var months = Math.floor(days / 30);
+    var remW   = Math.floor((days % 30) / 7);
+    var s = months === 1 ? '1 month' : months + ' months';
+    if (remW) s += ', ' + remW + (remW === 1 ? ' week' : ' weeks');
+    return s;
+  }
+
+  document.querySelectorAll('.event-card[data-event-date]').forEach(function (card) {
+    var label = fmtCountdown(card.getAttribute('data-event-date'));
+    var el = card.querySelector('.event-countdown');
+    if (el) el.textContent = label || 'Past';
+  });
+})();
 
 /* ── HOVER BUTTON — gold cursor-trail circles ── */
 (function () {
