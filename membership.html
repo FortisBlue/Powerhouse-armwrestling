@@ -623,7 +623,7 @@ body {
       </div>
 
       <div class="membership-option">
-        <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked>
+        <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
           <div class="membership-name">Yearly Powerhouse Membership</div>
           <div class="membership-note">Valid to 31 July. Free shirt for new members.</div>
@@ -633,7 +633,7 @@ body {
 
       <!-- $1 PAYMENT TEST — REMOVE BEFORE GOING LIVE -->
       <div class="membership-option" style="border-color:rgba(232,184,75,0.5);background:rgba(201,162,52,0.06);">
-        <input class="membership-radio" type="radio" name="mem-type" id="mem-test" value="test">
+        <input class="membership-radio" type="radio" name="mem-type" id="mem-test" value="test" onchange="updateSubmitBtn()">
         <div class="membership-info">
           <div class="membership-name" style="color:var(--gold);">⚡ Payment Test</div>
           <div class="membership-note">Dev only — remove before going live</div>
