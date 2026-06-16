@@ -4,9 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>POWERHOUSE ARMWRESTLING — Gold Coast, QLD</title>
+<meta name="description" content="Powerhouse Armwrestling Club — Gold Coast's home of arm wrestling. Train Saturdays in Pimpama. All levels welcome.">
+<meta name="theme-color" content="#0a0908">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="hero.jpg" as="image" fetchpriority="high">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap"></noscript>
 <style>
 :root {
   --black:   #0a0908;
@@ -373,6 +377,18 @@ section {
 .reveal-delay-4 { transition-delay: 0.32s; }
 
 /* ────────────────────────────────────────────────
+   ANIMATED GRADIENT BORDER (event cards)
+──────────────────────────────────────────────── */
+@property --ev-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes ev-border-spin {
+  to { --ev-angle: 360deg; }
+}
+
+/* ────────────────────────────────────────────────
    EVENTS
 ──────────────────────────────────────────────── */
 #events {
@@ -435,13 +451,25 @@ section {
 }
 
 .event-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-b);
+  background:
+    linear-gradient(#131108, #131108) padding-box,
+    conic-gradient(
+      from var(--ev-angle),
+      #2a1f06 0%,
+      #584827 20%,
+      #C9A234 45%,
+      #E8B84B 50%,
+      #C9A234 55%,
+      #584827 80%,
+      #2a1f06 100%
+    ) border-box;
+  border: 1.5px solid transparent;
   border-radius: 12px;
   padding: 28px 26px;
   position: relative;
   overflow: hidden;
-  transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+  animation: ev-border-spin 5s linear infinite;
+  transition: transform 280ms ease, box-shadow 280ms ease;
   cursor: default;
 }
 .event-card::before {
@@ -453,8 +481,8 @@ section {
 }
 .event-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(201,162,52,0.55);
   box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,162,52,0.15);
+  animation-duration: 2s;
 }
 
 .event-num {
@@ -654,10 +682,23 @@ section {
 }
 
 .rank-aside-card {
-  background: var(--char);
-  border: 1px solid var(--glass-b);
+  background:
+    linear-gradient(#1c1a16, #1c1a16) padding-box,
+    conic-gradient(
+      from var(--ev-angle),
+      #2a1f06 0%,
+      #584827 20%,
+      #C9A234 45%,
+      #E8B84B 50%,
+      #C9A234 55%,
+      #584827 80%,
+      #2a1f06 100%
+    ) border-box;
+  border: 1.5px solid transparent;
   border-radius: 12px;
   padding: 28px;
+  animation: ev-border-spin 9s linear infinite;
+  animation-delay: -4s;
 }
 
 .rank-aside-title {
@@ -818,15 +859,28 @@ section {
 }
 
 .location-card {
-  background: var(--char);
-  border: 1px solid rgba(201,162,52,0.15);
+  background:
+    linear-gradient(#1c1a16, #1c1a16) padding-box,
+    conic-gradient(
+      from var(--ev-angle),
+      #2a1f06 0%,
+      #584827 20%,
+      #C9A234 45%,
+      #E8B84B 50%,
+      #C9A234 55%,
+      #584827 80%,
+      #2a1f06 100%
+    ) border-box;
+  border: 1.5px solid transparent;
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 280ms ease, border-color 280ms ease;
+  animation: ev-border-spin 5s linear infinite;
+  animation-delay: -1.2s;
+  transition: transform 280ms ease;
 }
 .location-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(201,162,52,0.45);
+  animation-duration: 2s;
 }
 
 .location-header {
@@ -942,16 +996,29 @@ section {
 }
 
 .product-card {
-  background: var(--char);
-  border: 1px solid rgba(201,162,52,0.1);
+  background:
+    linear-gradient(#1c1a16, #1c1a16) padding-box,
+    conic-gradient(
+      from var(--ev-angle),
+      #2a1f06 0%,
+      #584827 20%,
+      #C9A234 45%,
+      #E8B84B 50%,
+      #C9A234 55%,
+      #584827 80%,
+      #2a1f06 100%
+    ) border-box;
+  border: 1.5px solid transparent;
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+  animation: ev-border-spin 7s linear infinite;
+  animation-delay: -2.5s;
+  transition: transform 280ms ease, box-shadow 280ms ease;
 }
 .product-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(201,162,52,0.4);
   box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(201,162,52,0.08);
+  animation-duration: 2.5s;
 }
 
 .product-img {
@@ -1126,10 +1193,23 @@ section {
 
 /* JOIN FORM */
 .join-form-wrap {
-  background: var(--char);
-  border: 1px solid var(--glass-b);
+  background:
+    linear-gradient(#1c1a16, #1c1a16) padding-box,
+    conic-gradient(
+      from var(--ev-angle),
+      #2a1f06 0%,
+      #584827 20%,
+      #C9A234 45%,
+      #E8B84B 50%,
+      #C9A234 55%,
+      #584827 80%,
+      #2a1f06 100%
+    ) border-box;
+  border: 1.5px solid transparent;
   border-radius: 16px;
   padding: 36px 32px;
+  animation: ev-border-spin 11s linear infinite;
+  animation-delay: -6s;
 }
 
 .form-title {
@@ -1511,6 +1591,45 @@ footer {
 .nav-socials svg { width: 14px; height: 14px; }
 @media (max-width: 860px) { .nav-socials { display: none; } }
 
+/* ── MOBILE NAV TOUCH TARGET ── */
+@media (max-width: 900px) {
+  .nav-cta { height: 44px; }
+}
+
+/* ── REDUCED MOTION — restore static borders, kill animations ── */
+@media (prefers-reduced-motion: reduce) {
+  .event-card,
+  .product-card,
+  .location-card {
+    animation: none;
+    background: var(--glass);
+    border: 1px solid var(--glass-b);
+  }
+  .rank-aside-card,
+  .join-form-wrap {
+    animation: none;
+    background: var(--char);
+    border: 1px solid var(--glass-b);
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-img-wrap,
+  .hero-cta {
+    opacity: 1;
+    animation: none;
+  }
+  .nav {
+    opacity: 1;
+    animation: none;
+  }
+  .member-count-dot {
+    animation: none;
+  }
+}
+
 /* ── DRAWER SOCIALS ── */
 .drawer-socials {
   display: flex;
@@ -1636,7 +1755,7 @@ footer {
 
     <!-- 2nd Place -->
     <div class="podium-slot podium-pos-2">
-      <div class="podium-photo"><img src="/rank2.png" alt="Pona Purcell"></div>
+      <div class="podium-photo"><img src="/rank2.png" alt="Pona Purcell" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Pona Purcell</div>
       <div class="podium-block"><span class="podium-num">2</span></div>
     </div>
@@ -1644,14 +1763,14 @@ footer {
     <!-- 1st Place -->
     <div class="podium-slot podium-pos-1">
       <div class="podium-crown" aria-hidden="true">★</div>
-      <div class="podium-photo"><img src="/rank1.png" alt="Jay Etheve"></div>
+      <div class="podium-photo"><img src="/rank1.png" alt="Jay Etheve" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Jay Etheve</div>
       <div class="podium-block"><span class="podium-num">1</span></div>
     </div>
 
     <!-- 3rd Place -->
     <div class="podium-slot podium-pos-3">
-      <div class="podium-photo"><img src="/rank3.png" alt="Sam Saffuri"></div>
+      <div class="podium-photo"><img src="/rank3.png" alt="Sam Saffuri" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Sam Saffuri</div>
       <div class="podium-block"><span class="podium-num">3</span></div>
     </div>
@@ -2012,8 +2131,25 @@ footer {
 </footer>
 
 <script>
-/* ── NAV SCROLL ── */
-// nav is always solid — no scroll toggle needed
+/* ── NAV SCROLL BACKGROUND ── */
+(function () {
+  var nav = document.getElementById('main-nav');
+  var heroH = window.innerHeight * 0.75;
+  function onScroll() {
+    if (window.scrollY > heroH) {
+      nav.style.background     = 'rgba(10,9,8,0.96)';
+      nav.style.backdropFilter = 'blur(20px)';
+      nav.style.webkitBackdropFilter = 'blur(20px)';
+      nav.style.borderBottom   = '1px solid rgba(201,162,52,0.14)';
+    } else {
+      nav.style.background     = 'transparent';
+      nav.style.backdropFilter = 'none';
+      nav.style.webkitBackdropFilter = 'none';
+      nav.style.borderBottom   = 'none';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 
 /* ── MOBILE BURGER ── */
 const burger = document.getElementById('nav-burger');
@@ -2080,16 +2216,21 @@ function handleJoin(e) {
   btn.style.letterSpacing = '0.1em';
 }
 
-/* ── LIVE MEMBER COUNT ── */
-fetch('/api/member-count')
-  .then(r => r.json())
-  .then(d => {
-    if (typeof d.count === 'number') {
-      document.getElementById('member-count-num').textContent = d.count;
-      document.getElementById('hero-member-count').style.opacity = '1';
-    }
-  })
-  .catch(() => {});
+/* ── LIVE MEMBER COUNT (4s timeout for low reception) ── */
+(function () {
+  var ac  = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  var tid = setTimeout(function () { if (ac) ac.abort(); }, 4000);
+  fetch('/api/member-count', ac ? { signal: ac.signal } : {})
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      clearTimeout(tid);
+      if (typeof d.count === 'number') {
+        document.getElementById('member-count-num').textContent = d.count;
+        document.getElementById('hero-member-count').style.opacity = '1';
+      }
+    })
+    .catch(function () {});
+})();
 
 /* ── EVENT COUNTDOWNS ── */
 (function () {
