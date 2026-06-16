@@ -100,7 +100,7 @@ body {
   color: var(--cream);
   font-family: 'Barlow', sans-serif;
   font-size: 15px;
-  padding: 11px 13px;
+  padding: 13px 14px;
   outline: none;
   transition: border-color 0.2s;
   -webkit-appearance: none;
@@ -139,28 +139,28 @@ body {
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
-  font-size: 13px;
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.8;
   color: var(--cream-d);
 }
 .waiver-doc p { margin-bottom: 12px; }
 .waiver-doc p:last-child { margin-bottom: 0; }
 .waiver-section-head {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cream);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  margin-top: 18px;
-  margin-bottom: 8px;
+  color: var(--gold);
+  margin-top: 22px;
+  margin-bottom: 6px;
   display: block;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(201,162,52,0.15);
 }
 .waiver-doc ul { padding-left: 16px; margin: 6px 0 10px; display: flex; flex-direction: column; gap: 6px; }
 .waiver-doc ul li { list-style: none; padding-left: 8px; position: relative; }
-.waiver-doc ul li::before { content: '—'; position: absolute; left: -10px; color: var(--gold-dk); }
+.waiver-doc ul li::before { content: '·'; position: absolute; left: -10px; color: var(--gold); font-size: 18px; line-height: 1; top: 2px; }
 .waiver-doc strong { color: var(--cream); }
 
 /* AGREE CHECKBOX */
@@ -207,12 +207,12 @@ body {
 .sig-wrap.error { border-color: var(--error) !important; }
 .sig-bar { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; background: var(--char-lt); border-bottom: 1px solid rgba(201,162,52,0.1); }
 .sig-bar-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-d); }
-.sig-clear { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); cursor: pointer; padding: 3px 7px; border-radius: 3px; transition: background 0.15s; }
+.sig-clear { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); cursor: pointer; padding: 8px 12px; border-radius: 4px; transition: background 0.15s; min-height: 36px; display: flex; align-items: center; }
 .sig-clear:hover { background: rgba(201,162,52,0.1); }
-.sig-canvas { display: block; width: 100%; height: 150px; background: #fff; cursor: crosshair; touch-action: none; }
+.sig-canvas { display: block; width: 100%; height: 180px; background: #fff; cursor: crosshair; touch-action: none; }
 .sig-footer { font-size: 11px; font-style: italic; color: rgba(200,190,168,0.35); text-align: center; padding: 7px 12px; background: var(--char-lt); border-top: 1px solid rgba(201,162,52,0.07); }
 .sig-err { display: none; font-size: 12px; color: var(--error); margin-top: 5px; }
-.minor-note { font-size: 12px; color: rgba(200,190,168,0.45); border-left: 2px solid rgba(201,162,52,0.2); padding-left: 10px; margin-top: 14px; line-height: 1.5; }
+.minor-note { font-size: 12px; color: rgba(200,190,168,0.45); padding-top: 14px; border-top: 1px solid rgba(201,162,52,0.1); margin-top: 14px; line-height: 1.6; }
 
 /* BUTTONS */
 .btn-primary { width: 100%; padding: 15px 24px; background: var(--gold); color: var(--black); border: none; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.12s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; }
@@ -296,8 +296,8 @@ body {
 
   <div class="progress-wrap" id="progress-wrap">
     <div class="progress-labels">
-      <span class="prog-label active" id="prog-1">Step 1 — Waiver</span>
-      <span class="prog-label" id="prog-2">Step 2 — Membership</span>
+      <span class="prog-label active" id="prog-1">Step 1: Waiver</span>
+      <span class="prog-label" id="prog-2">Step 2: Payment</span>
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="progress-fill"></div>
@@ -312,9 +312,7 @@ body {
     <div class="form-card">
       <p class="section-eyebrow">Membership Application</p>
       <h1 class="section-title">Your Details</h1>
-      <p class="section-sub">
-        I, <strong style="color:var(--cream)"></strong> HERBY AGREE with GOLDCOAST POWERHOUSE that I am by this agreement entitled to participate in a GOLDCOAST POWERHOUSE Event on the terms and conditions set out in this document.
-      </p>
+      <p class="section-sub">Fill in your details below, then read and sign the membership waiver to continue.</p>
 
       <div class="form-row">
         <div class="form-group">
@@ -410,6 +408,19 @@ body {
         </span>
       </label>
       <p class="agree-err" id="agree-err">You must read and agree to the terms above before continuing.</p>
+
+      <!-- MARKETING OPT-IN -->
+      <label class="agree-item" id="marketing-item" style="margin-bottom:0;">
+        <div class="agree-visual">
+          <input type="checkbox" id="marketing-check">
+          <span class="check-box">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><polyline points="1.5 5 4.5 8 10.5 1.5" stroke="#0a0908" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <span class="agree-text">
+          <strong>Keep me in the loop</strong>: receive club news, event updates and competition results by email. <span style="color:var(--cream-d);font-size:12px;">(Optional)</span>
+        </span>
+      </label>
 
     </div>
 
@@ -578,10 +589,10 @@ body {
             <option value="Small">Small</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>
-            <option value="XL">Extra Large — XL</option>
-            <option value="XXL">Double Extra Large — XXL</option>
-            <option value="XXXL">Triple Extra Large — XXXL</option>
-            <option value="XXXXL">Four Extra Large — XXXXL</option>
+            <option value="XL">XL</option>
+            <option value="XXL">2XL</option>
+            <option value="XXXL">3XL</option>
+            <option value="XXXXL">4XL</option>
           </select>
           <p class="form-hint">Your last name will be printed on the back of your shirt.</p>
         </div>
@@ -592,7 +603,7 @@ body {
         <label style="display:flex; align-items:flex-start; gap:12px; border:1px solid rgba(201,162,52,0.25); border-radius:8px; padding:16px; cursor:pointer;">
           <input type="checkbox" id="tshirt-addon-check" onchange="handleTshirtAddon()" style="margin-top:2px; width:18px; height:18px; accent-color:var(--gold); flex-shrink:0;">
           <span style="font-family:'Barlow Condensed',sans-serif; font-size:15px; line-height:1.4;">
-            I need a new club t-shirt &nbsp;<span style="color:var(--gold); font-weight:600;">+$50</span><br>
+            Add a club t-shirt &nbsp;<span style="color:var(--gold); font-weight:600;">+$50</span><br>
             <small style="color:var(--cream-d); font-weight:400;">Your last name will be printed on the back</small>
           </span>
         </label>
@@ -603,10 +614,10 @@ body {
             <option value="Small">Small</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>
-            <option value="XL">Extra Large — XL</option>
-            <option value="XXL">Double Extra Large — XXL</option>
-            <option value="XXXL">Triple Extra Large — XXXL</option>
-            <option value="XXXXL">Four Extra Large — XXXXL</option>
+            <option value="XL">XL</option>
+            <option value="XXL">2XL</option>
+            <option value="XXXL">3XL</option>
+            <option value="XXXXL">4XL</option>
           </select>
         </div>
       </div>
@@ -978,6 +989,7 @@ async function submitForm() {
       ec_phone:         document.getElementById('ec-phone').value.trim(),
       ec_signed:        !ecPad.isEmpty(),
       tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
+      marketing_opt_in: document.getElementById('marketing-check').checked,
     };
 
     const resp = await fetch(CFG.APPS_SCRIPT_URL, {
