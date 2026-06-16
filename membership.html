@@ -993,10 +993,12 @@ async function submitForm() {
       dob:              document.getElementById('dob').value,
       sig_date:         document.getElementById('sig-date').value,
       member_signed:    !memberPad.isEmpty(),
+      member_sig_png:   memberPad.isEmpty() ? '' : memberPad.toDataURL('image/png'),
       ec_first_name:    document.getElementById('ec-first-name').value.trim(),
       ec_last_name:     document.getElementById('ec-last-name').value.trim(),
       ec_phone:         document.getElementById('ec-phone').value.trim(),
       ec_signed:        !ecPad.isEmpty(),
+      ec_sig_png:       ecPad.isEmpty() ? '' : ecPad.toDataURL('image/png'),
       tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
       marketing_opt_in: document.getElementById('marketing-check').checked,
     };
