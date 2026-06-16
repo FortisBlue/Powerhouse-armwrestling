@@ -907,8 +907,11 @@ function handleTshirtAddon() {
 function calcTotal() {
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
   let cents   = PRICES[type] || PRICES.test;
-  const jtype = document.querySelector('input[name="join-type"]:checked').value;
-  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
+  // t-shirt add-on only applies to real membership options, not the $1 test
+  if (type !== 'test') {
+    const jtype = document.querySelector('input[name="join-type"]:checked').value;
+    if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
+  }
   return cents;
 }
 
