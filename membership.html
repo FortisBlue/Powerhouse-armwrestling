@@ -209,7 +209,8 @@ body {
 .sig-bar-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-d); }
 .sig-clear { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); cursor: pointer; padding: 8px 12px; border-radius: 4px; transition: background 0.15s; min-height: 36px; display: flex; align-items: center; }
 .sig-clear:hover { background: rgba(201,162,52,0.1); }
-.sig-canvas { display: block; width: 100%; height: 180px; background: #fff; cursor: crosshair; touch-action: none; }
+.sig-canvas { display: block; width: 100%; height: 180px; background: #fff; cursor: crosshair; touch-action: none; -ms-touch-action: none; }
+#member-sig-canvas { touch-action: none; -ms-touch-action: none; width: 100%; display: block; }
 .sig-footer { font-size: 11px; font-style: italic; color: rgba(200,190,168,0.35); text-align: center; padding: 7px 12px; background: var(--char-lt); border-top: 1px solid rgba(201,162,52,0.07); }
 .sig-err { display: none; font-size: 12px; color: var(--error); margin-top: 5px; }
 .minor-note { font-size: 12px; color: rgba(200,190,168,0.45); padding-top: 14px; border-top: 1px solid rgba(201,162,52,0.1); margin-top: 14px; line-height: 1.6; }
@@ -708,8 +709,17 @@ let squareCard = null, memberPad = null;
 /* ─── INIT ──────────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   memberPad = initPad('member-sig-canvas');
+  let _lastSigWidth = 0;
   window.addEventListener('resize', () => {
-    resizePad(document.getElementById('member-sig-canvas'), memberPad);
+    const canvas = document.getElementById('member-sig-canvas');
+    const rect = canvas.getBoundingClientRect();
+    const newW = rect.width || canvas.offsetWidth || 0;
+    // Only resize when the WIDTH changes (ignores mobile keyboard open/close which only changes height)
+    // Also skip if canvas is hidden (width=0 means display:none — would wipe the signature)
+    if (newW > 10 && Math.abs(newW - _lastSigWidth) > 20) {
+      _lastSigWidth = newW;
+      resizePad(canvas, memberPad);
+    }
   });
   document.getElementById('sig-date').value = new Date().toISOString().slice(0, 10);
   if (!CFG.IS_SANDBOX) {
@@ -753,19 +763,33 @@ function devPrefill() {
 function initPad(id) {
   const canvas = document.getElementById(id);
   const ratio  = Math.max(window.devicePixelRatio || 1, 1);
-  canvas.width  = canvas.offsetWidth  * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
+  const rect   = canvas.getBoundingClientRect();
+  const w = rect.width  || canvas.offsetWidth  || 300;
+  const h = rect.height || canvas.offsetHeight || 160;
+  canvas.width  = w * ratio;
+  canvas.height = h * ratio;
   canvas.getContext('2d').scale(ratio, ratio);
+  canvas.style.width  = w + 'px';
+  canvas.style.height = h + 'px';
   return new SignaturePad(canvas, { backgroundColor: 'rgb(255,255,255)', penColor: 'rgb(10,9,8)', minWidth: 1.5, maxWidth: 3 });
 }
 
 function resizePad(canvas, pad) {
+  if (!canvas || !pad) return;
+  const rect = canvas.getBoundingClientRect();
+  const w = rect.width || canvas.offsetWidth;
+  if (w < 10) return; // canvas is hidden or collapsed — never wipe the signature
   const ratio = Math.max(window.devicePixelRatio || 1, 1);
-  const data  = pad.toData();
-  canvas.width  = canvas.offsetWidth  * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
-  canvas.getContext('2d').scale(ratio, ratio);
-  pad.fromData(data);
+  const h = rect.height || canvas.offsetHeight || 160;
+  const data = pad.isEmpty() ? null : pad.toData();
+  canvas.width  = w * ratio;
+  canvas.height = h * ratio;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(ratio, ratio);
+  canvas.style.width  = w + 'px';
+  canvas.style.height = h + 'px';
+  pad.clear();
+  if (data) pad.fromData(data);
 }
 
 function clearSig() {
@@ -962,6 +986,26 @@ async function submitForm() {
     console.log('NONCE:', result.token);
     console.log('AMOUNT CENTS:', amountCents);
 
+    // Capture signature and validate before charging
+    const memberSigPng = (memberPad && !memberPad.isEmpty())
+      ? memberPad.toDataURL('image/png')
+      : '';
+    const memberCanvas = document.getElementById('member-sig-canvas');
+    console.log('Signature debug', {
+      isTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+      memberPadExists: !!memberPad,
+      memberPadEmpty:  memberPad ? memberPad.isEmpty() : null,
+      sigPrefix:       memberSigPng ? memberSigPng.slice(0, 30) : null,
+      sigLength:       memberSigPng ? memberSigPng.length : 0,
+      canvasWidth:     memberCanvas ? memberCanvas.width : null,
+      canvasHeight:    memberCanvas ? memberCanvas.height : null,
+      canvasClientWidth:  memberCanvas ? memberCanvas.clientWidth : null,
+      canvasClientHeight: memberCanvas ? memberCanvas.clientHeight : null,
+    });
+    if (!memberSigPng || !memberSigPng.startsWith('data:image/png;base64,') || memberSigPng.length < 1000) {
+      throw new Error('Signature is missing or blank — please go back and sign the waiver.');
+    }
+
     const payload = {
       nonce:            result.token,
       location_id:      CFG.SQ_LOCATION_ID,
@@ -975,8 +1019,8 @@ async function submitForm() {
       phone:            document.getElementById('phone').value.trim(),
       dob:              document.getElementById('dob').value,
       sig_date:         document.getElementById('sig-date').value,
-      member_signed:    !memberPad.isEmpty(),
-      member_sig_png:   memberPad.isEmpty() ? '' : memberPad.toDataURL('image/png'),
+      member_signed:    true,
+      member_sig_png:   memberSigPng,
       ec_first_name:    document.getElementById('ec-first-name').value.trim(),
       ec_last_name:     document.getElementById('ec-last-name').value.trim(),
       ec_phone:         document.getElementById('ec-phone').value.trim(),
