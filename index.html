@@ -234,7 +234,7 @@ body {
   height: 100vh;
   padding: 0;
   overflow: hidden;
-  background: #fff;
+  background: var(--black);
 }
 
 .hero-img-wrap {
@@ -1467,7 +1467,8 @@ footer {
 
 @media (max-width: 640px) {
   .hero-img {
-    object-position: 52% 22%;
+    object-fit: contain;
+    object-position: center center;
   }
   .hero-cta { top: 50%; left: 0; right: 0; transform: translateY(-50%); }
 
@@ -1719,7 +1720,10 @@ footer {
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
   <div class="hero-img-wrap">
-    <img src="hero.jpg" alt="Powerhouse Armwrestling — Gold Coast, QLD" class="hero-img">
+    <picture>
+      <source media="(max-width: 640px)" srcset="hero-mobile.jpg">
+      <img src="hero.jpg" alt="Powerhouse Armwrestling — Gold Coast, QLD" class="hero-img">
+    </picture>
 
     <div class="hero-cta">
       <div class="hero-member-count" id="hero-member-count" aria-live="polite">
