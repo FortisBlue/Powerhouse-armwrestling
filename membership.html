@@ -210,7 +210,7 @@ body {
 .sig-clear { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); cursor: pointer; padding: 8px 12px; border-radius: 4px; transition: background 0.15s; min-height: 36px; display: flex; align-items: center; }
 .sig-clear:hover { background: rgba(201,162,52,0.1); }
 .sig-canvas { display: block; width: 100%; height: 180px; background: #fff; cursor: crosshair; touch-action: none; -ms-touch-action: none; }
-#member-sig-canvas { touch-action: none; -ms-touch-action: none; width: 100%; display: block; }
+#member-sig-canvas { touch-action: none; -ms-touch-action: none; }
 .sig-footer { font-size: 11px; font-style: italic; color: rgba(200,190,168,0.35); text-align: center; padding: 7px 12px; background: var(--char-lt); border-top: 1px solid rgba(201,162,52,0.07); }
 .sig-err { display: none; font-size: 12px; color: var(--error); margin-top: 5px; }
 .minor-note { font-size: 12px; color: rgba(200,190,168,0.45); padding-top: 14px; border-top: 1px solid rgba(201,162,52,0.1); margin-top: 14px; line-height: 1.6; }
@@ -760,34 +760,27 @@ function devPrefill() {
 }
 
 /* ─── SIGNATURE PADS ────────────────────────────────────────────────────────── */
+const SIG_CSS_HEIGHT = 180; // must match .sig-canvas { height: 180px }
+
 function initPad(id) {
   const canvas = document.getElementById(id);
   const ratio  = Math.max(window.devicePixelRatio || 1, 1);
-  const rect   = canvas.getBoundingClientRect();
-  const w = rect.width  || canvas.offsetWidth  || 300;
-  const h = rect.height || canvas.offsetHeight || 160;
+  const w = canvas.offsetWidth || 300;
   canvas.width  = w * ratio;
-  canvas.height = h * ratio;
-  canvas.getContext('2d').scale(ratio, ratio);
-  canvas.style.width  = w + 'px';
-  canvas.style.height = h + 'px';
+  canvas.height = SIG_CSS_HEIGHT * ratio;
+  canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
   return new SignaturePad(canvas, { backgroundColor: 'rgb(255,255,255)', penColor: 'rgb(10,9,8)', minWidth: 1.5, maxWidth: 3 });
 }
 
 function resizePad(canvas, pad) {
   if (!canvas || !pad) return;
-  const rect = canvas.getBoundingClientRect();
-  const w = rect.width || canvas.offsetWidth;
-  if (w < 10) return; // canvas is hidden or collapsed — never wipe the signature
+  const w = canvas.offsetWidth;
+  if (w < 10) return; // canvas hidden or collapsed — never wipe the signature
   const ratio = Math.max(window.devicePixelRatio || 1, 1);
-  const h = rect.height || canvas.offsetHeight || 160;
   const data = pad.isEmpty() ? null : pad.toData();
   canvas.width  = w * ratio;
-  canvas.height = h * ratio;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(ratio, ratio);
-  canvas.style.width  = w + 'px';
-  canvas.style.height = h + 'px';
+  canvas.height = SIG_CSS_HEIGHT * ratio;
+  canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
   pad.clear();
   if (data) pad.fromData(data);
 }
