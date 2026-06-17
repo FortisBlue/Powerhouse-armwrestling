@@ -434,7 +434,7 @@ body {
         <div class="sig-wrap" id="member-sig-wrap">
           <div class="sig-bar">
             <span class="sig-bar-label">Signature</span>
-            <button type="button" class="sig-clear" onclick="clearSig('member')">Clear</button>
+            <button type="button" class="sig-clear" onclick="clearSig()">Clear</button>
           </div>
           <canvas class="sig-canvas" id="member-sig-canvas"></canvas>
           <div class="sig-footer">Sign with your finger or stylus</div>
@@ -469,21 +469,7 @@ body {
         <input class="form-input" type="tel" id="ec-phone" autocomplete="off" placeholder="0400000000" maxlength="10">
       </div>
 
-      <div class="form-divider"></div>
-
-      <div class="form-group">
-        <div class="sig-wrap" id="ec-sig-wrap">
-          <div class="sig-bar">
-            <span class="sig-bar-label">Emergency Contact Signature and Consent</span>
-            <button type="button" class="sig-clear" onclick="clearSig('ec')">Clear</button>
-          </div>
-          <canvas class="sig-canvas" id="ec-sig-canvas"></canvas>
-          <div class="sig-footer">Emergency contact signs here</div>
-        </div>
-        <p class="sig-err" id="ec-sig-err">Please provide the emergency contact's signature.</p>
-      </div>
-
-      <p class="minor-note">If the member is between 16–18 years old, a parent or legal guardian must sign above. The guardian's signature constitutes: (a) consent for the member to participate in all club activities; (b) agreement to all waiver and indemnity terms on the member's behalf; and (c) consent for photographs and media of the member to be used as described in the waiver above.</p>
+      <p class="minor-note">If the member is between 16–18 years old, a parent or legal guardian must provide verbal consent at their first training session.</p>
     </div>
 
     <button type="button" class="btn-primary" onclick="goToPage2()">
@@ -717,15 +703,13 @@ const CFG = {
 const PRICES = { yearly: 19200, half: 10000, test: 100 };
 
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
-let squareCard = null, memberPad = null, ecPad = null;
+let squareCard = null, memberPad = null;
 
 /* ─── INIT ──────────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   memberPad = initPad('member-sig-canvas');
-  ecPad     = initPad('ec-sig-canvas');
   window.addEventListener('resize', () => {
     resizePad(document.getElementById('member-sig-canvas'), memberPad);
-    resizePad(document.getElementById('ec-sig-canvas'), ecPad);
   });
   document.getElementById('sig-date').value = new Date().toISOString().slice(0, 10);
   if (!CFG.IS_SANDBOX) {
@@ -741,12 +725,13 @@ function devPrefill() {
   document.getElementById('phone').value      = '0412345678';
   document.getElementById('email').value      = 'test@powerhousearmwrestling.com.au';
   document.getElementById('dob').value        = '1990-06-14';
-  document.getElementById('ec-name').value    = 'Jane Member';
+  document.getElementById('ec-first-name').value = 'Jane';
+  document.getElementById('ec-last-name').value  = 'Member';
   document.getElementById('ec-phone').value   = '0498765432';
   document.getElementById('agree-check').checked = true;
   // Pre-draw a squiggle on both signature pads
   setTimeout(() => {
-    [memberPad, ecPad].forEach(pad => {
+    [memberPad].forEach(pad => {
       if (!pad) return;
       const w = pad._canvas.offsetWidth;
       const h = pad._canvas.offsetHeight;
@@ -783,11 +768,9 @@ function resizePad(canvas, pad) {
   pad.fromData(data);
 }
 
-function clearSig(which) {
-  const pad  = which === 'member' ? memberPad : ecPad;
-  const wrap = document.getElementById(which === 'member' ? 'member-sig-wrap' : 'ec-sig-wrap');
-  pad.clear();
-  wrap.classList.remove('error');
+function clearSig() {
+  memberPad.clear();
+  document.getElementById('member-sig-wrap').classList.remove('error');
 }
 
 /* ─── PAGE 1 VALIDATION ─────────────────────────────────────────────────────── */
@@ -823,7 +806,7 @@ function validatePage1() {
   }
 
   // Signatures
-  [['member-sig-wrap','member-sig-err', memberPad], ['ec-sig-wrap','ec-sig-err', ecPad]].forEach(([wrapId, errId, pad]) => {
+  [['member-sig-wrap','member-sig-err', memberPad]].forEach(([wrapId, errId, pad]) => {
     const empty = pad.isEmpty();
     document.getElementById(wrapId).classList.toggle('error', empty);
     document.getElementById(errId).style.display = empty ? 'block' : 'none';
@@ -997,8 +980,7 @@ async function submitForm() {
       ec_first_name:    document.getElementById('ec-first-name').value.trim(),
       ec_last_name:     document.getElementById('ec-last-name').value.trim(),
       ec_phone:         document.getElementById('ec-phone').value.trim(),
-      ec_signed:        !ecPad.isEmpty(),
-      ec_sig_png:       ecPad.isEmpty() ? '' : ecPad.toDataURL('image/png'),
+      ec_signed:        false,
       tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
       marketing_opt_in: document.getElementById('marketing-check').checked,
     };
