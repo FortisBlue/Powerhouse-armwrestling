@@ -1487,7 +1487,23 @@ footer {
 }
 
 @media (max-width: 900px) {
-  .events-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  .events-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding-bottom: 16px;
+    max-width: none;
+    scrollbar-width: none;
+  }
+  .events-grid::-webkit-scrollbar { display: none; }
+  .event-card {
+    flex: 0 0 82vw;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
   .locations-grid { grid-template-columns: 1fr; max-width: 520px; }
   .about-layout { grid-template-columns: 1fr; gap: 40px; }
   .nav-pills { display: none; }
