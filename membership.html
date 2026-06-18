@@ -340,8 +340,19 @@ body {
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="dob">Date of Birth <span class="req">*</span></label>
-        <input class="form-input" type="date" id="dob">
+        <label class="form-label">Date of Birth <span class="req">*</span></label>
+        <div style="display:flex; gap:8px;">
+          <select class="form-select" id="dob-day" onchange="updateDob()" style="flex:1; min-width:0;"><option value="">Day</option></select>
+          <select class="form-select" id="dob-month" onchange="updateDob()" style="flex:2; min-width:0;">
+            <option value="">Month</option>
+            <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+            <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+            <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+            <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+          </select>
+          <select class="form-select" id="dob-year" onchange="updateDob()" style="flex:2; min-width:0;"><option value="">Year</option></select>
+        </div>
+        <input type="hidden" id="dob">
       </div>
     </div>
 
@@ -739,7 +750,10 @@ function devPrefill() {
   document.getElementById('last-name').value  = 'Member';
   document.getElementById('phone').value      = '0412345678';
   document.getElementById('email').value      = 'test@powerhousearmwrestling.com.au';
-  document.getElementById('dob').value        = '1990-06-14';
+  document.getElementById('dob-day').value   = '14';
+  document.getElementById('dob-month').value = '6';
+  document.getElementById('dob-year').value  = '1990';
+  updateDob();
   document.getElementById('ec-first-name').value = 'Jane';
   document.getElementById('ec-last-name').value  = 'Member';
   document.getElementById('ec-phone').value   = '0498765432';
@@ -802,12 +816,19 @@ function validatePage1() {
   let ok = true;
 
   // Required text/date fields
-  ['first-name','last-name','phone','email','dob','sig-date','ec-first-name','ec-last-name','ec-phone'].forEach(id => {
+  ['first-name','last-name','phone','email','sig-date','ec-first-name','ec-last-name','ec-phone'].forEach(id => {
     const el  = document.getElementById(id);
     const bad = !el.value.trim();
     el.classList.toggle('error', bad);
     if (bad) ok = false;
   });
+
+  // DOB dropdown validation
+  const dobFilled = document.getElementById('dob').value;
+  ['dob-day','dob-month','dob-year'].forEach(id => {
+    document.getElementById(id).classList.toggle('error', !dobFilled);
+  });
+  if (!dobFilled) ok = false;
 
   // Australian mobile format
   ['phone','ec-phone'].forEach(id => {
@@ -904,6 +925,25 @@ function handleJoinType(type) {
   document.getElementById('tshirt-addon-size').classList.remove('error');
   updateSubmitBtn();
 }
+
+function updateDob() {
+  const day   = document.getElementById('dob-day').value;
+  const month = document.getElementById('dob-month').value;
+  const year  = document.getElementById('dob-year').value;
+  document.getElementById('dob').value = (day && month && year)
+    ? year + '-' + String(month).padStart(2,'0') + '-' + String(day).padStart(2,'0')
+    : '';
+  ['dob-day','dob-month','dob-year'].forEach(id => document.getElementById(id).classList.remove('error'));
+}
+
+// Populate DOB day and year dropdowns
+(function() {
+  const dayEl = document.getElementById('dob-day');
+  for (let d = 1; d <= 31; d++) { const o = document.createElement('option'); o.value = d; o.textContent = d; dayEl.appendChild(o); }
+  const yearEl = document.getElementById('dob-year');
+  const cur = new Date().getFullYear();
+  for (let y = cur; y >= 1920; y--) { const o = document.createElement('option'); o.value = y; o.textContent = y; yearEl.appendChild(o); }
+})();
 
 function handleTshirtAddon() {
   const checked = document.getElementById('tshirt-addon-check').checked;
