@@ -615,12 +615,12 @@ body {
         </div>
       </div>
 
-      <!-- YEARLY OPTION — uncomment when memberships open
+      <!-- YEARLY OPTION — uncomment for live launch
       <div class="membership-option">
-        <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" onchange="updateSubmitBtn()">
+        <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
           <div class="membership-name">Yearly Powerhouse Membership</div>
-          <div class="membership-note">Valid to 31 July. Free shirt for new members.</div>
+          <div class="membership-note">Valid 1 August – 31 July. Free shirt for new members.</div>
         </div>
         <div class="membership-price">$192</div>
       </div>
@@ -682,7 +682,7 @@ body {
     </div>
     <h2 class="confirm-title">You're In!</h2>
     <p class="confirm-body">Welcome to the Powerhouse family, <strong id="confirm-name"></strong>.</p>
-    <p class="confirm-detail">A receipt has been sent to <strong id="confirm-email"></strong>.<br>Our team will be in touch with your membership details.</p>
+    <p class="confirm-detail">You are now a member of Powerhouse Armwrestling Club.<br>We look forward to gripping up with you!</p>
     <a href="/" class="confirm-link">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       Back to Powerhouse
@@ -703,7 +703,7 @@ const CFG = {
 };
 
 // Pricing (cents)
-const PRICES = { yearly: 19200, half: 10000, test: 100 };
+const PRICES = { yearly: 19200, test: 100 };
 
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
 let squareCard = null, memberPad = null;
@@ -918,11 +918,8 @@ function handleTshirtAddon() {
 function calcTotal() {
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
   let cents   = PRICES[type] || PRICES.test;
-  // t-shirt add-on only applies to real membership options, not the $1 test
-  if (type !== 'test') {
-    const jtype = document.querySelector('input[name="join-type"]:checked').value;
-    if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
-  }
+  const jtype = document.querySelector('input[name="join-type"]:checked').value;
+  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 50;
   return cents;
 }
 
@@ -1044,7 +1041,6 @@ async function submitForm() {
       document.getElementById('confirm').classList.add('active');
       document.getElementById('progress-wrap').style.display = 'none';
       document.getElementById('confirm-name').textContent  = payload.first_name;
-      document.getElementById('confirm-email').textContent = payload.email;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       throw new Error(data.error || 'Payment failed — please try again or contact us.');
