@@ -734,9 +734,6 @@ const CFG = {
 // Pricing (cents)
 const PRICES = { yearly: 19200 };
 
-/* ─── LIVE TEST OVERRIDE — remove after final test ──────────────────────────── */
-const IS_FINAL_LIVE_TEST = new URLSearchParams(window.location.search).get('finaltest') === '1';
-
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
 let squareCard = null, memberPad = null;
 
@@ -764,7 +761,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     devPrefill();
   }
-  if (IS_FINAL_LIVE_TEST) updateSubmitBtn();
 });
 
 function devPrefill() {
@@ -979,7 +975,6 @@ function handleTshirtAddon() {
 }
 
 function calcTotal() {
-  if (IS_FINAL_LIVE_TEST) return 100;
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
   let cents   = PRICES[type];
   const jtype = document.querySelector('input[name="join-type"]:checked').value;
@@ -1091,7 +1086,6 @@ async function submitForm() {
       ec_signed:        false,
       tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
       marketing_opt_in: document.getElementById('marketing-check').checked,
-      live_test:        IS_FINAL_LIVE_TEST ? 'final_live_test_1_dollar' : undefined,
     };
 
     fetchSent = true;
