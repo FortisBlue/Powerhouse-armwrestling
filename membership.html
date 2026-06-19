@@ -764,6 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     devPrefill();
   }
+  if (IS_FINAL_LIVE_TEST) updateSubmitBtn();
 });
 
 function devPrefill() {
