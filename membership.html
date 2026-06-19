@@ -1028,6 +1028,9 @@ async function submitForm() {
   btn.disabled = true;
   btn.textContent = 'Processing payment…';
 
+  let fetchSent = false;
+  let paymentExplicitlyFailed = false;
+
   try {
     const result = await squareCard.tokenize();
     console.log('TOKENIZE RESULT:', JSON.stringify(result));
@@ -1085,6 +1088,7 @@ async function submitForm() {
       marketing_opt_in: document.getElementById('marketing-check').checked,
     };
 
+    fetchSent = true;
     const resp = await fetch(CFG.APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1102,17 +1106,26 @@ async function submitForm() {
       document.getElementById('confirm-name').textContent  = payload.first_name;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
+      paymentExplicitlyFailed = true;
       throw new Error(data.error || 'Payment failed — please try again or contact us.');
     }
 
   } catch (err) {
-    const isNetwork = err.name === 'TypeError' || err.message.includes('fetch') || err.message.includes('network');
-    errEl.textContent = isNetwork
-      ? 'Network error — check your connection and try again.'
-      : err.message;
-    errEl.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = `Complete Membership — $${amountDisplay || '1.00'}`;
+    if (fetchSent && !paymentExplicitlyFailed) {
+      // Fetch was sent but response never arrived or couldn't be parsed —
+      // payment may have gone through. Do NOT re-enable the button.
+      errEl.textContent = 'Payment status unclear. Please do not submit again. Contact Powerhouse Armwrestling Club and we\'ll confirm your payment.';
+      errEl.style.display = 'block';
+    } else {
+      // Error before fetch, or backend explicitly returned success:false
+      const isNetwork = err.name === 'TypeError' || err.message.includes('fetch') || err.message.includes('network');
+      errEl.textContent = isNetwork
+        ? 'Network error — check your connection and try again.'
+        : err.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = `Complete Membership — $${amountDisplay || '1.00'}`;
+    }
   }
 }
 </script>
