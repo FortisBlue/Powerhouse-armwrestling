@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Powerhouse Armwrestling Club</title>
+<meta name="description" content="Learn about Powerhouse Armwrestling Club — Gold Coast's home of arm wrestling since 2020. Not-for-profit, community-led, and proudly supported by the City of Gold Coast.">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.powerhousearmwrestling.com.au/about">
+<meta property="og:title" content="About Powerhouse Armwrestling Club">
+<meta property="og:description" content="Gold Coast's home of arm wrestling since 2020. Not-for-profit, volunteer-run, community-backed.">
+<meta property="og:image" content="https://www.powerhousearmwrestling.com.au/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0908;
+  --deep:     #111009;
+  --char:     #1c1a16;
+  --gold:     #C9A234;
+  --gold-lt:  #E8B84B;
+  --gold-dk:  #9A7A22;
+  --cream:    #F0E8D8;
+  --cream-d:  #C8BEA8;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 68px;
+  background: rgba(10,9,8,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,162,52,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 60px);
+  z-index: 100;
+}
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  line-height: 1;
+  gap: 1px;
+}
+.nav-logo-top {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+.nav-logo-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+}
+.nav-back {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 160ms ease;
+}
+.nav-back:hover { color: var(--gold); }
+.nav-back svg { width: 14px; height: 14px; }
+
+/* ── PAGE WRAP ── */
+.page-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 108px clamp(20px, 5vw, 48px) 80px;
+}
+
+/* ── HERO ── */
+.page-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 10vw, 80px);
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.page-lead {
+  font-size: 17px;
+  color: var(--cream-d);
+  line-height: 1.75;
+  max-width: 640px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(201,162,52,0.15);
+}
+
+/* ── SECTIONS ── */
+.about-section {
+  margin-bottom: 56px;
+}
+.about-section:last-of-type {
+  margin-bottom: 0;
+}
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.section-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 5vw, 40px);
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.about-section p {
+  color: var(--cream-d);
+  margin-bottom: 14px;
+  max-width: 680px;
+}
+.about-section p:last-of-type { margin-bottom: 0; }
+
+/* ── DIVIDER ── */
+.gold-rule {
+  border: none;
+  border-top: 1px solid rgba(201,162,52,0.15);
+  margin: 48px 0;
+}
+
+/* ── TRAINING CARD ── */
+.training-card {
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.14);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+.training-card-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.training-card-value {
+  font-size: 15px;
+  color: var(--cream);
+  line-height: 1.5;
+}
+
+/* ── PILLARS GRID ── */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 24px;
+}
+@media (max-width: 540px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+.pillar-card {
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.12);
+  border-radius: 10px;
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px 0 0 2px;
+}
+.pillar-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 0.04em;
+  color: rgba(201,162,52,0.15);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pillar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.pillar-body {
+  font-size: 13px;
+  color: var(--cream-d);
+  line-height: 1.55;
+}
+
+/* ── COUNCIL BADGE ── */
+.council-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(201,162,52,0.06);
+  border: 1px solid rgba(201,162,52,0.2);
+  border-radius: 8px;
+  padding: 14px 20px;
+  margin-top: 20px;
+}
+.council-badge-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: rgba(201,162,52,0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.council-badge-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  line-height: 1.4;
+}
+.council-badge-text span {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--cream-d);
+  letter-spacing: 0.04em;
+  margin-top: 1px;
+}
+
+/* ── CONTACT CARD ── */
+.contact-card {
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.18);
+  border-radius: 10px;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.contact-row:last-child { margin-bottom: 0; }
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(201,162,52,0.08);
+  border: 1px solid rgba(201,162,52,0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.contact-icon svg { width: 16px; height: 16px; color: var(--gold); }
+.contact-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-d);
+  margin-bottom: 2px;
+}
+.contact-value {
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 1.5;
+}
+.contact-value a {
+  color: var(--gold);
+  text-decoration: none;
+}
+.contact-value a:hover { text-decoration: underline; }
+
+/* ── JOIN CTA ── */
+.join-cta {
+  margin-top: 56px;
+  padding: 36px;
+  background: var(--char);
+  border: 1px solid rgba(201,162,52,0.2);
+  border-radius: 12px;
+  text-align: center;
+}
+.join-cta-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 6vw, 48px);
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.join-cta-body {
+  font-size: 15px;
+  color: var(--cream-d);
+  margin-bottom: 24px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn-primary {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  border: none;
+  border-radius: 6px;
+  padding: 14px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center;
+  padding: 28px clamp(20px, 4vw, 60px);
+  border-top: 1px solid rgba(201,162,52,0.12);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(200,190,168,0.45);
+  margin-top: 72px;
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="nav-logo" aria-label="Powerhouse Armwrestling">
+    <span class="nav-logo-top">POWERHOUSE</span>
+    <span class="nav-logo-sub">Armwrestling Club</span>
+  </a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Home
+  </a>
+</header>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="page-eyebrow">Our Story</div>
+  <h1 class="page-title">Built on the Gold Coast.<br>Built to Last.</h1>
+  <p class="page-lead">Powerhouse Armwrestling Club was founded in April 2020 by a group of Gold Coast athletes who wanted a real home for the sport — not a side show at a gym, but a dedicated club where serious competitors and curious beginners are both welcome. We're volunteer-run, not-for-profit, and every dollar goes back into the club.</p>
+
+  <!-- WHO WE ARE -->
+  <div class="about-section">
+    <div class="section-label">The Club</div>
+    <h2 class="section-heading">Who We Are</h2>
+    <p>We're an incorporated association — which means we're structured, accountable, and built to last. No one is paying themselves to run this club. It's coaches, members, and committee putting in the hours because they love the sport.</p>
+    <p>From complete beginners to athletes chasing national titles, everyone trains together. That's what makes the sessions work — you learn fast when you're pulling against people better than you, and you get stronger when the newcomers push you to explain what you're doing.</p>
+    <p>We cover the full technical game every session: back pressure, pronation, the top-roll, the hook, wrist curl strength, and explosive pulling speed. Show up enough times and you'll surprise yourself.</p>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- TRAINING -->
+  <div class="about-section">
+    <div class="section-label">Sessions</div>
+    <h2 class="section-heading">When & Where We Train</h2>
+    <p>We train every Saturday. Come along, no experience necessary — just show up and we'll take care of the rest.</p>
+
+    <div class="training-card">
+      <div class="training-card-label">Day & Time</div>
+      <div class="training-card-value">Every Saturday &mdash; 9:45am to 12:30pm</div>
+    </div>
+    <div class="training-card">
+      <div class="training-card-label">Location</div>
+      <div class="training-card-value">Pimpama School of Arts Hall<br>15 Clark Way, Pimpama QLD 4209</div>
+    </div>
+    <div class="training-card">
+      <div class="training-card-label">Membership</div>
+      <div class="training-card-value">$192/year (1 August – 31 July). No lock-in, no hidden fees. New members get a free club shirt.</div>
+    </div>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- VISION -->
+  <div class="about-section">
+    <div class="section-label">The Long Game</div>
+    <h2 class="section-heading">The Powerhouse Pillars</h2>
+    <p>From day one, the plan has been to build from the foundations up. We call these the Powerhouse Pillars — the four things that turn a good club into a great one.</p>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Strong Membership Base</div>
+        <div class="pillar-body">A thriving, structured membership that funds the club, grows the community, and keeps training accessible for everyone.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Elite Athlete Development</div>
+        <div class="pillar-body">Building pathways to state, national, and World Armwrestling Federation (WAF) competition. Gold Coast on the world stage.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Dedicated Training Facility</div>
+        <div class="pillar-body">A permanent home with professional competition tables — permanently set up, always ready. No more packing in and out.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Queensland's Benchmark Club</div>
+        <div class="pillar-body">Setting the standard for how arm wrestling clubs operate — structured, technical, inclusive, and respected at every level of the sport.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- COMMUNITY -->
+  <div class="about-section">
+    <div class="section-label">Community</div>
+    <h2 class="section-heading">Backed by the Gold Coast</h2>
+    <p>Arm wrestling is a legitimate strength sport with a rich competitive history, and we're committed to growing it on the Gold Coast the right way — structured, safe, and community-rooted.</p>
+    <p>We're proud to have the support of the City of Gold Coast as we build the club and put the region on the national arm wrestling map.</p>
+
+    <div class="council-badge">
+      <div class="council-badge-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A234" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="council-badge-text">
+        Proudly supported by the City of Gold Coast
+        <span>Local government community partner</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- CONTACT -->
+  <div class="about-section">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-heading">Contact Us</h2>
+    <p>Got a question about training, membership, or hosting an event? Reach out — we're a real club run by real people and we actually reply.</p>
+
+    <div class="contact-card">
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">General Enquiries</div>
+          <div class="contact-value"><a href="mailto:admin@powerhousearmwrestling.com.au">admin@powerhousearmwrestling.com.au</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Instagram</div>
+          <div class="contact-value"><a href="https://www.instagram.com/powerhouse_armwrestling_gc/" target="_blank" rel="noopener">@powerhouse_armwrestling_gc</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Facebook</div>
+          <div class="contact-value"><a href="https://www.facebook.com/GCArmwrestling/" target="_blank" rel="noopener">facebook.com/GCArmwrestling</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOIN CTA -->
+  <div class="join-cta">
+    <div class="join-cta-title">Ready to Pull?</div>
+    <p class="join-cta-body">Join Powerhouse Armwrestling Club and train every Saturday on the Gold Coast. $192/year. No experience needed.</p>
+    <a href="/membership" class="btn-primary">Join Here &rarr;</a>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  &copy; 2026 Powerhouse Armwrestling Club Inc. &mdash; Gold Coast, QLD, Australia &mdash; <a href="/privacy" style="color:rgba(200,190,168,0.55);text-decoration:none;">Privacy Policy</a>
+</footer>
+
+</body>
+</html>
