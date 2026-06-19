@@ -494,16 +494,6 @@ body {
       <p class="minor-note">If the member is between 16–18 years old, a parent or legal guardian must provide verbal consent at their first training session.</p>
     </div>
 
-    <!-- TEST PRE-FILL — remove after testing -->
-    <div style="margin:24px 0 8px; padding:16px; background:rgba(201,162,52,0.08); border:1px dashed rgba(201,162,52,0.4); border-radius:8px;">
-      <p style="font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">⚠ Test Pre-fill — Remove before launch</p>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button type="button" onclick="prefillA()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">A — New Member $1.00</button>
-        <button type="button" onclick="prefillB()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">B — Renewing + Shirt $1.50</button>
-        <button type="button" onclick="prefillC()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">C — Renewing No Shirt $1.00</button>
-      </div>
-    </div>
-    <!-- END TEST PRE-FILL -->
 
     <button type="button" class="btn-primary" onclick="goToPage2()">
       Continue to Membership
@@ -645,7 +635,6 @@ body {
         </div>
       </div>
 
-      <!-- YEARLY OPTION — uncomment for live launch
       <div class="membership-option">
         <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
@@ -654,8 +643,8 @@ body {
         </div>
         <div class="membership-price">$192</div>
       </div>
-      -->
 
+      <!-- TEST OPTION — removed for live launch
       <div class="membership-option" style="border-color:rgba(232,184,75,0.35);">
         <input class="membership-radio" type="radio" name="mem-type" id="mem-test" value="test" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
@@ -664,6 +653,7 @@ body {
         </div>
         <div class="membership-price">$1</div>
       </div>
+      -->
 
       <!-- HALF-YEAR OPTION — enable when ready (show only Feb 1 – Jul 31)
       <div class="membership-option" style="border-color: rgba(201,162,52,0.25); background: transparent;">
@@ -696,8 +686,15 @@ body {
       <div id="card-container"></div>
       <div id="pay-error"></div>
 
+      <div style="margin-top:20px; padding:14px 16px; background:rgba(201,162,52,0.04); border:1px solid rgba(201,162,52,0.1); border-radius:8px; font-size:12px; color:var(--cream-d); line-height:1.7;">
+        <strong style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream-d);">Privacy Notice</strong><br>
+        Powerhouse Armwrestling Club collects your name, date of birth, phone number, email, and emergency contact details for membership administration, waiver records, and club communication. This information is stored securely in Google Sheets and Google Drive, accessible only to authorised club committee members.<br><br>
+        Payment card details are processed securely by Square and are not stored by the club.<br><br>
+        To access, correct, or enquire about your personal information, contact us at <a href="mailto:admin@powerhousearmwrestling.com.au" style="color:var(--gold);">admin@powerhousearmwrestling.com.au</a>. Marketing emails are optional — you can opt out at any time.
+      </div>
+
       <button type="button" class="btn-primary" id="submit-btn" onclick="submitForm()" style="margin-top:20px;">
-        Complete Membership — $1.00
+        Complete Membership — $192.00
       </button>
 
       <p class="pay-note">By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.</p>
@@ -734,7 +731,7 @@ const CFG = {
 };
 
 // Pricing (cents)
-const PRICES = { yearly: 19200, test: 100 };
+const PRICES = { yearly: 19200 };
 
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
 let squareCard = null, memberPad = null;
@@ -798,66 +795,6 @@ function devPrefill() {
   }, 100);
 }
 
-function prefillA() {
-  try {
-    document.getElementById('first-name').value    = 'Jay';
-    document.getElementById('last-name').value     = 'Etheve';
-    document.getElementById('phone').value         = '0412345678';
-    document.getElementById('email').value         = 'ethevejay@gmail.com';
-    document.getElementById('dob-day').value       = '14';
-    document.getElementById('dob-month').value     = '6';
-    document.getElementById('dob-year').value      = '1990';
-    updateDob();
-    document.getElementById('ec-first-name').value = 'Jane';
-    document.getElementById('ec-last-name').value  = 'Member';
-    document.getElementById('ec-phone').value      = '0498765432';
-    document.getElementById('agree-check').checked = true;
-    document.getElementById('join-new').checked    = true;
-    handleJoinType('new');
-    document.getElementById('tshirt-size').value   = 'L';
-  } catch(err) { alert('prefillA error: ' + err.message); }
-}
-
-function prefillB() {
-  try {
-    document.getElementById('first-name').value    = 'Jay';
-    document.getElementById('last-name').value     = 'Etheve';
-    document.getElementById('phone').value         = '0412345678';
-    document.getElementById('email').value         = 'ethevejay@gmail.com';
-    document.getElementById('dob-day').value       = '14';
-    document.getElementById('dob-month').value     = '6';
-    document.getElementById('dob-year').value      = '1990';
-    updateDob();
-    document.getElementById('ec-first-name').value = 'Jane';
-    document.getElementById('ec-last-name').value  = 'Member';
-    document.getElementById('ec-phone').value      = '0498765432';
-    document.getElementById('agree-check').checked = true;
-    document.getElementById('join-renew').checked  = true;
-    handleJoinType('renewing');
-    document.getElementById('tshirt-addon-check').checked = true;
-    handleTshirtAddon();
-    document.getElementById('tshirt-addon-size').value = 'L';
-  } catch(err) { alert('prefillB error: ' + err.message); }
-}
-
-function prefillC() {
-  try {
-    document.getElementById('first-name').value    = 'Jay';
-    document.getElementById('last-name').value     = 'Etheve';
-    document.getElementById('phone').value         = '0412345678';
-    document.getElementById('email').value         = 'ethevejay@gmail.com';
-    document.getElementById('dob-day').value       = '14';
-    document.getElementById('dob-month').value     = '6';
-    document.getElementById('dob-year').value      = '1990';
-    updateDob();
-    document.getElementById('ec-first-name').value = 'Jane';
-    document.getElementById('ec-last-name').value  = 'Member';
-    document.getElementById('ec-phone').value      = '0498765432';
-    document.getElementById('agree-check').checked = true;
-    document.getElementById('join-renew').checked  = true;
-    handleJoinType('renewing');
-  } catch(err) { alert('prefillC error: ' + err.message); }
-}
 
 /* ─── SIGNATURE PADS ────────────────────────────────────────────────────────── */
 function initPad(id) {
@@ -1040,7 +977,7 @@ function calcTotal() {
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
   let cents   = PRICES[type] || PRICES.test;
   const jtype = document.querySelector('input[name="join-type"]:checked').value;
-  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 50;
+  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
   return cents;
 }
 
