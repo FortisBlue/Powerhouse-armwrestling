@@ -287,6 +287,7 @@ body {
 .confirm-detail { font-size: 14px; color: var(--cream-d); line-height: 1.6; margin-bottom: 36px; }
 .confirm-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,162,52,0.3); border-radius: 6px; padding: 12px 24px; transition: background 0.2s, border-color 0.2s; }
 .confirm-link:hover { background: rgba(201,162,52,0.06); border-color: var(--gold); }
+.confirm-tax { font-size: 12px; color: rgba(200,190,168,0.45); line-height: 1.5; margin-bottom: 28px; }
 </style>
 </head>
 <body>
@@ -712,6 +713,7 @@ body {
     <h2 class="confirm-title">You're In!</h2>
     <p class="confirm-body">Welcome to the Powerhouse family, <strong id="confirm-name"></strong>.</p>
     <p class="confirm-detail">You are now a member of Powerhouse Armwrestling Club.<br>We look forward to gripping up with you!</p>
+    <p class="confirm-tax">Your membership fee may be tax deductible — keep this confirmation for your records.</p>
     <a href="/" class="confirm-link">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       Back to Powerhouse
@@ -796,54 +798,65 @@ function devPrefill() {
   }, 100);
 }
 
-function fillPersonalDetails() {
-  document.getElementById('first-name').value    = 'Jay';
-  document.getElementById('last-name').value     = 'Etheve';
-  document.getElementById('phone').value         = '0412345678';
-  document.getElementById('email').value         = 'ethevejay@gmail.com';
-  document.getElementById('dob-day').value       = '14';
-  document.getElementById('dob-month').value     = '6';
-  document.getElementById('dob-year').value      = '1990';
-  updateDob();
-  document.getElementById('ec-first-name').value = 'Jane';
-  document.getElementById('ec-last-name').value  = 'Member';
-  document.getElementById('ec-phone').value      = '0498765432';
-  document.getElementById('agree-check').checked = true;
-  setTimeout(() => {
-    [memberPad].forEach(pad => {
-      if (!pad) return;
-      const w = pad._canvas.offsetWidth, h = pad._canvas.offsetHeight, t = Date.now();
-      pad.fromData([[
-        { x:w*0.08,y:h*0.55,pressure:0.5,time:t },{ x:w*0.2,y:h*0.3,pressure:0.5,time:t+20 },
-        { x:w*0.35,y:h*0.65,pressure:0.5,time:t+40 },{ x:w*0.5,y:h*0.3,pressure:0.5,time:t+60 },
-        { x:w*0.65,y:h*0.65,pressure:0.5,time:t+80 },{ x:w*0.92,y:h*0.55,pressure:0.5,time:t+120 }
-      ]]);
-    });
-  }, 100);
-}
-
 function prefillA() {
-  fillPersonalDetails();
-  document.getElementById('join-new').checked = true;
-  handleJoinType('new');
-  document.getElementById('tshirt-size').value = 'L';
+  try {
+    document.getElementById('first-name').value    = 'Jay';
+    document.getElementById('last-name').value     = 'Etheve';
+    document.getElementById('phone').value         = '0412345678';
+    document.getElementById('email').value         = 'ethevejay@gmail.com';
+    document.getElementById('dob-day').value       = '14';
+    document.getElementById('dob-month').value     = '6';
+    document.getElementById('dob-year').value      = '1990';
+    updateDob();
+    document.getElementById('ec-first-name').value = 'Jane';
+    document.getElementById('ec-last-name').value  = 'Member';
+    document.getElementById('ec-phone').value      = '0498765432';
+    document.getElementById('agree-check').checked = true;
+    document.getElementById('join-new').checked    = true;
+    handleJoinType('new');
+    document.getElementById('tshirt-size').value   = 'L';
+  } catch(err) { alert('prefillA error: ' + err.message); }
 }
 
 function prefillB() {
-  fillPersonalDetails();
-  document.getElementById('join-renew').checked = true;
-  handleJoinType('renewing');
-  setTimeout(() => {
+  try {
+    document.getElementById('first-name').value    = 'Jay';
+    document.getElementById('last-name').value     = 'Etheve';
+    document.getElementById('phone').value         = '0412345678';
+    document.getElementById('email').value         = 'ethevejay@gmail.com';
+    document.getElementById('dob-day').value       = '14';
+    document.getElementById('dob-month').value     = '6';
+    document.getElementById('dob-year').value      = '1990';
+    updateDob();
+    document.getElementById('ec-first-name').value = 'Jane';
+    document.getElementById('ec-last-name').value  = 'Member';
+    document.getElementById('ec-phone').value      = '0498765432';
+    document.getElementById('agree-check').checked = true;
+    document.getElementById('join-renew').checked  = true;
+    handleJoinType('renewing');
     document.getElementById('tshirt-addon-check').checked = true;
     handleTshirtAddon();
     document.getElementById('tshirt-addon-size').value = 'L';
-  }, 150);
+  } catch(err) { alert('prefillB error: ' + err.message); }
 }
 
 function prefillC() {
-  fillPersonalDetails();
-  document.getElementById('join-renew').checked = true;
-  handleJoinType('renewing');
+  try {
+    document.getElementById('first-name').value    = 'Jay';
+    document.getElementById('last-name').value     = 'Etheve';
+    document.getElementById('phone').value         = '0412345678';
+    document.getElementById('email').value         = 'ethevejay@gmail.com';
+    document.getElementById('dob-day').value       = '14';
+    document.getElementById('dob-month').value     = '6';
+    document.getElementById('dob-year').value      = '1990';
+    updateDob();
+    document.getElementById('ec-first-name').value = 'Jane';
+    document.getElementById('ec-last-name').value  = 'Member';
+    document.getElementById('ec-phone').value      = '0498765432';
+    document.getElementById('agree-check').checked = true;
+    document.getElementById('join-renew').checked  = true;
+    handleJoinType('renewing');
+  } catch(err) { alert('prefillC error: ' + err.message); }
 }
 
 /* ─── SIGNATURE PADS ────────────────────────────────────────────────────────── */
