@@ -493,6 +493,16 @@ body {
       <p class="minor-note">If the member is between 16–18 years old, a parent or legal guardian must provide verbal consent at their first training session.</p>
     </div>
 
+    <!-- TEST PRE-FILL — remove after testing -->
+    <div style="margin:24px 0 8px; padding:16px; background:rgba(201,162,52,0.08); border:1px dashed rgba(201,162,52,0.4); border-radius:8px;">
+      <p style="font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">⚠ Test Pre-fill — Remove before launch</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" onclick="prefillA()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">A — New Member $1.00</button>
+        <button type="button" onclick="prefillB()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">B — Renewing + Shirt $1.50</button>
+        <button type="button" onclick="prefillC()" style="font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 14px; background:rgba(201,162,52,0.15); border:1px solid rgba(201,162,52,0.4); color:var(--cream); border-radius:6px; cursor:pointer;">C — Renewing No Shirt $1.00</button>
+      </div>
+    </div>
+    <!-- END TEST PRE-FILL -->
 
     <button type="button" class="btn-primary" onclick="goToPage2()">
       Continue to Membership
@@ -634,6 +644,7 @@ body {
         </div>
       </div>
 
+      <!-- YEARLY OPTION — uncomment for live launch
       <div class="membership-option">
         <input class="membership-radio" type="radio" name="mem-type" id="mem-yearly" value="yearly" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
@@ -642,8 +653,8 @@ body {
         </div>
         <div class="membership-price">$192</div>
       </div>
+      -->
 
-      <!-- TEST OPTION — removed for live launch
       <div class="membership-option" style="border-color:rgba(232,184,75,0.35);">
         <input class="membership-radio" type="radio" name="mem-type" id="mem-test" value="test" checked onchange="updateSubmitBtn()">
         <div class="membership-info">
@@ -652,7 +663,6 @@ body {
         </div>
         <div class="membership-price">$1</div>
       </div>
-      -->
 
       <!-- HALF-YEAR OPTION — enable when ready (show only Feb 1 – Jul 31)
       <div class="membership-option" style="border-color: rgba(201,162,52,0.25); background: transparent;">
@@ -686,7 +696,7 @@ body {
       <div id="pay-error"></div>
 
       <button type="button" class="btn-primary" id="submit-btn" onclick="submitForm()" style="margin-top:20px;">
-        Complete Membership — $192.00
+        Complete Membership — $1.00
       </button>
 
       <p class="pay-note">By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.</p>
@@ -722,7 +732,7 @@ const CFG = {
 };
 
 // Pricing (cents)
-const PRICES = { yearly: 19200 };
+const PRICES = { yearly: 19200, test: 100 };
 
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
 let squareCard = null, memberPad = null;
@@ -1015,9 +1025,9 @@ function handleTshirtAddon() {
 
 function calcTotal() {
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
-  let cents   = PRICES[type];
+  let cents   = PRICES[type] || PRICES.test;
   const jtype = document.querySelector('input[name="join-type"]:checked').value;
-  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
+  if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 50;
   return cents;
 }
 
