@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYP
+OCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -533,7 +534,7 @@ body {
         </div>
         <div>
           <strong>Contact</strong>
-          PowerHouseArmWrestling@gmail.com
+          admin@powerhousearmwrestling.com.au
         </div>
       </div>
 
@@ -975,7 +976,7 @@ function handleTshirtAddon() {
 
 function calcTotal() {
   const type  = document.querySelector('input[name="mem-type"]:checked').value;
-  let cents   = PRICES[type] || PRICES.test;
+  let cents   = PRICES[type];
   const jtype = document.querySelector('input[name="join-type"]:checked').value;
   if (jtype === 'renewing' && document.getElementById('tshirt-addon-check').checked) cents += 5000;
   return cents;
@@ -1115,149 +1116,6 @@ async function submitForm() {
   }
 }
 </script>
-
-<!--
-╔══════════════════════════════════════════════════════════════════════════════╗
-║  GOOGLE APPS SCRIPT — paste into a new Apps Script project                  ║
-║                                                                              ║
-║  Steps:                                                                      ║
-║  1. script.google.com → New Project                                          ║
-║  2. Paste everything between the dashed lines                                ║
-║  3. Fill in SHEET_ID and SQUARE_TOKEN                                        ║
-║  4. Deploy → New Deployment → Web App                                        ║
-║     · Execute as: Me                                                         ║
-║     · Who can access: Anyone                                                 ║
-║  5. Copy deployment URL → paste into CFG.APPS_SCRIPT_URL above              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-var SHEET_ID     = 'YOUR_GOOGLE_SHEET_ID';
-var SQUARE_TOKEN = 'EAAAl6f5J6UVjur0WcdEaMbjds0SCCLXZWSYNLnAq_53QOgiIjPPRCAB_GH1UsLG';
-var IS_SANDBOX   = true;
-var SQ_BASE      = IS_SANDBOX
-  ? 'https://connect.squareupsandbox.com'
-  : 'https://connect.squareup.com';
-
-function doPost(e) {
-  try {
-    var data      = JSON.parse(e.postData.contents);
-    var payResult = chargeSquare(data.nonce, data.amount_cents, data.idempotency_key);
-    if (!payResult.success) return res({success: false, error: payResult.error});
-    writeToSheet(data, payResult.payment_id);
-    notifyAdmin(data, payResult.payment_id);
-    if (data.tshirt_size) notifyTshirtOrder(data);
-    return res({success: true, payment_id: payResult.payment_id});
-  } catch(err) {
-    return res({success: false, error: err.message});
-  }
-}
-
-function doGet(e) {
-  try {
-    var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
-    var count = Math.max(0, sheet.getLastRow() - 1);
-    return res({count: count});
-  } catch(err) {
-    return res({count: 0});
-  }
-}
-
-function chargeSquare(nonce, amountCents, idempotencyKey) {
-  var resp = UrlFetchApp.fetch(SQ_BASE + '/v2/payments', {
-    method: 'POST',
-    headers: {
-      'Authorization':  'Bearer ' + SQUARE_TOKEN,
-      'Content-Type':   'application/json',
-      'Square-Version': '2025-01-23',
-    },
-    payload: JSON.stringify({
-      source_id:       nonce,
-      idempotency_key: idempotencyKey,
-      amount_money:    {amount: amountCents, currency: 'AUD'},
-      note:            'Powerhouse Armwrestling — ' + (amountCents === 19200 ? 'Yearly' : 'Half Year') + ' Membership',
-    }),
-    muteHttpExceptions: true,
-  });
-  var result = JSON.parse(resp.getContentText());
-  if (result.payment && result.payment.status === 'COMPLETED') {
-    return {success: true, payment_id: result.payment.id};
-  }
-  var msg = result.errors ? result.errors[0].detail : 'Payment declined';
-  return {success: false, error: msg};
-}
-
-function writeToSheet(data, paymentId) {
-  var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
-  if (sheet.getLastRow() === 0) {
-    var headers = [
-      'Timestamp','Join Type','First Name','Last Name','Phone','Email','Date of Birth',
-      'T-Shirt Size','Membership Type','Amount Paid',
-      'EC Name','EC Phone','Payment ID','Member Signed','EC Signed'
-    ];
-    sheet.appendRow(headers);
-    var hRange = sheet.getRange(1, 1, 1, headers.length);
-    hRange.setFontWeight('bold');
-    hRange.setBackground('#1c1a16');
-    hRange.setFontColor('#C9A234');
-    sheet.setFrozenRows(1);
-  }
-  sheet.appendRow([
-    new Date().toISOString(),
-    data.join_type || 'new',
-    data.first_name, data.last_name, data.phone, data.email, data.dob,
-    data.tshirt_size || '',
-    data.membership_type,
-    '$' + (data.amount_cents / 100).toFixed(2) + ' AUD',
-    data.ec_name, data.ec_phone,
-    paymentId,
-    data.member_signed ? 'Yes' : 'No',
-    data.ec_signed     ? 'Yes' : 'No',
-  ]);
-}
-
-function notifyAdmin(data, paymentId) {
-  var joinLabel = data.join_type === 'renewing' ? 'Renewing Member' : 'New Member';
-  var amount    = '$' + (data.amount_cents / 100).toFixed(2) + ' AUD';
-  var subject   = 'New Membership — ' + data.first_name + ' ' + data.last_name;
-  var body =
-    'A membership has been processed through the portal.\n\n' +
-    'Type:            ' + joinLabel + '\n' +
-    'Name:            ' + data.first_name + ' ' + data.last_name + '\n' +
-    'Email:           ' + data.email + '\n' +
-    'Phone:           ' + data.phone + '\n' +
-    'Date of Birth:   ' + data.dob + '\n' +
-    'T-Shirt Size:    ' + (data.tshirt_size || 'N/A') + '\n' +
-    'Membership:      ' + data.membership_type + '\n' +
-    'Amount Paid:     ' + amount + '\n' +
-    'Payment ID:      ' + paymentId + '\n\n' +
-    'Emergency Contact: ' + data.ec_name + ' — ' + data.ec_phone + '\n\n' +
-    'Powerhouse Armwrestling Club';
-  MailApp.sendEmail('admin@powerhousearmwrestling.com.au', subject, body);
-}
-
-function notifyTshirtOrder(data) {
-  var joinLabel = data.join_type === 'renewing' ? 'renewing member (add-on)' : 'new member';
-  var subject   = 'T-Shirt Order — ' + data.first_name + ' ' + data.last_name;
-  var body =
-    'Hi,\n\n' +
-    'A ' + joinLabel + ' requires a club t-shirt.\n\n' +
-    'Name:  ' + data.first_name + ' ' + data.last_name + '\n' +
-    'Size:  ' + data.tshirt_size + '\n' +
-    'Phone: ' + data.phone + '\n' +
-    'Email: ' + data.email + '\n\n' +
-    'Please arrange with the supplier.\n\n' +
-    'Powerhouse Armwrestling Club';
-  MailApp.sendEmail('president@powerhousearmwrestling.com.au', subject, body);
-}
-
-function res(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
--->
 
 </body>
 </html>
