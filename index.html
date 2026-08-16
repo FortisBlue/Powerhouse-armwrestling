@@ -2291,11 +2291,15 @@ function handleJoin(e) {
 
 /* ── EVENT COUNTDOWNS ── */
 (function () {
+  function localDate(isoDate) {
+    var parts = isoDate.split('-').map(Number);
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
   function fmtCountdown(isoDate) {
     var now = new Date();
     now.setHours(0, 0, 0, 0);
-    var target = new Date(isoDate);
-    target.setHours(0, 0, 0, 0);
+    var target = localDate(isoDate);
     var days = Math.round((target - now) / 86400000);
     if (days < 0)  return null;
     if (days === 0) return 'Today';
@@ -2315,11 +2319,40 @@ function handleJoin(e) {
     return s;
   }
 
-  document.querySelectorAll('.event-card[data-event-date]').forEach(function (card) {
-    var label = fmtCountdown(card.getAttribute('data-event-date'));
-    var el = card.querySelector('.event-countdown');
-    if (el) el.textContent = label || 'Past';
-  });
+  function refreshEvents() {
+    var eventsSection = document.getElementById('events');
+
+    document.querySelectorAll('.event-card[data-event-date]').forEach(function (card) {
+      var label = fmtCountdown(card.getAttribute('data-event-date'));
+
+      if (label === null) {
+        card.remove();
+        return;
+      }
+
+      var el = card.querySelector('.event-countdown');
+      if (el) el.textContent = label;
+    });
+
+    if (eventsSection && !eventsSection.querySelector('.event-card[data-event-date]')) {
+      eventsSection.hidden = true;
+    }
+  }
+
+  function refreshAtNextMidnight() {
+    var now = new Date();
+    var nextMidnight = new Date(now);
+    nextMidnight.setDate(now.getDate() + 1);
+    nextMidnight.setHours(0, 0, 1, 0);
+
+    setTimeout(function () {
+      refreshEvents();
+      refreshAtNextMidnight();
+    }, nextMidnight - now);
+  }
+
+  refreshEvents();
+  refreshAtNextMidnight();
 })();
 
 /* ── HOVER BUTTON — gold cursor-trail circles ── */
