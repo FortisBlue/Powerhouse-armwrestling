@@ -1432,7 +1432,18 @@ footer {
 
 @media (max-width: 640px) {
   .nav { padding-left: 16px; padding-right: 16px; gap: 10px; }
-  .nav-cta { display: none; }
+  .nav-cta {
+    display: inline-flex;
+    justify-content: center;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    letter-spacing: 0.13em;
+  }
+  .nav-cta-text { padding-right: 0; }
+  .nav-cta:hover .nav-cta-text { opacity: 1; }
+  .nav-cta-icon { display: none; }
   .hero-img {
     object-fit: contain;
     object-position: center center;
@@ -1507,6 +1518,24 @@ footer {
     white-space: normal;
     line-height: 1.35;
   }
+}
+
+@media (max-width: 420px) {
+  .nav {
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 6px;
+  }
+  .nav-logo img { height: 48px; }
+  .nav-actions { gap: 6px !important; }
+  .nav-donate-mobile,
+  .nav-cta {
+    height: 42px;
+    padding: 0 10px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .nav-burger { padding: 2px; }
 }
 
 /* mobile nav drawer */
@@ -1699,7 +1728,7 @@ footer {
     </div>
     <a href="/donate" class="nav-donate-mobile" aria-label="Donate to Powerhouse Armwrestling Club">Donate Here</a>
     <a href="/membership" class="nav-cta">
-      <span class="nav-cta-text">Join Here</span>
+      <span class="nav-cta-text">Join Now</span>
       <span class="nav-cta-icon">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
