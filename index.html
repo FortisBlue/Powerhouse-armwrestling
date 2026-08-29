@@ -6,8 +6,9 @@
 <title>POWERHOUSE ARMWRESTLING — Gold Coast, QLD</title>
 <meta name="description" content="Powerhouse Armwrestling Club — Gold Coast's home of arm wrestling. Train Saturdays in Pimpama. All levels welcome.">
 <meta name="theme-color" content="#0a0908">
-<link rel="icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.powerhousearmwrestling.com.au">
 <meta property="og:title" content="Powerhouse Armwrestling Club — Gold Coast, QLD">
@@ -1031,141 +1032,13 @@ section {
 }
 
 /* ────────────────────────────────────────────────
-   STORE
-──────────────────────────────────────────────── */
-#store {
-  background: var(--black);
-}
-
-.store-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.product-card {
-  background:
-    linear-gradient(#1c1a16, #1c1a16) padding-box,
-    conic-gradient(
-      from var(--ev-angle),
-      #2a1f06 0%,
-      #584827 20%,
-      #C9A234 45%,
-      #E8B84B 50%,
-      #C9A234 55%,
-      #584827 80%,
-      #2a1f06 100%
-    ) border-box;
-  border: 1.5px solid transparent;
-  border-radius: 12px;
-  overflow: hidden;
-  animation: ev-border-spin 7s linear infinite;
-  animation-delay: -2.5s;
-  transition: transform 280ms ease, box-shadow 280ms ease;
-}
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(201,162,52,0.08);
-  animation-duration: 2.5s;
-}
-
-.product-img {
-  height: 200px;
-  background: linear-gradient(135deg, #1c1a10 0%, #2a2208 50%, #1a1508 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-.product-img::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 40%, rgba(201,162,52,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 70%, rgba(232,184,75,0.10) 0%, transparent 55%);
-}
-.product-img-icon {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 3.2rem;
-  letter-spacing: 0.04em;
-  color: rgba(201,162,52,0.25);
-  text-align: center;
-  line-height: 1;
-  position: relative;
-  z-index: 1;
-}
-
-.product-body {
-  padding: 18px 18px 20px;
-}
-
-.product-cat {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--gold-dk);
-  margin-bottom: 6px;
-}
-
-.product-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--cream);
-  margin-bottom: 14px;
-  line-height: 1.15;
-}
-
-.product-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.product-price {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  color: var(--gold);
-}
-
-.btn-cart {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 6px;
-  background: rgba(201,162,52,0.12);
-  border: 1px solid rgba(201,162,52,0.3);
-  color: var(--gold-lt);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 180ms ease, border-color 180ms ease;
-}
-.btn-cart:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--ink);
-}
-
-/* ────────────────────────────────────────────────
    ABOUT / JOIN
 ──────────────────────────────────────────────── */
 #about {
-  background: var(--deep);
+  background: #080706;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 #about::before {
   content: "";
@@ -1174,18 +1047,36 @@ section {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(201,162,52,0.4), transparent);
 }
-#about::after {
-  content: "POWERHOUSE";
+.about-photo {
   position: absolute;
-  bottom: -0.1em;
-  right: -0.05em;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22vw;
-  color: rgba(201,162,52,0.03);
-  line-height: 1;
+  inset: 0 0 auto;
+  aspect-ratio: 4 / 3;
   pointer-events: none;
   white-space: nowrap;
   z-index: 0;
+}
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(0.84) contrast(1.04) brightness(0.86);
+}
+.about-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,7,6,0.08) 0%, rgba(8,7,6,0.10) 32%, rgba(8,7,6,0.52) 65%, #080706 100%),
+    linear-gradient(90deg, rgba(8,7,6,0.24), transparent 24%, transparent 76%, rgba(8,7,6,0.24));
+}
+
+.about-heading {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.72);
 }
 
 .about-layout {
@@ -1194,10 +1085,17 @@ section {
   align-items: center;
   gap: 40px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: clamp(420px, 34vw, 640px) auto 0;
+  padding: clamp(28px, 4vw, 52px);
+  border: 1px solid rgba(201,162,52,0.28);
+  border-radius: 18px;
+  background: rgba(10,9,8,0.84);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.44), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .about-text p {
@@ -1384,7 +1282,7 @@ footer {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: 40px;
   margin-bottom: 48px;
 }
@@ -1517,7 +1415,6 @@ footer {
   .rankings-layout { grid-template-columns: 1fr; gap: 36px; }
   .rank-aside { position: static; }
   .rank-aside-card { max-width: 480px; }
-  .store-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer-brand { grid-column: 1 / -1; }
 }
@@ -1525,7 +1422,7 @@ footer {
 @media (max-width: 900px) {
   .events-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .locations-grid { grid-template-columns: 1fr; max-width: 520px; }
-  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .about-layout { gap: 32px; }
   .nav-pills { display: none; }
   .nav-burger { display: flex; }
   .nav { grid-template-columns: 1fr auto auto; }
@@ -1544,7 +1441,6 @@ footer {
   }
   .hero-cta { top: 62%; left: 0; right: 0; transform: none; }
 
-  .store-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .hero-title { font-size: clamp(4rem, 22vw, 20rem); }
@@ -1560,6 +1456,57 @@ footer {
   .podium-pos-3 .podium-num { font-size: 28px; }
   .podium-pname { font-size: 11px; letter-spacing: 0.06em; }
   .podium-crown { font-size: 18px; }
+
+  #about {
+    padding: 0 16px 72px;
+  }
+  .about-photo {
+    position: relative;
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    aspect-ratio: 4 / 3;
+  }
+  .about-photo img {
+    filter: saturate(0.88) contrast(1.03) brightness(0.90);
+  }
+  .about-photo::after {
+    background: linear-gradient(180deg, transparent 50%, rgba(8,7,6,0.28) 76%, #080706 100%);
+  }
+  .about-heading {
+    margin-top: -62px;
+  }
+  #about .section-title {
+    font-size: clamp(2.8rem, 15vw, 4.5rem);
+  }
+  .about-layout {
+    gap: 28px;
+    margin-top: 24px;
+    padding: 26px 18px 30px;
+    border-radius: 14px;
+    background: rgba(15,13,11,0.94);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  #about .about-text {
+    text-align: left;
+  }
+  .about-text p {
+    font-size: 14px;
+    line-height: 1.72;
+  }
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .about-feat {
+    min-height: 40px;
+    height: auto;
+    padding: 10px 14px;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.35;
+  }
 }
 
 /* mobile nav drawer */
@@ -1595,7 +1542,7 @@ footer {
 .nav-drawer a:hover { color: var(--gold); }
 .nav-drawer a:last-child { border-bottom: none; }
 
-/* ── ABOUT SECTION CENTERING ── */
+/* ── ABOUT SECTION ── */
 #about .section-label { justify-content: center; }
 #about .section-title { text-align: center; }
 .about-text { text-align: center; }
@@ -1730,7 +1677,6 @@ footer {
     <li><a href="#rankings" class="pill-link">Rankings</a></li>
     <li><a href="#events" class="pill-link">Events</a></li>
     <li><a href="#locations" class="pill-link">Locations</a></li>
-    <li><a href="#store" class="pill-link">Store</a></li>
     <li><a href="#about" class="pill-link">About</a></li>
     <li><a href="/membership" class="pill-link">Membership</a></li>
     <li><a href="/donate" class="pill-link" style="color:var(--gold);">Donate</a></li>
@@ -1771,7 +1717,6 @@ footer {
   <a href="#rankings">Rankings</a>
   <a href="#events">Events</a>
   <a href="#locations">Locations</a>
-  <a href="#store">Store</a>
   <a href="#about">About</a>
   <a href="/membership">Membership</a>
   <a href="/donate">Donate Here</a>
@@ -2033,78 +1978,16 @@ footer {
 
 <hr class="gold-rule">
 
-<!-- ══════════════════════ STORE ══════════════════════ -->
-<section id="store">
-  <div class="section-label reveal">Official Gear</div>
-  <h2 class="section-title reveal">Gear Up</h2>
-
-  <div class="store-grid">
-
-    <div class="product-card reveal reveal-delay-1">
-      <div class="product-img">
-        <div class="product-img-icon">WRAPS</div>
-      </div>
-      <div class="product-body">
-        <div class="product-cat">Training</div>
-        <div class="product-name">Competition<br>Wrist Straps</div>
-        <div class="product-footer">
-          <div class="product-price">$38</div>
-          <button class="btn-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-delay-2">
-      <div class="product-img">
-        <div class="product-img-icon">SINGLET</div>
-      </div>
-      <div class="product-body">
-        <div class="product-cat">Apparel</div>
-        <div class="product-name">Club<br>Singlet</div>
-        <div class="product-footer">
-          <div class="product-price">$65</div>
-          <button class="btn-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-delay-3">
-      <div class="product-img">
-        <div class="product-img-icon">CHALK</div>
-      </div>
-      <div class="product-body">
-        <div class="product-cat">Equipment</div>
-        <div class="product-name">Pro<br>Chalk Bag</div>
-        <div class="product-footer">
-          <div class="product-price">$22</div>
-          <button class="btn-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-delay-4">
-      <div class="product-img">
-        <div class="product-img-icon">HOODIE</div>
-      </div>
-      <div class="product-body">
-        <div class="product-cat">Apparel</div>
-        <div class="product-name">Competition<br>Hoodie</div>
-        <div class="product-footer">
-          <div class="product-price">$110</div>
-          <button class="btn-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<hr class="gold-rule">
-
 <!-- ══════════════════════ ABOUT / JOIN ══════════════════════ -->
 <section id="about">
-  <div class="section-label reveal">Our Story</div>
-  <h2 class="section-title reveal">Become a Powerhouse</h2>
+  <div class="about-photo" aria-hidden="true">
+    <img src="about-community.webp" alt="" loading="lazy" decoding="async">
+  </div>
+
+  <div class="about-heading">
+    <div class="section-label reveal">Our Story</div>
+    <h2 class="section-title reveal">Become a Powerhouse</h2>
+  </div>
 
   <div class="about-layout">
 
@@ -2161,16 +2044,6 @@ footer {
         <li><a href="/about">About Us</a></li>
         <li><a href="/membership">Join Here</a></li>
         <li><a href="/donate">Donate Here</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Store</div>
-      <ul class="footer-links">
-        <li><a href="#store">All Products</a></li>
-        <li><a href="#">Apparel</a></li>
-        <li><a href="#">Equipment</a></li>
-        <li><a href="#">Bundles</a></li>
       </ul>
     </div>
 
