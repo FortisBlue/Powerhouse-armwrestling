@@ -289,6 +289,16 @@ body {
 .confirm-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,162,52,0.3); border-radius: 6px; padding: 12px 24px; transition: background 0.2s, border-color 0.2s; }
 .confirm-link:hover { background: rgba(201,162,52,0.06); border-color: var(--gold); }
 .confirm-tax { font-size: 12px; color: rgba(200,190,168,0.45); line-height: 1.5; margin-bottom: 28px; }
+.payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 24px; }
+.payment-method { position: relative; display: block; cursor: pointer; }
+.payment-method input { position: absolute; opacity: 0; pointer-events: none; }
+.payment-method-card { height: 100%; padding: 16px; border: 1px solid rgba(201,162,52,0.2); border-radius: 8px; background: rgba(255,255,255,0.02); transition: border-color .2s, background .2s; }
+.payment-method input:checked + .payment-method-card { border-color: var(--gold); background: rgba(201,162,52,0.08); box-shadow: inset 0 0 0 1px rgba(201,162,52,0.25); }
+.payment-method-title { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--cream); }
+.payment-method-note { display: block; margin-top: 5px; font-size: 12px; line-height: 1.45; color: var(--cream-d); }
+.cash-notice { display: none; margin: 0 0 20px; padding: 16px; border: 1px solid rgba(201,162,52,0.32); border-radius: 8px; background: rgba(201,162,52,0.07); color: var(--cream-d); font-size: 13px; line-height: 1.65; }
+.cash-notice strong { color: var(--gold); }
+@media (max-width: 560px) { .payment-methods { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -671,26 +681,53 @@ body {
 
     <!-- PAYMENT -->
     <div class="form-card">
-      <p class="section-eyebrow">Secure Payment</p>
-      <h2 class="section-title">Card Details</h2>
-      <p class="section-sub">Processed securely via Square. Your card is charged once at checkout.</p>
+      <p class="section-eyebrow">Payment</p>
+      <h2 class="section-title">Choose How You’ll Pay</h2>
+      <p class="section-sub">Pay securely now by card, or submit your application and pay cash at training.</p>
 
-      <div class="sandbox-badge" id="sandbox-badge">
-        ⚠ Sandbox mode — Test card: 4111 1111 1111 1111 / Any future date / Any CVV
+      <div class="payment-methods" role="radiogroup" aria-label="Payment method">
+        <label class="payment-method">
+          <input type="radio" name="payment-method" value="card" checked onchange="handlePaymentMethod('card')">
+          <span class="payment-method-card">
+            <span class="payment-method-title">Pay by card</span>
+            <span class="payment-method-note">Immediate payment through Square.</span>
+          </span>
+        </label>
+        <label class="payment-method">
+          <input type="radio" name="payment-method" value="cash" onchange="handlePaymentMethod('cash')">
+          <span class="payment-method-card">
+            <span class="payment-method-title">Pay cash at training</span>
+            <span class="payment-method-note">Your application stays pending until the club confirms your cash payment.</span>
+          </span>
+        </label>
       </div>
 
-      <div class="card-loading" id="card-loading">
-        <div class="spinner"></div>
-        Loading payment form…
+      <div class="cash-notice" id="cash-notice">
+        <strong>Cash applications are not activated automatically.</strong><br>
+        Submit your signed application here, then pay Jay or an authorised Powerhouse club officer at training. Your membership, welcome email and shirt order will only be activated after the club verifies your payment.
       </div>
 
-      <div id="card-container"></div>
+      <div id="card-payment-wrap">
+        <h3 class="section-title" style="font-size:28px;">Card Details</h3>
+        <p class="section-sub">Processed securely via Square. Your card is charged once at checkout.</p>
+
+        <div class="sandbox-badge" id="sandbox-badge">
+          ⚠ Sandbox mode — Test card: 4111 1111 1111 1111 / Any future date / Any CVV
+        </div>
+
+        <div class="card-loading" id="card-loading">
+          <div class="spinner"></div>
+          Loading payment form…
+        </div>
+
+        <div id="card-container"></div>
+      </div>
       <div id="pay-error"></div>
 
       <div style="margin-top:20px; padding:14px 16px; background:rgba(201,162,52,0.04); border:1px solid rgba(201,162,52,0.1); border-radius:8px; font-size:12px; color:var(--cream-d); line-height:1.7;">
         <strong style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream-d);">Privacy Notice</strong><br>
         Powerhouse Armwrestling Club collects your name, date of birth, phone number, email, and emergency contact details for membership administration, waiver records, and club communication. This information is stored securely in Google Sheets and Google Drive, accessible only to authorised club committee members.<br><br>
-        Payment card details are processed securely by Square and are not stored by the club.<br><br>
+        Payment card details are processed securely by Square and are not stored by the club. Cash applications are held as pending records until an authorised club officer confirms payment.<br><br>
         To access, correct, or enquire about your personal information, contact us at <a href="mailto:admin@powerhousearmwrestling.com.au" style="color:var(--gold);">admin@powerhousearmwrestling.com.au</a>. Marketing emails are optional — you can opt out at any time.
       </div>
 
@@ -698,7 +735,7 @@ body {
         Complete Membership — $192.00
       </button>
 
-      <p class="pay-note">By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.</p>
+      <p class="pay-note" id="pay-note">By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.</p>
     </div>
 
   </section>
@@ -708,10 +745,9 @@ body {
     <div class="confirm-icon">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A234" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h2 class="confirm-title">You're In!</h2>
-    <p class="confirm-body">Welcome to the Powerhouse family, <strong id="confirm-name"></strong>.</p>
-    <p class="confirm-detail">You are now a member of Powerhouse Armwrestling Club.<br>We look forward to gripping up with you!</p>
-    <p class="confirm-tax">Your membership fee may be tax deductible — keep this confirmation for your records.</p>
+    <h2 class="confirm-title" id="confirm-title">You're In!</h2>
+    <p class="confirm-body" id="confirm-body">Welcome to the Powerhouse family, <strong id="confirm-name"></strong>.</p>
+    <p class="confirm-detail" id="confirm-detail">You are now a member of Powerhouse Armwrestling Club.<br>We look forward to gripping up with you!</p>
     <a href="/" class="confirm-link">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       Back to Powerhouse
@@ -736,6 +772,9 @@ const PRICES = { yearly: 19200 };
 
 /* ─── STATE ─────────────────────────────────────────────────────────────────── */
 let squareCard = null, memberPad = null;
+const cashApplicationId = (typeof crypto !== 'undefined' && crypto.randomUUID)
+  ? crypto.randomUUID()
+  : 'cash-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
 
 /* ─── INIT ──────────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -985,7 +1024,63 @@ function calcTotal() {
 function updateSubmitBtn() {
   const display = (calcTotal() / 100).toFixed(2);
   const btn = document.getElementById('submit-btn');
-  if (btn) btn.textContent = `Complete Membership — $${display}`;
+  const method = document.querySelector('input[name="payment-method"]:checked')?.value || 'card';
+  if (btn) btn.textContent = method === 'cash'
+    ? `Submit Cash Application — $${display} Due`
+    : `Complete Membership — $${display}`;
+}
+
+function handlePaymentMethod(method) {
+  document.getElementById('card-payment-wrap').style.display = method === 'card' ? 'block' : 'none';
+  document.getElementById('cash-notice').style.display = method === 'cash' ? 'block' : 'none';
+  document.getElementById('pay-note').textContent = method === 'cash'
+    ? 'By submitting this application you confirm your agreement to the membership terms and signed waiver. Your membership remains pending until the club confirms receipt of cash.'
+    : 'By completing payment you confirm your agreement to the Powerhouse Armwrestling Club membership terms and the release and waiver signed above.';
+  document.getElementById('pay-error').style.display = 'none';
+  updateSubmitBtn();
+  if (method === 'card') initSquare();
+}
+
+function buildMembershipPayload(joinType, tshirtSize) {
+  const memberSigPng = (memberPad && !memberPad.isEmpty())
+    ? memberPad.toDataURL('image/png')
+    : '';
+  if (!memberSigPng || !memberSigPng.startsWith('data:image/png;base64,') || memberSigPng.length < 1000) {
+    throw new Error('Signature is missing or blank — please go back and sign the waiver.');
+  }
+  return {
+    amount_cents:     calcTotal(),
+    membership_type: document.querySelector('input[name="mem-type"]:checked').value,
+    join_type:        joinType,
+    first_name:       document.getElementById('first-name').value.trim(),
+    last_name:        document.getElementById('last-name').value.trim(),
+    email:            document.getElementById('email').value.trim(),
+    phone:            document.getElementById('phone').value.trim(),
+    dob:              document.getElementById('dob').value,
+    sig_date:         document.getElementById('sig-date').value,
+    member_signed:    true,
+    member_sig_png:   memberSigPng,
+    ec_first_name:    document.getElementById('ec-first-name').value.trim(),
+    ec_last_name:     document.getElementById('ec-last-name').value.trim(),
+    ec_phone:         document.getElementById('ec-phone').value.trim(),
+    ec_signed:        false,
+    tshirt_size:      tshirtSize,
+    marketing_opt_in: document.getElementById('marketing-check').checked,
+  };
+}
+
+function showConfirmation(payload, isCash) {
+  document.getElementById('page-2').classList.remove('active');
+  document.getElementById('confirm').classList.add('active');
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('confirm-name').textContent = payload.first_name;
+  if (isCash) {
+    document.getElementById('confirm-title').textContent = 'Application Pending';
+    document.getElementById('confirm-body').innerHTML = 'Thanks, <strong id="confirm-name"></strong>. Your signed application has been saved.';
+    document.getElementById('confirm-name').textContent = payload.first_name;
+    document.getElementById('confirm-detail').innerHTML = `Please pay <strong>$${(payload.amount_cents / 100).toFixed(2)} cash</strong> at training. You are not yet an active member; the club will email you after your payment is verified and your membership is activated.`;
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ─── SUBMIT ────────────────────────────────────────────────────────────────── */
@@ -1015,15 +1110,51 @@ async function submitForm() {
   }
   addonSz.classList.remove('error');
 
+  const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  const tshirtSize = joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : '');
+  const amountCents = calcTotal();
+  const amountDisplay = (amountCents / 100).toFixed(2);
+  let payload;
+  try {
+    payload = buildMembershipPayload(joinType, tshirtSize);
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (paymentMethod === 'cash') {
+    btn.disabled = true;
+    btn.textContent = 'Submitting application…';
+    payload.request_type = 'cash_application';
+    payload.payment_method = 'cash';
+    payload.application_id = cashApplicationId;
+    try {
+      const resp = await fetch(CFG.APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+      });
+      const data = await resp.json();
+      if (!data.success) throw new Error(data.error || 'Could not save your application — please try again.');
+      showConfirmation(payload, true);
+    } catch (err) {
+      errEl.textContent = err.name === 'TypeError'
+        ? 'Network error — your application may already be saved. Check your connection and try once more; we will not create a duplicate.'
+        : err.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      updateSubmitBtn();
+    }
+    return;
+  }
+
   if (!squareCard) {
     errEl.textContent = 'Payment system not ready — please refresh and try again.';
     errEl.style.display = 'block';
     return;
   }
-
-  const selectedType  = document.querySelector('input[name="mem-type"]:checked').value;
-  const amountCents   = calcTotal();
-  const amountDisplay = (amountCents / 100).toFixed(2);
 
   btn.disabled = true;
   btn.textContent = 'Processing payment…';
@@ -1033,7 +1164,6 @@ async function submitForm() {
 
   try {
     const result = await squareCard.tokenize();
-    console.log('TOKENIZE RESULT:', JSON.stringify(result));
     if (result.status !== 'OK') {
       throw new Error('Square result: ' + JSON.stringify(result));
     }
@@ -1042,51 +1172,13 @@ async function submitForm() {
       ? crypto.randomUUID()
       : Date.now().toString(36) + Math.random().toString(36).slice(2);
 
-    console.log('NONCE:', result.token);
-    console.log('AMOUNT CENTS:', amountCents);
-
-    // Capture signature and validate before charging
-    const memberSigPng = (memberPad && !memberPad.isEmpty())
-      ? memberPad.toDataURL('image/png')
-      : '';
-    const memberCanvas = document.getElementById('member-sig-canvas');
-    console.log('Signature debug', {
-      isTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
-      memberPadExists: !!memberPad,
-      memberPadEmpty:  memberPad ? memberPad.isEmpty() : null,
-      sigPrefix:       memberSigPng ? memberSigPng.slice(0, 30) : null,
-      sigLength:       memberSigPng ? memberSigPng.length : 0,
-      canvasWidth:     memberCanvas ? memberCanvas.width : null,
-      canvasHeight:    memberCanvas ? memberCanvas.height : null,
-      canvasClientWidth:  memberCanvas ? memberCanvas.clientWidth : null,
-      canvasClientHeight: memberCanvas ? memberCanvas.clientHeight : null,
-    });
-    if (!memberSigPng || !memberSigPng.startsWith('data:image/png;base64,') || memberSigPng.length < 1000) {
-      throw new Error('Signature is missing or blank — please go back and sign the waiver.');
-    }
-
-    const payload = {
+    payload = Object.assign(payload, {
+      request_type:    'card_payment',
+      payment_method:  'card',
       nonce:            result.token,
       location_id:      CFG.SQ_LOCATION_ID,
       idempotency_key:  idempotencyKey,
-      amount_cents:     amountCents,
-      membership_type:  selectedType,
-      join_type:        joinType,
-      first_name:       document.getElementById('first-name').value.trim(),
-      last_name:        document.getElementById('last-name').value.trim(),
-      email:            document.getElementById('email').value.trim(),
-      phone:            document.getElementById('phone').value.trim(),
-      dob:              document.getElementById('dob').value,
-      sig_date:         document.getElementById('sig-date').value,
-      member_signed:    true,
-      member_sig_png:   memberSigPng,
-      ec_first_name:    document.getElementById('ec-first-name').value.trim(),
-      ec_last_name:     document.getElementById('ec-last-name').value.trim(),
-      ec_phone:         document.getElementById('ec-phone').value.trim(),
-      ec_signed:        false,
-      tshirt_size:      joinType === 'new' ? sz.value : (addonChecked ? addonSz.value : ''),
-      marketing_opt_in: document.getElementById('marketing-check').checked,
-    };
+    });
 
     fetchSent = true;
     const resp = await fetch(CFG.APPS_SCRIPT_URL, {
@@ -1100,11 +1192,7 @@ async function submitForm() {
     console.log('API RESPONSE:', JSON.stringify(data));
 
     if (data.success) {
-      document.getElementById('page-2').classList.remove('active');
-      document.getElementById('confirm').classList.add('active');
-      document.getElementById('progress-wrap').style.display = 'none';
-      document.getElementById('confirm-name').textContent  = payload.first_name;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showConfirmation(payload, false);
     } else {
       paymentExplicitlyFailed = true;
       throw new Error(data.error || 'Payment failed — please try again or contact us.');

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support the Club | Powerhouse Armwrestling</title>
+<meta name="description" content="Support Powerhouse Armwrestling Club with a secure contribution through Square.">
+<meta property="og:title" content="Support Powerhouse Armwrestling Club">
+<meta property="og:description" content="Help fund equipment, events and opportunities for the Gold Coast armwrestling community.">
+<meta property="og:url" content="https://www.powerhousearmwrestling.com.au/donate">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://web.squarecdn.com/v1/square.js"></script>
+<style>
+:root { --ink:#0a0908; --char:#171510; --panel:#211e17; --gold:#c9a234; --cream:#f0e8d8; --muted:#b9ad98; --error:#e26a63; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { min-height:100vh; background:var(--ink); color:var(--cream); font-family:Inter, sans-serif; }
+body::before { content:""; position:fixed; inset:0; pointer-events:none; background:radial-gradient(circle at 12% 10%, rgba(201,162,52,.12), transparent 32%), linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size:auto, 48px 48px, 48px 48px; }
+.nav { position:relative; z-index:2; height:84px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(20px,5vw,72px); border-bottom:1px solid rgba(201,162,52,.15); background:rgba(10,9,8,.9); }
+.logo img { width:92px; height:auto; display:block; }
+.nav-links { display:flex; align-items:center; gap:24px; }
+.nav-links a { color:var(--muted); text-decoration:none; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:13px; }
+.nav-links .join { color:var(--ink); background:var(--gold); padding:11px 17px; border-radius:5px; }
+main { position:relative; z-index:1; width:min(1120px, calc(100% - 32px)); margin:0 auto; padding:clamp(52px,8vw,100px) 0 80px; display:grid; grid-template-columns:minmax(0,1fr) minmax(380px,500px); gap:clamp(40px,7vw,88px); align-items:start; }
+.eyebrow { font-family:'Barlow Condensed',sans-serif; color:var(--gold); text-transform:uppercase; font-size:12px; font-weight:800; letter-spacing:.24em; margin-bottom:18px; }
+h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(62px,9vw,112px); line-height:.83; letter-spacing:.02em; font-weight:400; }
+h1 span { display:block; color:var(--gold); }
+.intro { margin-top:28px; max-width:590px; color:var(--muted); line-height:1.75; font-size:16px; }
+.impact { margin-top:40px; display:grid; gap:13px; }
+.impact-item { display:flex; align-items:center; gap:13px; color:var(--cream); font-size:14px; }
+.impact-mark { width:25px; height:25px; border:1px solid rgba(201,162,52,.45); color:var(--gold); display:grid; place-items:center; border-radius:50%; flex:0 0 auto; font-size:12px; }
+.form-card { background:linear-gradient(145deg, rgba(39,35,26,.98), rgba(23,21,16,.98)); border:1px solid rgba(201,162,52,.24); border-radius:12px; padding:clamp(24px,4vw,38px); box-shadow:0 24px 80px rgba(0,0,0,.42); }
+.form-title { font-family:'Bebas Neue',sans-serif; font-size:40px; letter-spacing:.04em; font-weight:400; margin-bottom:5px; }
+.form-sub { color:var(--muted); font-size:13px; line-height:1.55; margin-bottom:24px; }
+label.field-label { display:block; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin:18px 0 8px; }
+.amount-presets { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.amount-presets button { appearance:none; border:1px solid rgba(201,162,52,.26); border-radius:6px; background:rgba(255,255,255,.025); color:var(--cream); padding:13px 8px; font:700 15px 'Barlow Condensed',sans-serif; cursor:pointer; }
+.amount-presets button.active { border-color:var(--gold); color:var(--gold); background:rgba(201,162,52,.09); }
+.amount-wrap { position:relative; }
+.amount-prefix { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--gold); font-weight:700; }
+input, textarea { width:100%; border:1px solid rgba(201,162,52,.25); background:#15130f; color:var(--cream); border-radius:6px; padding:13px 14px; font:14px Inter,sans-serif; outline:none; }
+.amount-wrap input { padding-left:32px; font-size:18px; font-weight:600; }
+input:focus, textarea:focus { border-color:var(--gold); }
+textarea { resize:vertical; min-height:76px; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+#card-container { min-height:90px; }
+.loading { color:var(--muted); font-size:13px; padding:15px 0; }
+.error { display:none; color:var(--error); font-size:13px; line-height:1.5; margin:13px 0; }
+.submit { width:100%; border:0; border-radius:6px; background:var(--gold); color:var(--ink); padding:16px 18px; font:800 15px 'Barlow Condensed',sans-serif; letter-spacing:.11em; text-transform:uppercase; cursor:pointer; margin-top:18px; }
+.submit:disabled { opacity:.55; cursor:not-allowed; }
+.fine { color:rgba(185,173,152,.7); font-size:11px; line-height:1.55; margin-top:14px; text-align:center; }
+.success { display:none; text-align:center; padding:34px 12px 18px; }
+.success-mark { width:62px; height:62px; display:grid; place-items:center; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font-size:28px; margin:0 auto 22px; }
+.success h2 { font:400 48px 'Bebas Neue',sans-serif; color:var(--gold); letter-spacing:.04em; }
+.success p { color:var(--muted); line-height:1.7; margin-top:8px; }
+@media(max-width:820px){ main{grid-template-columns:1fr; max-width:620px;} .nav-links a:not(.join){display:none;} h1{font-size:76px;} }
+@media(max-width:480px){ .two-col{grid-template-columns:1fr;} .amount-presets{grid-template-columns:repeat(3,1fr);} .nav{height:72px;} .logo img{width:76px;} }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="/" aria-label="Powerhouse Armwrestling home"><img src="logo.png" alt="Powerhouse Armwrestling Club"></a>
+  <nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/membership" class="join">Join the club</a></nav>
+</header>
+<main>
+  <section>
+    <p class="eyebrow">Back the club</p>
+    <h1>Help Us Build <span>The Powerhouse</span></h1>
+    <p class="intro">Every contribution helps us create a stronger home for armwrestling on the Gold Coast. Choose any amount and pay securely through Square.</p>
+    <div class="impact">
+      <div class="impact-item"><span class="impact-mark">✓</span>Maintain and improve club training equipment</div>
+      <div class="impact-item"><span class="impact-mark">✓</span>Support events and competition opportunities</div>
+      <div class="impact-item"><span class="impact-mark">✓</span>Grow an accessible local armwrestling community</div>
+    </div>
+  </section>
+
+  <section class="form-card" id="form-card">
+    <div id="donation-form">
+      <h2 class="form-title">Make a Contribution</h2>
+      <p class="form-sub">Choose an amount below or enter your own.</p>
+      <div class="amount-presets" aria-label="Suggested amounts">
+        <button type="button" onclick="setAmount(25,this)">$25</button>
+        <button type="button" class="active" onclick="setAmount(50,this)">$50</button>
+        <button type="button" onclick="setAmount(100,this)">$100</button>
+      </div>
+      <label class="field-label" for="amount">Contribution amount (AUD)</label>
+      <div class="amount-wrap"><span class="amount-prefix">$</span><input id="amount" type="number" min="1" max="7000" step="0.01" value="50.00" inputmode="decimal" required></div>
+      <div class="two-col">
+        <div><label class="field-label" for="donor-name">Name (optional)</label><input id="donor-name" maxlength="120" autocomplete="name"></div>
+        <div><label class="field-label" for="donor-email">Email (optional)</label><input id="donor-email" type="email" maxlength="200" autocomplete="email"></div>
+      </div>
+      <label class="field-label" for="message">Message (optional)</label>
+      <textarea id="message" maxlength="500" placeholder="Leave a note for the club"></textarea>
+      <label class="field-label">Secure card payment</label>
+      <div class="loading" id="card-loading">Loading secure payment form…</div>
+      <div id="card-container"></div>
+      <div class="error" id="error" role="alert"></div>
+      <button class="submit" id="submit" type="button" onclick="submitDonation()">Contribute $50.00</button>
+      <p class="fine">Card details are processed securely by Square and are never stored by the club. Contributions are not represented as tax-deductible gifts.</p>
+    </div>
+    <div class="success" id="success">
+      <div class="success-mark">✓</div>
+      <h2>Thank You</h2>
+      <p>Your contribution has been received. It genuinely helps us keep building the club.</p>
+    </div>
+  </section>
+</main>
+<script>
+const CFG = { API_URL:'/api/membership', APP_ID:'sq0idp-FwOlU52Jd1g948fKdnpnMg', LOCATION_ID:'LRE1Q97A62XVE' };
+let squareCard = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('amount').addEventListener('input', updateButton);
+  if (!window.Square) return showError('Payment system failed to load. Please refresh and try again.');
+  try {
+    const payments = Square.payments(CFG.APP_ID, CFG.LOCATION_ID);
+    squareCard = await payments.card({ style:{
+      '.input-container':{'borderColor':'rgba(201,162,52,.35)','borderRadius':'6px'},
+      '.input-container.is-focus':{'borderColor':'#c9a234'},
+      '.input-container.is-error':{'borderColor':'#e26a63'},
+      'input':{'backgroundColor':'#15130f','color':'#f0e8d8','fontSize':'14px'},
+      'input::placeholder':{'color':'rgba(185,173,152,.45)'},
+      '.message-text':{'color':'#b9ad98'}
+    }});
+    await squareCard.attach('#card-container');
+    document.getElementById('card-loading').style.display = 'none';
+  } catch (err) {
+    document.getElementById('card-loading').style.display = 'none';
+    showError('The secure payment form could not load. Please refresh and try again.');
+  }
+});
+
+function setAmount(value, button) {
+  document.getElementById('amount').value = value.toFixed(2);
+  updateButton();
+}
+function updateButton() {
+  const amount = Number(document.getElementById('amount').value || 0);
+  document.querySelectorAll('.amount-presets button').forEach(btn => {
+    btn.classList.toggle('active', Number(btn.textContent.replace('$','')) === amount);
+  });
+  document.getElementById('submit').textContent = amount > 0 ? `Contribute $${amount.toFixed(2)}` : 'Choose an amount';
+}
+function showError(message) {
+  const el = document.getElementById('error'); el.textContent = message; el.style.display = 'block';
+}
+async function submitDonation() {
+  const button = document.getElementById('submit');
+  const amount = Number(document.getElementById('amount').value);
+  const email = document.getElementById('donor-email').value.trim();
+  document.getElementById('error').style.display = 'none';
+  if (!Number.isFinite(amount) || amount < 1 || amount > 7000) return showError('Please enter an amount between $1 and $7,000.');
+  if (email && !document.getElementById('donor-email').checkValidity()) return showError('Please enter a valid email address.');
+  if (!squareCard) return showError('Payment system is not ready. Please refresh and try again.');
+
+  button.disabled = true; button.textContent = 'Processing…';
+  let sent = false;
+  try {
+    const token = await squareCard.tokenize();
+    if (token.status !== 'OK') throw new Error('Please check your card details and try again.');
+    const key = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+    const payload = {
+      request_type:'donation', nonce:token.token, idempotency_key:key,
+      location_id:CFG.LOCATION_ID, amount_cents:Math.round(amount * 100),
+      donor_name:document.getElementById('donor-name').value.trim(), donor_email:email,
+      message:document.getElementById('message').value.trim()
+    };
+    sent = true;
+    const response = await fetch(CFG.API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload), redirect:'follow' });
+    const data = await response.json();
+    if (!data.success) { sent = false; throw new Error(data.error || 'Payment was not completed.'); }
+    document.getElementById('donation-form').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  } catch (err) {
+    showError(sent ? 'Payment status is unclear. Please do not submit again; contact the club so we can check it.' : err.message);
+    if (!sent) { button.disabled = false; updateButton(); }
+  }
+}
+</script>
+</body>
+</html>
