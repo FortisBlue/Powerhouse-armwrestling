@@ -6,7 +6,7 @@
 <title>POWERHOUSE ARMWRESTLING — Gold Coast, QLD</title>
 <meta name="description" content="Powerhouse Armwrestling Club — Gold Coast's home of arm wrestling. Train Saturdays in Pimpama. All levels welcome.">
 <meta name="theme-color" content="#0a0908">
-<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
@@ -16,7 +16,8 @@
 <meta property="og:image" content="https://www.powerhousearmwrestling.com.au/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="hero.webp" as="image" fetchpriority="high" type="image/webp">
+<link rel="preload" href="hero-mobile-828.webp" as="image" fetchpriority="high" type="image/webp" media="(max-width: 1100px)">
+<link rel="preload" href="hero-1920.webp" as="image" fetchpriority="high" type="image/webp" media="(min-width: 1101px)">
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap"></noscript>
 <style>
@@ -1419,7 +1420,7 @@ footer {
   .footer-brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .events-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .locations-grid { grid-template-columns: 1fr; max-width: 520px; }
   .about-layout { gap: 32px; }
@@ -1626,10 +1627,10 @@ footer {
   border-color: var(--gold);
 }
 .nav-socials svg { width: 14px; height: 14px; }
-@media (max-width: 860px) { .nav-socials { display: none; } }
+@media (max-width: 1100px) { .nav-socials { display: none; } }
 
 /* ── MOBILE NAV TOUCH TARGET ── */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .nav-cta { height: 44px; }
 }
 
@@ -1699,7 +1700,7 @@ footer {
 <!-- ══════════════════════ NAV ══════════════════════ -->
 <header class="nav" id="main-nav">
   <a href="#hero" class="nav-logo" aria-label="Powerhouse Armwrestling">
-    <img src="logo.png" alt="Powerhouse Armwrestling Club">
+    <img src="logo-nav.webp" alt="Powerhouse Armwrestling Club" width="360" height="202">
   </a>
 
   <ul class="nav-pills">
@@ -1770,10 +1771,10 @@ footer {
 <section id="hero">
   <div class="hero-img-wrap">
     <picture>
-      <source media="(max-width: 640px)" type="image/webp" srcset="hero-mobile.webp">
-      <source media="(max-width: 640px)" srcset="hero-mobile.jpg">
-      <source type="image/webp" srcset="hero.webp">
-      <img src="hero.jpg" alt="Powerhouse Armwrestling — Gold Coast, QLD" class="hero-img">
+      <source media="(max-width: 1100px)" type="image/webp" srcset="hero-mobile-828.webp">
+      <source media="(max-width: 1100px)" srcset="hero-mobile-828.jpg">
+      <source type="image/webp" srcset="hero-1920.webp">
+      <img src="hero-1920.jpg" alt="Powerhouse Armwrestling — Gold Coast, QLD" class="hero-img" width="1920" height="1072" fetchpriority="high" decoding="async">
     </picture>
 
     <div class="hero-cta">
@@ -1796,7 +1797,7 @@ footer {
 
     <!-- 2nd Place -->
     <div class="podium-slot podium-pos-2">
-      <div class="podium-photo"><img src="/rank2.png" alt="Pona Purcell" loading="lazy" decoding="async"></div>
+      <div class="podium-photo"><img src="/rank2-thumb.webp" alt="Pona Purcell" width="240" height="300" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Pona Purcell</div>
       <div class="podium-block"><span class="podium-num">2</span></div>
     </div>
@@ -1804,14 +1805,14 @@ footer {
     <!-- 1st Place -->
     <div class="podium-slot podium-pos-1">
       <div class="podium-crown" aria-hidden="true">★</div>
-      <div class="podium-photo"><img src="/rank1.png" alt="Jay Etheve" loading="lazy" decoding="async"></div>
+      <div class="podium-photo"><img src="/rank1-thumb.webp" alt="Jay Etheve" width="240" height="300" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Jay Etheve</div>
       <div class="podium-block"><span class="podium-num">1</span></div>
     </div>
 
     <!-- 3rd Place -->
     <div class="podium-slot podium-pos-3">
-      <div class="podium-photo"><img src="/rank3.png" alt="Sam Saffuri" loading="lazy" decoding="async"></div>
+      <div class="podium-photo"><img src="/rank3-thumb.webp" alt="Sam Saffuri" width="240" height="300" loading="lazy" decoding="async"></div>
       <div class="podium-pname">Sam Saffuri</div>
       <div class="podium-block"><span class="podium-num">3</span></div>
     </div>
@@ -2010,7 +2011,7 @@ footer {
 <!-- ══════════════════════ ABOUT / JOIN ══════════════════════ -->
 <section id="about">
   <div class="about-photo" aria-hidden="true">
-    <img src="about-community.webp" alt="" loading="lazy" decoding="async">
+    <img src="about-community-1200.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
   </div>
 
   <div class="about-heading">
