@@ -10,7 +10,9 @@
 <title>POWERHOUSE ARMWRESTLING — Gold Coast, QLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="hero-mobile-828.webp" as="image" fetchpriority="high" type="image/webp">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap"></noscript>
 <style>
 /* ─────────────────────────────────────────
    ROOT & RESET
@@ -180,6 +182,12 @@ body {
   height: calc(100vh - var(--nav-h));
   overflow: hidden;
   background: var(--black);
+}
+
+#hero picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-img {
@@ -903,7 +911,10 @@ footer {
 
 <!-- ══════ HERO ══════ -->
 <section id="hero">
-  <img src="hero-mobile.jpg" alt="Powerhouse Armwrestling" class="hero-img">
+  <picture>
+    <source type="image/webp" srcset="hero-mobile-828.webp">
+    <img src="hero-mobile-828.jpg" alt="Powerhouse Armwrestling" class="hero-img" width="828" height="1484" fetchpriority="high" decoding="async">
+  </picture>
   <div class="hero-stats">
     <div class="hero-stat-item"><span class="hero-stat-num">127</span> Members</div>
     <div class="hero-stat-dot"></div>
