@@ -2,7 +2,7 @@
 
 `Code.js` is the source for the Google Apps Script web app used by `/api/membership`.
 
-Current production deployment: **Version 27**, deployed 30 August 2026. The known-good rollback is **Version 26** using the same deployment ID and web-app URL.
+Current production deployment: **Version 30**, deployed 14 September 2026. The known-good rollback is **Version 29** using the same deployment ID and web-app URL.
 
 ## Deploying an update
 
@@ -16,6 +16,8 @@ Current production deployment: **Version 27**, deployed 30 August 2026. The know
 ## Cash approval
 
 A cash application is saved to the `Pending Cash` sheet and does not appear in `Members` or the public member count. After cash is physically received, an authorised approver ticks **Cash Received** in column D. The trigger then adds the active member, creates the signed waiver PDF, and sends the final member and team emails.
+
+Cash signature images use `Member Name - DD-MM-YYYY - Signature.png`. Full waiver PDFs for both cash and card use `Member Name - DD-MM-YYYY.pdf`. Dates use Australia/Brisbane and the file creation date. Pending Cash stores the signature file ID, so renaming an image preserves the approval link.
 
 If a step fails, the row changes to `Approval error` and records the problem in `Last Error`. After fixing the cause, run `approveCashApplication(ROW_NUMBER)` manually from the Apps Script editor to retry safely.
 

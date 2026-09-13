@@ -293,7 +293,7 @@ function findCashApplicationRow(sheet, applicationId) {
 
 function savePendingSignature(data) {
   var b64 = data.member_sig_png.replace(/^data:image\/png;base64,/, '');
-  var blob = Utilities.newBlob(Utilities.base64Decode(b64), 'image/png', 'cash-' + data.application_id + '-signature.png');
+  var blob = Utilities.newBlob(Utilities.base64Decode(b64), 'image/png', (fullName(data.first_name, data.last_name) || 'Unnamed Member') + ' - ' + Utilities.formatDate(new Date(), 'Australia/Brisbane', 'dd-MM-yyyy') + ' - Signature.png');
   return DriveApp.getFolderById(WAIVER_FOLDER_ID).createFile(blob).getId();
 }
 
