@@ -619,7 +619,7 @@ body {
             <option value="XXXL">3XL</option>
             <option value="XXXXL">4XL</option>
           </select>
-          <p class="form-hint">Your last name will be printed on the back of your shirt.</p>
+          <p class="form-hint">A club T-shirt is included with your new membership.</p>
         </div>
       </div>
 
@@ -629,7 +629,7 @@ body {
           <input type="checkbox" id="tshirt-addon-check" onchange="handleTshirtAddon()" style="margin-top:2px; width:18px; height:18px; accent-color:var(--gold); flex-shrink:0;">
           <span style="font-family:'Barlow Condensed',sans-serif; font-size:15px; line-height:1.4;">
             Add a club t-shirt &nbsp;<span style="color:var(--gold); font-weight:600;">+$50</span><br>
-            <small style="color:var(--cream-d); font-weight:400;">Your last name will be printed on the back</small>
+            <small style="color:var(--cream-d); font-weight:400;">Choose your size and name for the back below</small>
           </span>
         </label>
         <div id="tshirt-addon-size-wrap" style="display:none; margin-top:12px;">
@@ -645,6 +645,12 @@ body {
             <option value="XXXXL">4XL</option>
           </select>
         </div>
+      </div>
+
+      <div class="form-group" id="tshirt-name-section" style="margin-bottom:24px;">
+        <label class="form-label" for="tshirt-custom-name">Name on back of T-shirt (optional)</label>
+        <input class="form-input" type="text" id="tshirt-custom-name" maxlength="40" placeholder="Your custom name or nickname" aria-describedby="tshirt-name-hint">
+        <p class="form-hint" id="tshirt-name-hint">Leave blank to use your last name. Enter the name exactly as you want it printed (maximum 40 characters).</p>
       </div>
 
       <div class="membership-option">
@@ -982,6 +988,7 @@ function handleJoinType(type) {
   document.getElementById('tshirt-addon-size-wrap').style.display = 'none';
   document.getElementById('tshirt-addon-size').value = '';
   document.getElementById('tshirt-addon-size').classList.remove('error');
+  updateTshirtNameField();
   updateSubmitBtn();
 }
 
@@ -1011,7 +1018,15 @@ function handleTshirtAddon() {
     document.getElementById('tshirt-addon-size').value = '';
     document.getElementById('tshirt-addon-size').classList.remove('error');
   }
+  updateTshirtNameField();
   updateSubmitBtn();
+}
+
+function updateTshirtNameField() {
+  const hasShirt = document.getElementById('join-new').checked || document.getElementById('tshirt-addon-check').checked;
+  document.getElementById('tshirt-name-section').style.display = hasShirt ? 'block' : 'none';
+  document.getElementById('tshirt-custom-name').disabled = !hasShirt;
+  if (!hasShirt) document.getElementById('tshirt-custom-name').value = '';
 }
 
 function calcTotal() {
@@ -1066,6 +1081,7 @@ function buildMembershipPayload(joinType, tshirtSize) {
     ec_phone:         document.getElementById('ec-phone').value.trim(),
     ec_signed:        false,
     tshirt_size:      tshirtSize,
+    tshirt_custom_name: tshirtSize ? document.getElementById('tshirt-custom-name').value.trim().replace(/\s+/g, ' ') : '',
     marketing_opt_in: document.getElementById('marketing-check').checked,
   };
 }

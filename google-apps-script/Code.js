@@ -51,7 +51,8 @@ var MEMBER_HEADERS = [
   'EC Signed',
   'Marketing Opt-In',
   'Payment Method',
-  'Application ID'
+  'Application ID',
+  'T-Shirt Print Name'
 ];
 
 var PENDING_CASH_HEADERS = [
@@ -59,7 +60,7 @@ var PENDING_CASH_HEADERS = [
   'Member Row', 'PDF ID', 'Member Email Sent', 'Team Email Sent', 'Signature File ID',
   'First Name', 'Last Name', 'Email', 'Phone', 'DOB', 'Join Type', 'Membership',
   'T-Shirt Size', 'EC First Name', 'EC Last Name', 'EC Phone', 'Amount Due',
-  'Date Signed', 'Member Signed', 'Marketing Opt-In', 'Last Error'
+  'Date Signed', 'Member Signed', 'Marketing Opt-In', 'Last Error', 'T-Shirt Print Name'
 ];
 
 /* HELPERS */
@@ -86,6 +87,25 @@ function yesNo(value) {
 
 function fullName(first, last) {
   return ((first || '') + ' ' + (last || '')).trim();
+}
+
+function validateTshirtName(data) {
+  if (!data.tshirt_size) {
+    data.tshirt_custom_name = '';
+    return;
+  }
+  var name = String(data.tshirt_custom_name || '').trim().replace(/\s+/g, ' ');
+  if (name.length > 40) throw new Error('The name on your T-shirt must be 40 characters or fewer.');
+  data.tshirt_custom_name = name;
+}
+
+function tshirtPrintName(data) {
+  return data.tshirt_size ? String(data.tshirt_custom_name || data.last_name || '').trim() : '';
+}
+
+function sheetText(value) {
+  // Keep customer-entered print names as literal text, including names beginning with =.
+  return /^[=+@-]/.test(value) ? "'" + value : value;
 }
 
 function logError(context, err, extra) {
@@ -181,6 +201,8 @@ function doPost(e) {
       }
     }
 
+    validateTshirtName(data);
+
     var payResult = chargeSquare(
       data.nonce,
       serverAmount,
@@ -268,18 +290,28 @@ function validateMembershipSubmission(data) {
   if ((data.join_type === 'new' || data.tshirt_size) && ALLOWED_TSHIRT_SIZES.indexOf(data.tshirt_size) === -1) {
     throw new Error('A valid T-shirt size is required.');
   }
+  validateTshirtName(data);
   return pricing;
 }
 
 function getPendingCashSheet() {
   var book = SpreadsheetApp.openById(SHEET_ID);
   var sheet = book.getSheetByName(PENDING_CASH_SHEET) || book.insertSheet(PENDING_CASH_SHEET);
+  if (sheet.getMaxColumns() < PENDING_CASH_HEADERS.length) {
+    sheet.insertColumnsAfter(sheet.getMaxColumns(), PENDING_CASH_HEADERS.length - sheet.getMaxColumns());
+  }
   if (sheet.getRange(1, 1).isBlank()) {
     sheet.getRange(1, 1, 1, PENDING_CASH_HEADERS.length).setValues([PENDING_CASH_HEADERS]);
     sheet.getRange(1, 1, 1, PENDING_CASH_HEADERS.length)
       .setFontWeight('bold').setBackground('#1c1a16').setFontColor('#C9A234');
     sheet.setFrozenRows(1);
-    sheet.getRange(2, 4, Math.max(sheet.getMaxRows() - 1, 1), 1).insertCheckboxes();
+  }
+  var printNameHeader = sheet.getRange(1, 27);
+  if (printNameHeader.isBlank()) {
+    printNameHeader.setValue('T-Shirt Print Name').setFontWeight('bold').setBackground('#1c1a16').setFontColor('#C9A234');
+    sheet.setColumnWidth(27, 200);
+  } else if (printNameHeader.getValue() !== 'T-Shirt Print Name') {
+    throw new Error('Pending Cash sheet header mismatch at column 27.');
   }
   return sheet;
 }
@@ -320,9 +352,11 @@ function processCashApplication(data) {
       data.first_name, data.last_name, cleanEmail(data.email), fmtPhone(data.phone), data.dob,
       data.join_type, data.membership_type, data.tshirt_size || '', data.ec_first_name,
       data.ec_last_name, fmtPhone(data.ec_phone), Number(data.amount_cents), data.sig_date,
-      true, Boolean(data.marketing_opt_in), ''
+      true, Boolean(data.marketing_opt_in), '', sheetText(tshirtPrintName(data))
     ];
     sheet.appendRow(row);
+    // Only add a checkbox for an actual application; prefilled FALSE rows hide new applications far below the list.
+    sheet.getRange(sheet.getLastRow(), 4).insertCheckboxes();
     var warnings = [];
     runStep('notifyCashApplicationMember', function () { notifyCashApplicationMember(data); }, warnings);
     runStep('notifyCashApplicationTeam', function () { notifyCashApplicationTeam(data, sheet.getLastRow()); }, warnings);
@@ -340,6 +374,7 @@ function notifyCashApplicationMember(data) {
       'Hi ' + data.first_name + ',\n\n' +
       'We have saved your signed membership application. Your membership is still pending.\n\n' +
       'Amount due in cash: ' + fmtAmount(data.amount_cents) + '\n' +
+      (data.tshirt_size ? 'T-shirt: ' + data.tshirt_size + ' | Name on back: ' + tshirtPrintName(data) + '\n' : '') +
       'Please pay Jay or an authorised Powerhouse club officer at training. After the club verifies the cash payment, we will activate your membership and send your final confirmation.\n\n' +
       'Powerhouse Armwrestling Club',
     name: 'Powerhouse Armwrestling Club',
@@ -357,6 +392,7 @@ function notifyCashApplicationTeam(data, rowNumber) {
       'Name: ' + fullName(data.first_name, data.last_name) + '\n' +
       'Amount due: ' + fmtAmount(data.amount_cents) + '\n' +
       'T-shirt size: ' + (data.tshirt_size || 'N/A') + '\n' +
+      'T-shirt print name: ' + (tshirtPrintName(data) || 'N/A') + '\n' +
       'Pending Cash sheet row: ' + rowNumber + '\n\n' +
       'Only tick Cash Received after the money has actually been received.',
     name: 'Powerhouse Memberships'
@@ -369,7 +405,8 @@ function pendingRowToData(values) {
     phone: values[13], dob: values[14], join_type: values[15], membership_type: values[16],
     tshirt_size: values[17], ec_first_name: values[18], ec_last_name: values[19], ec_phone: values[20],
     amount_cents: Number(values[21]), sig_date: values[22], member_signed: Boolean(values[23]),
-    ec_signed: false, marketing_opt_in: Boolean(values[24]), payment_method: 'cash'
+    ec_signed: false, marketing_opt_in: Boolean(values[24]), payment_method: 'cash',
+    tshirt_custom_name: values[26] || ''
   };
 }
 
@@ -441,6 +478,15 @@ function approveCashApplication(rowNumber) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function setupTshirtNameColumns() {
+  var members = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
+  ensureHeaders(members);
+  members.setColumnWidth(19, 200);
+  getPendingCashSheet();
+  SpreadsheetApp.flush();
+  Logger.log('T-Shirt Print Name ready: Sheet1 column S and Pending Cash column AA. Existing applications unchanged.');
 }
 
 function setupCashWorkflow() {
@@ -589,7 +635,8 @@ function buildMemberRow(data, paymentId) {
     yesNo(data.ec_signed),
     yesNo(data.marketing_opt_in),
     data.payment_method === 'cash' ? 'Cash' : 'Card',
-    data.application_id || ''
+    data.application_id || '',
+    sheetText(tshirtPrintName(data))
   ];
 }
 
@@ -696,6 +743,7 @@ function generateAndSavePDF(data, paymentId) {
       ['Membership Type', data.membership_type || ''],
       ['Amount Paid',     fmtAmount(data.amount_cents)],
       ['T-Shirt Size',    data.tshirt_size || 'N/A'],
+      ['T-Shirt Print Name', tshirtPrintName(data) || 'N/A'],
       ['Date Signed',     fmtDate(data.sig_date)],
       ['Payment ID',      paymentId]
     ];
@@ -816,6 +864,7 @@ function notifyTeam(data, paymentId) {
     'Membership:    ' + (data.membership_type || '') + '\n' +
     'Amount Paid:   ' + fmtAmount(data.amount_cents) + '\n' +
     shirtLine + '\n' +
+    (data.tshirt_size ? 'Name on back:  ' + tshirtPrintName(data) + '\n' : '') +
     'Date Signed:   ' + fmtDate(data.sig_date) + '\n' +
     'Payment ID:    ' + paymentId + '\n\n' +
     '--- EMERGENCY CONTACT ------------------------\n' +
@@ -864,6 +913,7 @@ function notifyMember(data, paymentId) {
     'Payment ID:  ' + paymentId + '\n' +
     'Date:        ' + fmtDate(data.sig_date) + '\n' +
     (data.tshirt_size ? 'T-Shirt Size: ' + data.tshirt_size + '\n' : '') +
+    (data.tshirt_size ? 'Name on back: ' + tshirtPrintName(data) + '\n' : '') +
     '\n' +
     'Your signed waiver has been saved to our records.\n\n' +
     '--- TRAINING INFO ---\n' +
