@@ -116,6 +116,14 @@ function res(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+function postRes(obj) {
+  // ContentService redirects POST responses through googleusercontent.com and
+  // the server-side proxy can receive doGet() output instead. HtmlService keeps
+  // the POST result in the response page; the proxy decodes this marker.
+  var encoded = Utilities.base64EncodeWebSafe(JSON.stringify(obj), Utilities.Charset.UTF_8);
+  return HtmlService.createHtmlOutput('PH_JSON:' + encoded);
+}
+
 /* ENDPOINTS */
 
 function doPost(e) {
@@ -127,7 +135,7 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
 
     if (data.request_type === 'cash_application' || data.payment_method === 'cash') {
-      return res(processCashApplication(data));
+      return postRes(processCashApplication(data));
     }
 
     if (!SQUARE_TOKEN) {
@@ -137,17 +145,17 @@ function doPost(e) {
     // Location ID guard - must match our Square location
     if (data.location_id !== EXPECTED_LOCATION_ID) {
       Logger.log('LOCATION MISMATCH: received ' + data.location_id);
-      return res({ success: false, error: 'Invalid location. Please refresh and try again.' });
+      return postRes({ success: false, error: 'Invalid location. Please refresh and try again.' });
     }
 
     if (data.request_type === 'donation') {
-      return res(processDonation(data));
+      return postRes(processDonation(data));
     }
 
     // join_type guard
     if (data.join_type !== 'new' && data.join_type !== 'renewing') {
       Logger.log('INVALID JOIN TYPE: received ' + data.join_type);
-      return res({ success: false, error: 'Invalid join type. Please refresh and try again.' });
+      return postRes({ success: false, error: 'Invalid join type. Please refresh and try again.' });
     }
 
     var pricing      = computeServerPrice(data);
@@ -155,21 +163,21 @@ function doPost(e) {
 
     if (Number(data.amount_cents) !== serverAmount) {
       Logger.log('PRICE MISMATCH: frontend sent ' + data.amount_cents + ', server computed ' + serverAmount);
-      return res({ success: false, error: 'The payment amount changed. Please refresh and try again.' });
+      return postRes({ success: false, error: 'The payment amount changed. Please refresh and try again.' });
     }
 
     // T-shirt size validation
     if (data.join_type === 'new') {
       if (!data.tshirt_size) {
-        return res({ success: false, error: 'T-shirt size is required for new members.' });
+        return postRes({ success: false, error: 'T-shirt size is required for new members.' });
       }
       if (ALLOWED_TSHIRT_SIZES.indexOf(data.tshirt_size) === -1) {
-        return res({ success: false, error: 'Invalid t-shirt size.' });
+        return postRes({ success: false, error: 'Invalid t-shirt size.' });
       }
     }
     if (data.join_type === 'renewing' && data.tshirt_size) {
       if (ALLOWED_TSHIRT_SIZES.indexOf(data.tshirt_size) === -1) {
-        return res({ success: false, error: 'Invalid t-shirt size.' });
+        return postRes({ success: false, error: 'Invalid t-shirt size.' });
       }
     }
 
@@ -181,7 +189,7 @@ function doPost(e) {
     );
 
     if (!payResult.success) {
-      return res({ success: false, error: payResult.error });
+      return postRes({ success: false, error: payResult.error });
     }
 
     var warnings = [];
@@ -219,11 +227,11 @@ function doPost(e) {
     runStep('generateAndSavePDF', function () { generateAndSavePDF(data, payResult.payment_id); }, warnings);
     runStep('notifyTeam',         function () { notifyTeam(data, payResult.payment_id); },         warnings);
 
-    return res({ success: true, payment_id: payResult.payment_id, warnings: warnings });
+    return postRes({ success: true, payment_id: payResult.payment_id, warnings: warnings });
 
   } catch (err) {
     logError('doPost', err);
-    return res({ success: false, error: err && err.message ? err.message : String(err) });
+    return postRes({ success: false, error: err && err.message ? err.message : String(err) });
   }
 }
 

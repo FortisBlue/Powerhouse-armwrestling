@@ -14,7 +14,11 @@ module.exports = async function handler(req, res) {
     const text = await upstream.text();
     let data;
     try { data = JSON.parse(text); }
-    catch { throw new Error('Unexpected response: ' + text.slice(0, 300)); }
+    catch {
+      const marked = text.match(/PH_JSON(?::|\\x3a)([A-Za-z0-9_-]+)/);
+      if (!marked) throw new Error('Unexpected response: ' + text.slice(0, 300));
+      data = JSON.parse(Buffer.from(marked[1], 'base64url').toString('utf8'));
+    }
 
     return res.status(200).json(data);
   } catch (err) {
